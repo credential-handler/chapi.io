@@ -1,19 +1,17 @@
 # chapi.io
 CHAPI is the Credential Handler API - an open-source solution for communicating Verifiable Credentials on the Web.  The CHAPI protocol allows your digital wallet to receive Verifiable Credentials from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that  establishes trust and preserves privacy.
 
-#### [Take CHAPI for a Spin](https://playground.chapi.io)
+## [Try the CHAPI Playground](https://playground.chapi.io)
 This site provides a simple playground to show how CHAPI can enable a digital wallet to receive a Verifiable Credential from a third-party issuer.  You'll need a digital wallet for this demo - if you have one already, good for you!  If not, the CHAPI Playground will present some suggested options for you to try.
 
 ## CHAPI is for open for _everyone_
 CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, users are presented with a fixed set of options for authentication with third-party sites.  The CHAPI protocol provides mediation between any CHAPI-enabled wallet and web application.  Just register your wallet with your browser, and off you go!
 
-#### [Digital Wallets that work with CHAPI](wallets.md)
-
 ## How does CHAPI work?
-Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are results of open collaboration through World Wide Web Consortium (W3C) Credentials Community Group.
+Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are results of open collaboration through World Wide Web Consortium (W3C).  You can find more information, and join the discussion at the [W3C Credentials Community Group](https://www.w3.org/community/credentials/).
 
 ## Contributing
-Contributions are welcome and encouraged!  Please follow these [Contributing Guidelines](CONTRIBUTING.md)
+Contributions are welcome and encouraged!  Please follow [best practices for contributing to open-source code on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github).
 
 ## License
-This site content is open-source; all content in this Repository is licensed by contributors under the [BSD 3-Clause](LICENSE)
+This site content is open-source; content in this Repository is licensed by contributors under the [BSD 3-Clause](LICENSE)
