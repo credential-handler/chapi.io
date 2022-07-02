@@ -9,4 +9,4 @@ Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable 
 Contributions are welcome and encouraged!  Please follow [best practices for contributing to open-source code on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github).
 
 ## License
-This site content is open-source; content in this Repository is licensed by contributors under the [BSD 3-Clause](LICENSE.md)
+This site content is open-source; content in this Repository is licensed by contributors under the [BSD 3-Clause](license)
