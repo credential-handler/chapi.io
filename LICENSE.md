@@ -3,7 +3,7 @@ layout: subpage
 title: "License"
 permalink: /license/
 ---
-## BSD 3-Clause License
+# BSD 3-Clause License
 
 Copyright (c) 2022, Digital Bazaar, Inc.
 All rights reserved.
