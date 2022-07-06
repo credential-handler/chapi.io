@@ -5,6 +5,12 @@ CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, us
 ## How does CHAPI work?
 Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are results of open collaboration through World Wide Web Consortium (W3C).  You can find more information and join the discussion at the [W3C Credentials Community Group](https://www.w3.org/community/credentials/).
 
+<p class="button-row">
+    <a href="https://playground.chapi.io" class="btn2">W3C Standards</a>
+    <a href="https://playground.chapi.io" class="btn2">Developer Docs</a>
+    <a href="https://playground.chapi.io" class="btn2">Example Code</a>
+</p>
+
 ## Contributing
 Contributions are welcome and encouraged!  Please follow [best practices for contributing to open-source code on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github).
 
