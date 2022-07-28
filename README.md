@@ -7,10 +7,14 @@ Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable 
 ## How does CHAPI work?
 A _Credential Handler_ is an event handler for credential request and storage events.  Web app developers can use CHAPI to provide their users with Credential Handlers that run in the browser.  These Credential Hanlders can respond when users visit other websites that present, request, or store Verifiable Credentials.
 
+![CHAPI Polyfill Image](/images/VeresCHAPIaccept.png)
+## How do I integrate CHAPI into my website or application?
+Examples and developer docs:
+
 <p class="button-row">
-    <a href="devIssuers" class="btn2">for VC Issuers</a>
-    <a href="devWallets" class="btn2">for Digital Wallets</a>
-    <a href="devVerifiers" class="btn2">for VC Verifiers </a>
+    <a href="developers/issuers" class="btn2">for VC Issuers</a>
+    <a href="developers/wallets" class="btn2">for Digital Wallets</a>
+    <a href="developers/verifiers" class="btn2">for VC Verifiers </a>
 </p>
 
 ## Contributing
