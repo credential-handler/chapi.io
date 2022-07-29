@@ -16,7 +16,9 @@ If you're working in vanilla JavaScript, you can add the `navigator.credentials`
 ```
 <script src="https://unpkg.com/credential-handler-polyfill@3.0.0/dist/credential-handler-polyfill.min.js"></script>
 
-const polyfill = window.credentialHandlerPolyfill;
+<script>
+credentialHandlerPolyfill.loadOnce();
+</script>
 ```
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
@@ -68,14 +70,14 @@ const testPresentation = {
 Add wrapper data to the Verifiable Presnetation construct a *WebCredential* object.  The `recommendedHandlerOrigins` parameter allows issuers to suggest Credentail Handlers (e.g. digital wallets) for the user to receive the data. 
 
 ```
-    const credentialType = 'VerifiablePresentation';
-    const webCredentialWrapper = new WebCredential(
-      credentialType, testPresentation, {
-        recommendedHandlerOrigins: [
-          'https://chapi-demo-wallet.digitalbazaar.com',
-          'https://demo.vereswallet.dev'
-        ]
-      });
+const credentialType = 'VerifiablePresentation';
+const webCredentialWrapper = new WebCredential(
+    credentialType, testPresentation, {
+    recommendedHandlerOrigins: [
+        'https://chapi-demo-wallet.digitalbazaar.com',
+        'https://demo.vereswallet.dev'
+    ]
+});
 ```
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
@@ -85,7 +87,7 @@ Add wrapper data to the Verifiable Presnetation construct a *WebCredential* obje
 ## Issue and Store Credentials
 An issuer can get() and store() credentials without knowing anything about the user's wallet. This is intentional; for privacy reasons, the issuer must not be able to query any information (without user consent) about which wallets or credential handlers a user may have installed (otherwise, fingerprinting and other attacks would be possible).
 
-A credential issuer can ask to store a Verifiable Creential during a user gesture event, for example when the user pushes a button to receive a credential.
+A credential issuer can ask to store a Verifiable Credential during a user gesture event, for example when the user pushes a button to receive a credential.
 ```
 const result = await navigator.credentials.store(webCredentialWrapper);
 if(!result) {
