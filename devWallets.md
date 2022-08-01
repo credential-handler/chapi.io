@@ -88,7 +88,7 @@ WebCredentialHandler.activateHandler({
 </p>
 
 #### 5. Get Credentials Events
-CHAPI supports the presentation of credentials via the `navigator.credentials.get()` API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `get()` requeste from a third-party website.
+CHAPI supports the presentation of credentials via the `navigator.credentials.get()` API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `get()` request from a third-party website.
 
 ```
   async function handleGetEvent() {
@@ -108,7 +108,7 @@ CHAPI supports the presentation of credentials via the `navigator.credentials.ge
 When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party. 
 
 #### 6. Store Credentials Events
-CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` requeste from a third-party website.  
+CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.  
 
 ```
 async function handleStoreEvent() {
