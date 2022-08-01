@@ -40,7 +40,7 @@ await CredentialHandlerPolyfill.loadOnce();
 console.log('Ready to work with credentials!');
 ```
 ## Construct a Web Credential Query
-A verifier can request credentials over CHAPI by forming a `VerifiablePresentationRequest` object, wrapped with additional information for working with *Web Credentials*.  The example below illustrates a `QueryByExample`, which is wrapped in a `web` object.  The `recommendedHandlerOrigins` parameter allows verfiers to suggest Credentail Handlers (e.g. digital wallets) for the user to present the requested data. 
+A verifier can request credentials over CHAPI by forming a `VerifiablePresentationRequest` object, wrapped with additional information for working with *Web Credentials*.  The example below illustrates a `QueryByExample`, which is wrapped in a `web` object.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
 
 ```
 const credentialQuery = {
