@@ -5,7 +5,7 @@ CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, us
 Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are results of open collaboration through World Wide Web Consortium (W3C).  You can find more information and join the discussion at the [W3C Credentials Community Group](https://www.w3.org/community/credentials/).
 
 ## How does CHAPI work?
-A _Credential Handler_ is an event handler for credential request and storage events.  Web app developers can use CHAPI to provide their users with Credential Handlers that run in the browser.  These Credential Hanlders can respond when users visit other websites that present, request, or store Verifiable Credentials.
+A _Credential Handler_ is an event handler for credential request and storage events.  Web app developers can use CHAPI to provide their users with Credential Handlers that run in the browser.  These Credential Handlers can respond when users visit other websites that present, request, or store Verifiable Credentials.
 
 ![CHAPI Polyfill Image](/images/VeresCHAPIaccept.png)
 ## How do I integrate CHAPI into my website or application?
