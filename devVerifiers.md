@@ -49,7 +49,7 @@ const credentialQuery = {
             "query": [{
                 "type": "QueryByExample",
                 "credentialQuery": {
-                    "reason": "Please present a UniversityDegreeCredential for JaneDoe.",
+                    "reason": "We need to see your University Degree to continue the teacher application process."
                     "example": {
                         "@context": [
                             "https://w3id.org/credentials/v1",
