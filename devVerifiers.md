@@ -69,7 +69,7 @@ const testVpr = {
 </p>
 
 #### 2. Wrap the Request in a Web Credential Query
-Next, construct a generalized *[Credential Interface Query](https://www.w3.org/TR/credential-management-1/)* of type `web`.  This will be passed through the browser to a CHAPI Credential Handler, which recognizes generalized *Web Credentials*. The example below illustrates a  Web Credential request for a `VerifiablePresentation` which uses the specific query parameters defined above.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
+Next, construct a generalized *[Credential Interface Query](https://www.w3.org/TR/credential-management-1/)* of type `web`.  This will be passed through the browser to a CHAPI Credential Handler, which recognizes generalized *Web Credentials*. The example below illustrates a Web Credential request for a `VerifiablePresentation` which uses the specific query parameters defined above.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
 
 ```
 const credentialInterfaceQuery = {
