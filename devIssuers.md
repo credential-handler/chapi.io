@@ -58,7 +58,7 @@ const testPresentation = {
         //your Verifiable Credential,
         //other VCs, if you want to include multiple
     ],
-    //A proof is not required on the Verifiable Presnetation (only on the VCs themselves)
+    //A proof is not required on the Verifiable Presentation (only on the VCs themselves)
 }
 ```
 <p class="code-annotation">

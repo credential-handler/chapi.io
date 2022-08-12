@@ -10,7 +10,7 @@ CHAPI integrates easily into verifier websites, allowing your site to request Ve
 - **Example Code**: the [chapi-demo-verifier](https://github.com/credential-handler/chapi-demo-verifier) contains a full example implementation and is referenced throughout this guide. 
 - **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
 
-## Import the CHAPI Polyfill into your Verfier Site
+## Import the CHAPI Polyfill into your Verifier Site
 If you're working in vanilla JavaScript, you can add the `navigator.credentials` and `credentialHandlerPolyfill` globals to your code and then load the polyfill library:
 
 ```
@@ -46,27 +46,27 @@ A verifier can request credentials over CHAPI by forming a `VerifiablePresentati
 const credentialQuery = {
   "web": {
     "VerifiablePresentation": {
-            "query": [{
-                "type": "QueryByExample",
-                "credentialQuery": {
-                    "reason": "We need to see your University Degree to continue the teacher application process."
+      "query": [{
+        "type": "QueryByExample",
+        "credentialQuery": {
+          "reason": "We need to see your University Degree to continue the teacher application process."
                     "example": {
-                        "@context": [
-                            "https://w3id.org/credentials/v1",
-                            "https://www.w3.org/2018/credentials/examples/v1"
-                        ],
-                        "type": ["UniversityDegreeCredential"],
-                        "credentialSubject": {
-                            "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
-                        }
-                    }
-                }
-            }]
-        },
-        "recommendedHandlerOrigins": [
-            "https://chapi-demo-wallet.digitalbazaar.com"
-        ]
-    }
+            "@context": [
+              "https://w3id.org/credentials/v1",
+              "https://www.w3.org/2018/credentials/examples/v1"
+            ],
+            "type": ["UniversityDegreeCredential"],
+            "credentialSubject": {
+              "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+            }
+          }
+        }
+      }]
+    },
+    "recommendedHandlerOrigins": [
+      "https://chapi-demo-wallet.digitalbazaar.com"
+    ]
+  }
 }
 ```
 <p class="code-annotation">

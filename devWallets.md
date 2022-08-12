@@ -129,6 +129,6 @@ Storage of credentials prompts the individual using the browser to confirm that 
 
 ### Resources
 - WebShare Specification: [this W3C draft](https://w3c.github.io/web-share/) describes the Web Share API.
-- WebShare Documentation: [web.dev](https://web.dev/web-share/) hosts developer docs and examples fot the WebShare API
+- WebShare Documentation: [web.dev](https://web.dev/web-share/) hosts developer docs and examples for the WebShare API
 
 To enable a native wallet to receive VCs via CHAPI, you’ll need to register the wallet as a share target with the mobile OS that is capable of receiving text files.  See appropriate share target documentation for [Android](https://developer.android.com/training/sharing/receive) or [iOS](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1).
