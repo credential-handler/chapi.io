@@ -45,7 +45,7 @@ console.log('Ready to work with credentials!');
 To communicate a Verifiable Credential over CHAPI, it must be wrapped in a `WebCredential` object, which is constructed as follows:
 
 #### 1. Make a Verifiable Presentation
-Incorporate the Verifiable Credential(s) into a *Verifiable Presentation*.  A Verifiable Presentation contains an array of one or more Verifiable Credentials. For CHAPI, the Verifiable Presentation object does not need to be separately signed.
+Incorporate the Verifiable Credential(s) into a *[Verifiable Presentation](https://www.w3.org/TR/vc-data-model/#presentations-0)*.  A Verifiable Presentation contains an array of one or more Verifiable Credentials. For CHAPI, the Verifiable Presentation object does not need to be separately signed.
 
 ```
 const testPresentation = {
