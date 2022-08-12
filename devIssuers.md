@@ -17,7 +17,7 @@ If you're working in vanilla JavaScript, you can add the `navigator.credentials`
 <script src="https://unpkg.com/credential-handler-polyfill@3.0.0/dist/credential-handler-polyfill.min.js"></script>
 
 <script>
-credentialHandlerPolyfill.loadOnce();
+await credentialHandlerPolyfill.loadOnce();
 </script>
 ```
 <p class="code-annotation">

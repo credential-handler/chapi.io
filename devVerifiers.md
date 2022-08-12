@@ -17,7 +17,7 @@ If you're working in vanilla JavaScript, you can add the `navigator.credentials`
 <script src="https://unpkg.com/credential-handler-polyfill@3.0.0/dist/credential-handler-polyfill.min.js"></script>
 
 <script>
-credentialHandlerPolyfill.loadOnce();
+await credentialHandlerPolyfill.loadOnce();
 </script>
 ```
 <p class="code-annotation">
@@ -41,17 +41,15 @@ console.log('Ready to work with credentials!');
 ```
 ## Construct a Web Credential Query
 #### 1. Make a Verifiable Presentation Request
-Incorporate the Verifiable Credential(s) into a *Verifiable Presentation*.  A Verifiable Presentation contains an array of one or more Verifiable Credentials. For CHAPI, the Verifiable Presentation object does not need to be separately signed.
-
 A verifier can request credentials over CHAPI by forming a *[Verifiable Presentation Request](https://w3c-ccg.github.io/vp-request-spec/)*.  The example below illustrates a `QueryByExample`, which specifies the type of Verifiable Credential being requested and an optional reason for the request.
 
 ```
-const verifiablePresentationRequest = {
+const testVpr = {
   "query": [{
     "type": "QueryByExample",
     "credentialQuery": {
-      "reason": "We need to see your University Degree to continue the teacher application process."
-                        "example": {
+      "reason": "Please present your University Degree to continue the teacher application process.",
+      "example": {
         "@context": [
           "https://w3id.org/credentials/v1",
           "https://www.w3.org/2018/credentials/examples/v1"
@@ -71,12 +69,12 @@ const verifiablePresentationRequest = {
 </p>
 
 #### 2. Wrap the Request in a Web Credential Query
-Next, construct a generalized [Credential Interface Query](https://www.w3.org/TR/credential-management-1/) of type `web`.  This will be passed through the browser to a CHAPI Credential Handler, which is designed to recognize generalized *Web Credentials*. The example below illustrates a  Web Credential request for a `VerifiablePresentation` which uses the specific query parameters defined above.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
+Next, construct a generalized *[Credential Interface Query](https://www.w3.org/TR/credential-management-1/)* of type `web`.  This will be passed through the browser to a CHAPI Credential Handler, which recognizes generalized *Web Credentials*. The example below illustrates a  Web Credential request for a `VerifiablePresentation` which uses the specific query parameters defined above.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
 
 ```
 const credentialInterfaceQuery = {
   "web": {
-    "VerifiablePresentation": verifiablePresentationRequest,
+    "VerifiablePresentation": testVpr,
   },
   "recommendedHandlerOrigins": [
     "https://chapi-demo-wallet.digitalbazaar.com"
