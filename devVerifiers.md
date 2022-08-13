@@ -61,7 +61,7 @@ const testVpr = {
       }
     }
   }]
-}
+};
 ```
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
@@ -79,7 +79,7 @@ const credentialInterfaceQuery = {
   "recommendedHandlerOrigins": [
     "https://chapi-demo-wallet.digitalbazaar.com"
   ]
-}
+};
 ```
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
