@@ -59,7 +59,7 @@ const testPresentation = {
         //other VCs, if you want to include multiple
     ],
     //A proof is not required on the Verifiable Presentation (only on the VCs themselves)
-}
+};
 ```
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
