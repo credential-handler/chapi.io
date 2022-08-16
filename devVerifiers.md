@@ -77,7 +77,7 @@ const credentialInterfaceQuery = {
     "VerifiablePresentation": testVpr,
   },
   "recommendedHandlerOrigins": [
-    "https://chapi-demo-wallet.digitalbazaar.com"
+    "https://wallet.example.chapi.io/"
   ]
 };
 ```

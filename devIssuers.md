@@ -74,7 +74,7 @@ const credentialType = 'VerifiablePresentation';
 const webCredentialWrapper = new WebCredential(
     credentialType, testPresentation, {
     recommendedHandlerOrigins: [
-        'https://chapi-demo-wallet.digitalbazaar.com'
+        'https://wallet.example.chapi.io/'
     ]
 });
 ```
