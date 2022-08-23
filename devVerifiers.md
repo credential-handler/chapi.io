@@ -45,17 +45,17 @@ A verifier can request credentials over CHAPI by forming a *[Verifiable Presenta
 
 ```
 const testVpr = {
-  "query": [{
-    "type": "QueryByExample",
-    "credentialQuery": {
-      "reason": "Please present your University Degree to continue the teacher application process.",
-      "example": {
+  query: [{
+    type: "QueryByExample",
+    credentialQuery: {
+      reason: "Please present your University Degree to continue the teacher application process.",
+      example: {
         "@context": [
           "https://w3id.org/credentials/v1",
           "https://www.w3.org/2018/credentials/examples/v1"
         ],
-        "type": ["UniversityDegreeCredential"],
-        "credentialSubject": {
+        type: ["UniversityDegreeCredential"],
+        credentialSubject: {
           "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
         }
       }
