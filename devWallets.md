@@ -156,7 +156,7 @@ An example VPR is shown below.  Like the other CHAPI examples on this site, the 
 The individual selects a digital wallet, which responds to the CHAPI `get()` event.  The example code below shows two functions, plus a third function that your wallet will need to create
 
 - `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse()` if it sees a request for DID Authentication.
-- `formDIDAuthResponse()` creates a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
+- `formDIDAuthResponse()` creates a "web" credential containing a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
 - `signDidAuthPresentation()` is the lower-level function in your wallet that creates a signed Verifiable Presentation with the user's DID.
 
 ```
