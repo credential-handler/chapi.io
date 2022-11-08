@@ -153,10 +153,11 @@ An example VPR is shown below.  Like the other CHAPI examples on this site, the 
 ```
 
 #### 2. The Digital Wallet responds with a Verifiable Presentation
-The individual selects a digital wallet, which responds to the CHAPI `get()` event.  The example code below contains two functions:
+The individual selects a digital wallet, which responds to the CHAPI `get()` event.  The example code below shows two functions, plus a third function that your wallet will need to create
 
-- `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse()` if it sees a request for DID Authentication
+- `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse()` if it sees a request for DID Authentication.
 - `formDIDAuthResponse()` creates a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
+- `signDidAuthPresentation()` is the lower-level function in your wallet that creates a signed Verifiable Presentation with the user's DID.
 
 ```
 async function formDidAuthResponse({challenge, domain}) {
@@ -189,7 +190,7 @@ async function handleGetEvent() {
 }
 ```
 
-Your wallet's version of `formDidAuthResponse()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
+Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
 ```
 const didAuthPresentation = {
     "@context": [
