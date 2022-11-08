@@ -125,6 +125,90 @@ async function handleStoreEvent() {
 
 Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.
 
+## DID Authentication with CHAPI
+This section is written from the perspective of web wallets.  CHAPI provides a simple method for a 3rd party website to request an individual present their Decentralized Identifier (DID) and prove their identity.  The individual selects a digital wallet to respond to this DID Authentication request.
+
+### Resources
+- [Verifiable Presentation Request](https://w3c-ccg.github.io/vp-request-spec/#did-authentication)
+- Verifiable Credentials
+- DID Core Specification
+
+#### 1. The 3rd Party Site sends a DID Authentication Request
+The individual interacts with a 3rd party website, triggering a request for _DID Authentication_.  The site sends a _Verifiable Presentation Request_ (VPR) using the CHAPI `get()` event.  
+
+An example VPR is shown below.  Like the other CHAPI examples on this site, the VPR is wrapped in a `web` credential object - this ensures that it is passed to a _Credential Handler_ in the individual's browser.
+```
+"web": {
+  "VerifiablePresentation": {
+      "query": {
+        "type": "DIDAuthentication"
+      },
+      "challenge": "IME0WNG2MIOsYsPgezxAM", //randomly-generated challenge string (e.g.,a UUID, nanoid, or bnid)
+      "domain": "https://playground.chapi.io" //URL of your web app (where the wallet will respond to the DID Auth request
+  },
+  "recommendedHandlerOrigins": [
+      "https://demo.vereswallet.dev/"
+  ]
+}
+```
+
+#### 2. The Digital Wallet responds with a Verifiable Presentation
+The individual selects a digital wallet, which responds to the CHAPI `get()` event.  The example code below contains two functions:
+
+- `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse` if it sees a request for DID Authentication
+- `formDIDAuthResponse()` creates a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
+
+```
+async function formDidAuthResponse({challenge, domain}) {
+    const dataType = 'VerifiablePresentation';
+
+    //Add your code for signing a verifiable presentation
+    didAuthPresentation = await signDidAuthPresentation({challenge, domain});
+
+    //wrap the DID Auth presentation in a web credential
+    const credentialType = 'VerifiablePresentation';
+    const didAuthResponse = new WebCredential(
+      credentialType, didAuthPresentation, {
+      recommendedHandlerOrigins: []
+    });
+
+    return didAuthResponse;
+}
+
+async function handleGetEvent() {
+    const event = await WebCredentialHandler.receiveCredentialEvent();
+    console.log('Store Credential Event:', event.type, event);
+
+    const vp = event.credentialRequestOptions.web.VerifiablePresentation;
+    const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
+
+    const {type} = query.value;
+    if(type ==='DIDAuthentication') {
+      event.respondWith(formDidAuthResponse({challenge: vp.challenge, domain: vp.domain}))
+    }
+}
+```
+
+Your wallet's version of `formDidAuthResponse` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
+```
+const didAuthPresentation = {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+    ],
+    "type": "VerifiablePresentation",
+    "holder": "did:key:exampleDID",
+    "proof": {
+        "type": "Ed25519Signature2018",
+        "created": "2022-10-28T20:24:27Z",
+        "verificationMethod": "did:key:exampleDID",
+        "proofPurpose": "authentication",
+        "challenge": "IME0WNG2MIOsYsPgezxAM",
+        "domain": "https://playground.chapi.io",
+        "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg"
+    }
+};
+```
+
 ## for Native Mobile Apps
 
 ### Resources
