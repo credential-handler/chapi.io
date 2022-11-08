@@ -130,8 +130,8 @@ This section is written from the perspective of web wallets.  CHAPI provides a s
 
 ### Resources
 - [Verifiable Presentation Request](https://w3c-ccg.github.io/vp-request-spec/#did-authentication)
-- Verifiable Credentials
-- DID Core Specification
+- [Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/#presentations)
+- [DID Core Specification](https://www.w3.org/TR/did-core/#authentication)
 
 #### 1. The 3rd Party Site sends a DID Authentication Request
 The individual interacts with a 3rd party website, triggering a request for _DID Authentication_.  The site sends a _Verifiable Presentation Request_ (VPR) using the CHAPI `get()` event.  
@@ -155,7 +155,7 @@ An example VPR is shown below.  Like the other CHAPI examples on this site, the 
 #### 2. The Digital Wallet responds with a Verifiable Presentation
 The individual selects a digital wallet, which responds to the CHAPI `get()` event.  The example code below contains two functions:
 
-- `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse` if it sees a request for DID Authentication
+- `handleGetEvent()` responds to the CHAPI `get()` event and calls `formDIDAuthResponse()` if it sees a request for DID Authentication
 - `formDIDAuthResponse()` creates a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
 
 ```
@@ -189,7 +189,7 @@ async function handleGetEvent() {
 }
 ```
 
-Your wallet's version of `formDidAuthResponse` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
+Your wallet's version of `formDidAuthResponse()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
 ```
 const didAuthPresentation = {
     "@context": [
