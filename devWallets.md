@@ -178,7 +178,7 @@ async function formDidAuthResponse({challenge, domain}) {
 
 async function handleGetEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
-    console.log('Store Credential Event:', event.type, event);
+    console.log('Get Credential Event:', event.type, event);
 
     const vp = event.credentialRequestOptions.web.VerifiablePresentation;
     const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
@@ -190,7 +190,29 @@ async function handleGetEvent() {
 }
 ```
 
-Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
+Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2020 and 2018 signature suites, respectively.
+
+```
+const didAuthPresentation = {
+    '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        'https://w3id.org/security/suites/ed25519-2020/v1'
+    ],
+    type: ['VerifiablePresentation'],
+    holder: 'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ',
+    proof: {
+        type: 'Ed25519Signature2020',
+        created: '2022-11-09T22:04:18Z',
+        verificationMethod: 'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ#z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ',
+        proofPurpose: 'authentication',
+        challenge: 'qd4_rg4FvyYDUIuy-DmN9',
+        domain: 'https://localhost:51443',
+        proofValue: 'zinUxNo4eLvMRU7QaYwSKTKRkvYud7cDeh3B8zm3G1FLZGiSKjCXFgZiQTLKJmpLuatgpcqCTpRZBj4ETAsddcfe'
+    }
+};
+
+```
+
 ```
 const didAuthPresentation = {
     "@context": [
