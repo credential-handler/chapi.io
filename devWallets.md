@@ -219,11 +219,11 @@ const didAuthPresentation = {
         "https://www.w3.org/2018/credentials/v1",
     ],
     "type": "VerifiablePresentation",
-    "holder": "did:key:exampleDID",
+    "holder": "did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr",
     "proof": {
         "type": "Ed25519Signature2018",
         "created": "2022-10-28T20:24:27Z",
-        "verificationMethod": "did:key:exampleDID#publicKey-1",
+        "verificationMethod": "did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr",
         "proofPurpose": "authentication",
         "challenge": "IME0WNG2MIOsYsPgezxAM",
         "domain": "https://playground.chapi.io",
