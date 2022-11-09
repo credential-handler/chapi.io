@@ -201,7 +201,7 @@ const didAuthPresentation = {
     "proof": {
         "type": "Ed25519Signature2018",
         "created": "2022-10-28T20:24:27Z",
-        "verificationMethod": "did:key:exampleDID",
+        "verificationMethod": "did:key:exampleDID#publicKey-1",
         "proofPurpose": "authentication",
         "challenge": "IME0WNG2MIOsYsPgezxAM",
         "domain": "https://playground.chapi.io",
