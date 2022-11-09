@@ -178,7 +178,7 @@ async function formDidAuthResponse({challenge, domain}) {
 
 async function handleGetEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
-    console.log('Store Credential Event:', event.type, event);
+    console.log('Get Credential Event:', event.type, event);
 
     const vp = event.credentialRequestOptions.web.VerifiablePresentation;
     const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
@@ -190,7 +190,29 @@ async function handleGetEvent() {
 }
 ```
 
-Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2018 signature suite.
+Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The examples below show what this looks like with the Ed25519Signature2020 and 2018 signature suites, respectively.
+
+```
+const didAuthPresentation = {
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "type": "VerifiablePresentation",
+    "holder": "did:key:exampleDID",
+    "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2022-10-28T20:24:27Z",
+        "verificationMethod": "did:key:exampleDID#publicKey-1",
+        "proofPurpose": "authentication",
+        "challenge": "IME0WNG2MIOsYsPgezxAM",
+        "domain": "https://playground.chapi.io",
+        "proofValue": "eyJhbGciOi..."
+    }
+};
+```
+
+
 ```
 const didAuthPresentation = {
     "@context": [
@@ -205,7 +227,7 @@ const didAuthPresentation = {
         "proofPurpose": "authentication",
         "challenge": "IME0WNG2MIOsYsPgezxAM",
         "domain": "https://playground.chapi.io",
-        "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg"
+        "jws": "eyJhbGciOi..."
     }
 };
 ```
