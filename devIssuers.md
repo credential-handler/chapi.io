@@ -14,7 +14,7 @@ CHAPI integrates easily into issuer websites, allowing your site to issue Verifi
 If you're working in vanilla JavaScript, you can add the `navigator.credentials` and `credentialHandlerPolyfill` globals to your code and then load the polyfill library:
 
 ```
-<script src="https://unpkg.com/credential-handler-polyfill@3.0.0/dist/credential-handler-polyfill.min.js"></script>
+<script src="https://unpkg.com/credential-handler-polyfill@3.0.1/dist/credential-handler-polyfill.min.js"></script>
 
 <script>
 await credentialHandlerPolyfill.loadOnce();
@@ -29,7 +29,7 @@ await credentialHandlerPolyfill.loadOnce();
 Or, if you're developing on Node.js, add the credential-handler-polyfill library to your project...
 
 ```
-npm i credential-handler-polyfill@3.0.0
+npm i credential-handler-polyfill@3.0.1
 ``` 
 
 and then import and load the polyfill library as follows:
