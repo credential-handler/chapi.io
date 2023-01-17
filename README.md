@@ -1,4 +1,4 @@
-The CHAPI protocol allows your digital wallet to receive Verifiable Credentails from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that establishes trust and preserves privacy.
+The CHAPI protocol allows your digital wallet to receive Verifiable Credentials from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that establishes trust and preserves privacy.
 ## CHAPI is for open for _everyone_
 CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, users are presented with a fixed set of options for authentication with third-party sites.  The CHAPI protocol provides mediation between any CHAPI-enabled web application and a third-party site.  Just register your web app with your browser, and off you go!
 
