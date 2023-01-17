@@ -78,7 +78,7 @@ const credentialInterfaceQuery = {
     recommendedHandlerOrigins: [
       "https://wallet.example.chapi.io/"
     ]
-   }
+  }
 };
 ```
 <p class="code-annotation">
