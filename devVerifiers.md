@@ -75,10 +75,10 @@ Next, construct a generalized *[Credential Interface Query](https://www.w3.org/T
 const credentialInterfaceQuery = {
   web: {
     VerifiablePresentation: testVpr,
-  },
-  recommendedHandlerOrigins: [
-    "https://wallet.example.chapi.io/"
-  ]
+    recommendedHandlerOrigins: [
+      "https://wallet.example.chapi.io/"
+    ]
+   }
 };
 ```
 <p class="code-annotation">
