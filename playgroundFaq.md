@@ -5,7 +5,7 @@ permalink: /developers/playgroundfaq
 ---
 # CHAPI Playground Integration Guide
 
-Have you already integrated CHAPI into your project and now you’re interested in making your Verifier/Issuer/Wallet available for experimentation? This Integration Guide/FAQ for the CHAPI Playground will help you accomplish this!
+Have you already integrated CHAPI into your project and now you’re interested in making your Issuer, Wallet, or Verifier available for experimentation? This Integration Guide/FAQ for the CHAPI Playground will help you accomplish this!
 
 ## Issuers
 ### New issuer introduction:
@@ -62,5 +62,5 @@ We’ve added an example to the [Verifiable Presentation Request (VPR) spec](htt
 
 In this example, the `interact` field describes the type and URL of the /exchanges endpoint.  The `type` is an `UnmediatedPresentationService2021`, which is outlined in the [VCAPI spec](https://w3c-ccg.github.io/vc-api/#exchange-examples).
 
-##Verifiers
+## Verifiers
 Integrating Verifiers into the CHAPI playground is next on our agenda, stay tuned for more information on that process as it becomes available. 
