@@ -52,7 +52,7 @@ All of this follows the patterns in the [VPR spec](https://w3c-ccg.github.io/vp-
 
 ### Integrating with the VC-API exchanges workflow
 Here's an overview of the steps:
-1. CHAPI Playground sends a DID Auth Request (VPR) over CHAPI to the wallet.  This includes an interact field that specifies an \exchanges endpoint on the CHAPI Playground.
+1. CHAPI Playground sends a DID Auth Request (VPR) over CHAPI to the wallet.  This includes an `interact` field that specifies an \exchanges endpoint on the CHAPI Playground.
 2. The Wallet POSTs a VP containing the DID Auth to the \exchanges endpoint.
 3. The CHAPI Playground \exchanges endpoint responds with a VP containing the specified credential
 
