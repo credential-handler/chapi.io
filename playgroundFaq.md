@@ -9,17 +9,20 @@ Have you already integrated CHAPI into your project and now you’re interested 
 
 ## Issuers
 ### New issuer introduction:
-You can integrate your Issuer into our tooling with the [CHAPI-Playground Issuer](https://playground.chapi.io/issuer).  
+You can integrate your Issuer into our tooling with the [CHAPI-Playground Issuer](https://playground.chapi.io/issuer).
 
 If you can provide a [VC-API /issue endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  That should be all we need for integration with the Veres Wallet.  (Note that you'll also be able to use this site to demonstrate issuance with any other CHAPI-enabled wallets).
 
 We've put together a [quick test](https://github.com/credential-handler/chapi-issuer-test-suite) that you can run locally against your endpoint (the test runs locally; the endpoint can be running anywhere).  If your issuer endpoint can pass the first three test conditions, then we'll be ready to add it to the playground.
 
 ### Updating to the VC-API Spec:
-To be compliant with the [vc-api spec](https://w3c-ccg.github.io/vc-api/#issue-credential), your endpoint should end in `credentials\issue`.  
+To be compliant with the [vc-api spec](https://w3c-ccg.github.io/vc-api/#issue-credential), your endpoint should end in `/credentials/issue`.
 
 ### Adding contexts to issuers so that they can support the example credentials hosted on the CHAPI playground.
 To ensure interoperability, add the [following contexts](https://docs.google.com/document/d/1L3GnHtvrH51MJ7W2ZAL-PIfzR2dxLyFoDrUAHZ1KBU4/edit) to get it to work with the other credential examples on the CHAPI-playground.
+
+NOTE: Example credentials can be added or updated in
+[@credential-handler/vc-examples](https://github.com/credential-handler/vc-examples).
 
 ### How should my issuer endpoint handle authentication?
 Authentication is up-to-you.  We are working with some open (unauthenticated) VC-API endpoints now, but we also have support for zCap and Oauth2 authentication.  You can test with the endpoint open and then add backend auth as a second step, if you would like to have it.
@@ -63,4 +66,4 @@ We’ve added an example to the [Verifiable Presentation Request (VPR) spec](htt
 In this example, the `interact` field describes the type and URL of the /exchanges endpoint.  The `type` is an `UnmediatedPresentationService2021`, which is outlined in the [VCAPI spec](https://w3c-ccg.github.io/vc-api/#exchange-examples).
 
 ## Verifiers
-Integrating Verifiers into the CHAPI playground is next on our agenda, stay tuned for more information on that process as it becomes available. 
+Integrating Verifiers into the CHAPI playground is next on our agenda, stay tuned for more information on that process as it becomes available.
