@@ -13,7 +13,7 @@ You can integrate your Issuer into our tooling with the [CHAPI Playground Issuer
 
 If you can provide a [VC-API /issue endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  Your endpoint should end in `/credentials/issue`.
 
-We've put together a [simple test utility](https://github.com/credential-handler/CHAPI Playground-test-suite) that you can run locally against your endpoint (the test runs locally; the endpoint can be running anywhere).  If your issuer endpoint can pass the first three test conditions, then we'll be ready to add it to the list of options in the CHAPI Playground.
+We've put together a [simple test utility](https://github.com/credential-handler/chapi-playground-test-suite) that you can run locally against your endpoint (the test runs locally; the endpoint can be running anywhere).  If your issuer endpoint can pass the first three test conditions, then we'll be ready to add it to the list of options in the CHAPI Playground.
 
 Once integrated into the CHAPI Playground, your issuer will be able to work with any CHAPI-enabled wallet, including the Veres Wallet. (Note that you can also add CHAPI support directly to your issuer so that it can communicate directly with digital wallets).
 
