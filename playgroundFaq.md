@@ -92,7 +92,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
     ],
     "holder": "did:example:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr",
     "proof": {
-      "type": "Ed25519Signature2020
+      "type": "Ed25519Signature2020",
       "created": "2022-10-17T18:12:55Z",
       "verificationMethod": "did:example:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr",
       "proofPurpose": "authentication",
