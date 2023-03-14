@@ -62,18 +62,18 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 ```
 {
   "query": {
-      "type": "DIDAuthentication"
+    "type": "DIDAuthentication"
   },
   "interact": {
-      "service": [
-          {
-              "type": "VerifiableCredentialApiExchangeService",
-              "serviceEndpoint": "https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
-          },
-          {
-              "type": "CredentialHandlerService"
-          }
-      ]
+    "service": [
+      {
+        "type": "VerifiableCredentialApiExchangeService",
+        "serviceEndpoint": "https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
+      },
+      {
+        "type": "CredentialHandlerService"
+      }
+    ]
   },
   "challenge": "g2Wvqg7-cQGWYCCH55rUl",
   "domain": "https://playground.chapi.io"
