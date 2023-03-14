@@ -61,22 +61,22 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 **Step 1**: CHAPI Playground sends a DID Auth Request (VPR) over CHAPI to the wallet.  This includes an `interact` field that specifies an /exchanges endpoint on the CHAPI Playground.  
 ```
 {
-    "query": {
-        "type": "DIDAuthentication"
-    },
-    "interact": {
-        "service": [
-            {
-                "type": "VerifiableCredentialApiExchangeService",
-                "serviceEndpoint": "https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
-            },
-            {
-                "type": "CredentialHandlerService"
-            }
-        ]
-    },
-    "challenge": "g2Wvqg7-cQGWYCCH55rUl",
-    "domain": "https://playground.chapi.io"
+  "query": {
+      "type": "DIDAuthentication"
+  },
+  "interact": {
+      "service": [
+          {
+              "type": "VerifiableCredentialApiExchangeService",
+              "serviceEndpoint": "https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
+          },
+          {
+              "type": "CredentialHandlerService"
+          }
+      ]
+  },
+  "challenge": "g2Wvqg7-cQGWYCCH55rUl",
+  "domain": "https://playground.chapi.io"
 }
 ```
 
