@@ -11,7 +11,7 @@ Have you already integrated CHAPI into your project and now you’re interested 
 ### Introduction
 You can integrate your Issuer into our tooling with the [CHAPI Playground Issuer](https://playground.chapi.io/issuer).
 
-If you provide a [VC-API /issue endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  Your endpoint should end in `/credentials/issue`.
+If you provide a [VC-API Issue Credential Endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  Your endpoint should end in `/credentials/issue`.
 
 We've put together a [simple test utility](https://github.com/credential-handler/chapi-playground-test-suite) that you can run locally against your endpoint (the test runs locally; the endpoint can be running anywhere).  Once your issuer endpoint can pass the test conditions, we'll be ready to add it to the list of options in the CHAPI Playground.
 
