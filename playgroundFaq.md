@@ -8,7 +8,7 @@ permalink: /developers/playgroundfaq
 Have you already integrated CHAPI into your project and now you’re interested in making your Issuer, Wallet, or Verifier available for experimentation? This Integration Guide/FAQ for the CHAPI Playground will help you accomplish this!
 
 ## Issuers
-### New issuer introduction:
+### Introduction
 You can integrate your Issuer into our tooling with the [CHAPI Playground Issuer](https://playground.chapi.io/issuer).
 
 If you provide a [VC-API /issue endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  Your endpoint should end in `/credentials/issue`.
