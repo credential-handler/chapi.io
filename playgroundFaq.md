@@ -104,7 +104,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 }
 ```
 
-**Step 3**: The CHAPI Playground /exchanges endpoint responds with a VP containing the specified credential
+**Step 3**: The CHAPI Playground `/exchanges` endpoint responds with a VP containing the specified credential
 ```
 {
   "verifiablePresentation": {
