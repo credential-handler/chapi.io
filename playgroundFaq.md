@@ -97,7 +97,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
       "verificationMethod": "did:example:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr",
       "proofPurpose": "authentication",
       "challenge": "TTkKgear2sBt4TYxr_zrL",
-      "domain": "https://playground.chapi.io",
+      "domain": "playground.chapi.io",
       "proofValue": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..gaG1RaxRy-xLkjVN-7ulh0dbUU1EX"
     }
   }
