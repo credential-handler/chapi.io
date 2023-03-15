@@ -52,7 +52,7 @@ The Playground receives the DID Auth, it extracts the value of `holder` and inse
 
 
 ### Integrating with the VC-API/exchanges workflow
-The general /exchanges pattern is illustrated in the [Verifiable Presentation Request (VPR) spec](https://w3c-ccg.github.io/vp-request-spec/#example-example-interact-request), which shows how an issuer can ask for DID Authentication and then point the wallet at /exchanges endpoint to perform the Auth-Pickup workflow.
+The general `/exchanges` pattern is illustrated in the [Verifiable Presentation Request (VPR) spec](https://w3c-ccg.github.io/vp-request-spec/#example-example-interact-request), which shows how an issuer can ask for DID Authentication and then point the wallet at `/exchanges` endpoint to perform the Auth-Pickup workflow.
 
 In this example, the `interact` field describes the type and URL of the `/exchanges` endpoint.  The `type` is an `UnmediatedPresentationService2021`, which is outlined in the [VC-API spec](https://w3c-ccg.github.io/vc-api/#exchange-examples).
 
