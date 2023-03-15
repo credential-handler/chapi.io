@@ -76,7 +76,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
     ]
   },
   "challenge": "g2Wvqg7-cQGWYCCH55rUl",
-  "domain": "https://playground.chapi.io"
+  "domain": "playground.chapi.io"
 }
 ```
 
