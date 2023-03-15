@@ -31,7 +31,7 @@ Issuer backends do not need CORS because the CHAPI Playground web app makes a ba
 
 
 ## Wallets
-### New wallet introduction
+### Introduction
 Wallets can integrate with the CHAPI Playground using two different methods:
 
 1. **Basic CHAPI store() workflow:** this workflow uses CHAPI to directly communicate a Verifiable Credential.  The [CHAPI Playground](https://playground.chapi.io) site uses VCAPI on the backend to connect to various issuer sites.  This is a simplified workflow that can get developers up-and-running without the need to implement a credential pickup using VC-API/exchanges.
