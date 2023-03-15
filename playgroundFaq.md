@@ -80,7 +80,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 }
 ```
 
-**Step 2**: The Wallet POSTs a VP containing the DID Auth to the /exchanges endpoint.
+**Step 2**: The Wallet POSTs a VP containing the DID Auth to the `/exchanges` endpoint.
 ```
 {
   "verifiablePresentation" :{
