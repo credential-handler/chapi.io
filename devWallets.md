@@ -16,14 +16,14 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 #### 1. Import the CHAPI Polyfill into your wallet app
 If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
 
-```
+```sh
 npm i credential-handler-polyfill@3.0.1
-npm i web-credential-handler@2.0.1 
-``` 
+npm i web-credential-handler@2.0.1
+```
 
 In your code, you can import and load the polyfill library as follows:
 
-```
+```javascript
 import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
 import * as WebCredentialHandler from 'web-credential-handler';
 
@@ -38,7 +38,7 @@ console.log('Ready to work with credentials!');
 #### 2. Add a `credential_handler` to your app's manifest.json
 In order to register a credential handler, your web app must serve a "manifest.json" file from its root path ("/manifest.json"). This file must also be CORS-enabled.  At a minimum, add the following `credential_handler` object:
 
-```
+```json
 {
   "credential_handler": {
     "url": "/wallet-worker.html",
@@ -55,7 +55,7 @@ In order to register a credential handler, your web app must serve a "manifest.j
 
 You can register a Credential Handler by calling the `CredentialManager.requestPermission()` API. This call will ensure that the individual using the browser explicitly confirms that they want to use the website as a credential handler. The example below uses the `installHandler()` helper method to perform this action:
 
-```
+```javascript
   await WebCredentialHandler.installHandler();
   console.log('Wallet installed.');
 ```
@@ -70,7 +70,7 @@ Your wallet app's existing functionality can be configured to respond to CHAPI e
 #### 4. Setup Listeners for CHAPI Events
 The `activateHandler()` function is a helper that sets up listeners for CHAPI `get()` and `store()` events.
 
-```
+```javascript
 WebCredentialHandler.activateHandler({
     async get(event) {
         console.log('WCH: Received get() event:', event);
@@ -90,7 +90,7 @@ WebCredentialHandler.activateHandler({
 #### 5. Get Credentials Events
 CHAPI supports the presentation of credentials via the `navigator.credentials.get()` API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `get()` request from a third-party website.
 
-```
+```javascript
   async function handleGetEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
 
@@ -110,7 +110,7 @@ When presenting credentials, the user is shown what they will be sharing and mus
 #### 6. Store Credentials Events
 CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.  
 
-```
+```javascript
 async function handleStoreEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
     console.log('Store Credential Event:', event.type, event);
@@ -159,7 +159,7 @@ The individual selects a digital wallet, which responds to the CHAPI `get()` eve
 - `formDIDAuthResponse()` creates a "web" credential containing a signed Verifiable Presentation meeting the VPR Spec for DID Authentication
 - `signDidAuthPresentation()` is the lower-level function in your wallet that creates a signed Verifiable Presentation with the user's DID.
 
-```
+```javascript
 async function formDidAuthResponse({challenge, domain}) {
     const dataType = 'VerifiablePresentation';
 
@@ -192,7 +192,7 @@ async function handleGetEvent() {
 
 Your wallet's version of `signDidAuthPresentation()` should create a signed Verifiable Presentation with the `holder` equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2020 and 2018 signature suites, respectively.
 
-```
+```javascript
 const didAuthPresentation = {
     '@context': [
         'https://www.w3.org/2018/credentials/v1',
@@ -213,7 +213,7 @@ const didAuthPresentation = {
 
 ```
 
-```
+```javascript
 const didAuthPresentation = {
     "@context": [
         "https://www.w3.org/2018/credentials/v1",
