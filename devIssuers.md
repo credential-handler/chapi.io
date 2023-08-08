@@ -13,7 +13,7 @@ CHAPI integrates easily into issuer websites, allowing your site to issue Verifi
 ## Import the CHAPI Polyfill into your Issuer Site
 If you're working in vanilla JavaScript, you can add the `navigator.credentials` and `credentialHandlerPolyfill` globals to your code and then load the polyfill library:
 
-```
+```html
 <script src="https://unpkg.com/credential-handler-polyfill@3.0.1/dist/credential-handler-polyfill.min.js"></script>
 
 <script>
@@ -28,13 +28,13 @@ await credentialHandlerPolyfill.loadOnce();
 
 Or, if you're developing on Node.js, add the credential-handler-polyfill library to your project...
 
-```
+```sh
 npm i credential-handler-polyfill@3.0.1
-``` 
+```
 
 and then import and load the polyfill library as follows:
 
-```
+```javascript
 import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
 
 await CredentialHandlerPolyfill.loadOnce();
@@ -47,7 +47,7 @@ To communicate a Verifiable Credential over CHAPI, it must be wrapped in a `WebC
 #### 1. Make a Verifiable Presentation
 Incorporate the Verifiable Credential(s) into a *[Verifiable Presentation](https://www.w3.org/TR/vc-data-model/#presentations-0)*.  A Verifiable Presentation contains an array of one or more Verifiable Credentials. For CHAPI, the Verifiable Presentation object does not need to be separately signed.
 
-```
+```javascript
 const testPresentation = {
     "@context": [
       "https://www.w3.org/2018/credentials/v1",
@@ -69,7 +69,7 @@ const testPresentation = {
 #### 2. Make a Web Credential
 Add wrapper data to the Verifiable Presentation to construct a *WebCredential* object.  The `recommendedHandlerOrigins` parameter allows issuers to suggest Credential Handlers (e.g. digital wallets) for the user to receive the data. 
 
-```
+```javascript
 const credentialType = 'VerifiablePresentation';
 const webCredentialWrapper = new WebCredential(
     credentialType, testPresentation, {
@@ -87,7 +87,7 @@ const webCredentialWrapper = new WebCredential(
 An issuer can get() and store() credentials without knowing anything about the user's wallet. This is intentional; for privacy reasons, the issuer must not be able to query any information (without user consent) about which wallets or credential handlers a user may have installed (otherwise, fingerprinting and other attacks would be possible).
 
 A credential issuer can ask to store a Verifiable Credential during a user gesture event, for example when the user pushes a button to receive a credential.
-```
+```javascript
 const result = await navigator.credentials.store(webCredentialWrapper);
 if(!result) {
   console.log('store credential operation did not succeed');
@@ -113,4 +113,3 @@ Typical ways of handling empty results may include:
 - Invite the user to install a wallet if they haven't already (and provide a link/recommendation)
 - (In case the user denied the request) Invite the user to retry the operation, after explaining why you're asking to get or store the credential
 - (If possible/applicable) Provide an alternate path to the user (the conceptual equivalent of allowing "Guest Checkout" if the user has refused to register for an ecommerce account).
-

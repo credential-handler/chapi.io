@@ -59,7 +59,7 @@ In this example, the `interact` field describes the type and URL of the `/exchan
 The CHAPI Playground implementation follows the general pattern, via the following spcific steps (with example data):
 
 **Step 1**: CHAPI Playground sends a DID Auth Request (VPR) over CHAPI to the wallet.  This includes an `interact` field that specifies an `/exchanges` endpoint on the CHAPI Playground.  
-```
+```json
 {
   "query": {
     "type": "DIDAuthentication"
@@ -81,7 +81,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 ```
 
 **Step 2**: The Wallet POSTs a VP containing the DID Auth to the `/exchanges` endpoint.
-```
+```json
 {
   "verifiablePresentation" :{
     "@context": [
@@ -105,7 +105,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
 ```
 
 **Step 3**: The CHAPI Playground `/exchanges` endpoint responds with a VP containing the specified credential
-```
+```json
 {
   "verifiablePresentation": {
     "@context": [

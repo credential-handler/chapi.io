@@ -13,7 +13,7 @@ CHAPI integrates easily into verifier websites, allowing your site to request Ve
 ## Import the CHAPI Polyfill into your Verifier Site
 If you're working in vanilla JavaScript, you can add the `navigator.credentials` and `credentialHandlerPolyfill` globals to your code and then load the polyfill library:
 
-```
+```html
 <script src="https://unpkg.com/credential-handler-polyfill@3.0.1/dist/credential-handler-polyfill.min.js"></script>
 
 <script>
@@ -27,13 +27,13 @@ await credentialHandlerPolyfill.loadOnce();
 
 Or, if you're developing on Node.js, add the credential-handler-polyfill library to your project...
 
-```
+```sh
 npm i credential-handler-polyfill@3.0.1
-``` 
+```
 
 and then import and load the polyfill library as follows:
 
-```
+```javascript
 import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
 
 await CredentialHandlerPolyfill.loadOnce();
@@ -43,7 +43,7 @@ console.log('Ready to work with credentials!');
 #### 1. Make a Verifiable Presentation Request
 A verifier can request credentials over CHAPI by forming a *[Verifiable Presentation Request](https://w3c-ccg.github.io/vp-request-spec/)*.  The example below illustrates a `QueryByExample`, which specifies the type of Verifiable Credential being requested and an optional reason for the request.
 
-```
+```javascript
 const testVpr = {
   query: [{
     type: "QueryByExample",
@@ -71,7 +71,7 @@ const testVpr = {
 #### 2. Wrap the Request in a Web Credential Query
 Next, construct a generalized *[Credential Interface Query](https://www.w3.org/TR/credential-management-1/)* of type `web`.  This will be passed through the browser to a CHAPI Credential Handler, which recognizes generalized *Web Credentials*. The example below illustrates a Web Credential request for a `VerifiablePresentation` which uses the specific query parameters defined above.  The `recommendedHandlerOrigins` parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data. 
 
-```
+```javascript
 const credentialInterfaceQuery = {
   web: {
     VerifiablePresentation: testVpr,
@@ -90,7 +90,7 @@ const credentialInterfaceQuery = {
 An verifier can get() and store() credentials without knowing anything about the user's wallet. This is intentional; for privacy reasons, the verifier must not be able to query any information (without user consent) about which wallets or credential handlers a user may have installed (otherwise, fingerprinting and other attacks would be possible).
 
 A credential verifier can ask to store a Verifiable Credential during a user gesture event, for example when the user pushes a button to receive a credential.
-```
+```javascript
 const result = await navigator.credentials.get(credentialQuery);
 console.log('Result of get() request:', JSON.stringify(result, null, 2));
 ```
