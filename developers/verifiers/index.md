@@ -4,7 +4,9 @@ title: "Developer Docs for VC Verifiers"
 permalink: /developers/verifiers/
 ---
 ## CHAPI for VC Verifiers
-CHAPI integrates easily into verifier websites, allowing your site to request Verifiable Credentials presentations from a user's digital wallet
+CHAPI integrates easily into verifier websites, allowing your site to request Verifiable Credentials presentations from a user's digital wallet.
+
+* [Verifying Multiple Credentials](multicredentials)
 
 ## Resources
 - **Example Code**: the [chapi-demo-verifier](https://github.com/credential-handler/chapi-demo-verifier) contains a full example implementation and is referenced throughout this guide. 
