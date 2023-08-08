@@ -1,12 +1,12 @@
 ---
 layout: subpage
 title: "Developer Docs for CHAPI Wallet QueryByExample"
-permalink: /developers/querybyexample
+permalink: /developers/wallets/querybyexample
 ---
 # {{ page.title }}
 
 Prerequisite: This document assumes completion of the
-[CHAPI integration for Digital Wallets integration instructions](wallets).
+[CHAPI integration for Digital Wallets integration instructions](./).
 
 Responding to requests for credentials from a verifier is a critical step in building out a complete wallet. There are multiple credential query formats, but today we're focusing on Verifiable Presentation Request's `QueryByExample` format.
 
