@@ -4,7 +4,12 @@ title: "Developer Docs for Digital Wallets"
 permalink: /developers/wallets
 ---
 # CHAPI for Digital Wallets
-CHAPI integrates easily into digital wallet software, allowing your wallet to receive and present Verifiable Credentials to/from third party sites:
+CHAPI integrates easily into digital wallet software, allowing your wallet to receive and present Verifiable Credentials to/from third party sites.
+
+* [for Web Wallets](#for-web-wallets)
+* [for Native Mobile Wallets](#for-native-mobile-apps)
+
+* [Working with `QueryByExample` format requests](querybyexample)
 
 ## for Web Wallets
 ### Resources
