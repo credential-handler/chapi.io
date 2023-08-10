@@ -1,3 +1,10 @@
+---
+layout: subpage
+title: "CHAPI is the Credential Handler API"
+permalink: /index.html
+showHero: true
+---
+
 The CHAPI protocol allows your digital wallet to receive Verifiable Credentials from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that establishes trust and preserves privacy.
 ## CHAPI is for open for _everyone_
 CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, users are presented with a fixed set of options for authentication with third-party sites.  The CHAPI protocol provides mediation between any CHAPI-enabled web application and a third-party site.  Just register your web app with your browser, and off you go!
@@ -26,19 +33,6 @@ Interested in making your Verifier/Issuer/Wallet available for experimentation? 
 
 ## Contributing
 Contributions are welcome and encouraged!  Please follow [best practices for contributing to open-source code on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github).
-
-This site is built with [Jekyll](https://jekyllrb.org) and hosted on GitHub Pages.
-
-To build the site locally you will need Ruby and it's devkit installed (so you
-can install gems). If you have Ruby, do the following in your local working
-copy directory:
-```sh
-$ gem install jekyll bundler
-$ bundle install
-$ bundle exec jekyll serve
-```
-
-If all worked as hoped, you can visit https://localhost:4000/ to test the site.
 
 ## License
 This site content is open-source; content in this Repository is licensed by contributors under the [BSD 3-Clause](license)

@@ -43,6 +43,14 @@
       </div>
     </header>
 
+    {% if page.showHero %}
+    <div class="page-header" role="banner">
+      <h1 class="project-name">{{ site.title }}</h1>
+      <h2 class="project-tagline">{{ site.description }}</h2>
+      <a href="https://playground.chapi.io" class="btn">Try the CHAPI Playground</a>
+    </div>
+    {% endif %}
+
     <main id="content" class="main-content" role="main">
       {{ content }}
 
