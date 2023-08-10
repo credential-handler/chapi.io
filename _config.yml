@@ -5,3 +5,6 @@ url: "https://chapi.io"
 
 # Build settings
 theme: jekyll-theme-cayman
+
+exclude:
+  - README.md
