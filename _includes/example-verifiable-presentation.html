@@ -1,0 +1,161 @@
+<div class="ui basic segment">
+  <details class="ui accordion">
+    <summary class="title">
+      <i class="dropdown icon"></i>
+      Example Verifiable Presentation
+    </summary>
+    <div class="content ui form">
+      <textarea class="field">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1"
+  ],
+  "type": "VerifiablePresentation",
+  "holder": "did:v1:test:nym:z6MkvAiqFoU1PsyvpC1Rc4XBdR7uXvjuGBYHRjH8Kum4Wa8c",
+  "verifiableCredential": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1",
+        "https://contexts.vcplayground.org/examples/alumni/v1.json",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "type": [
+        "VerifiableCredential",
+        "AlumniCredential"
+      ],
+      "issuer": {
+        "id": "did:key:z6MkfMMx7yTbRBpjTL5PyiHjucZoyjZ3vEXod3d3Yvn2znez",
+        "image": "data:image/png;base64,iVBORw0KG....QYFB0T/BzE/ye22Qk+VAAAAAElFTkSuQmCC"
+      },
+      "name": "Alumni Credential",
+      "description": "The holder is an alumni of Example University.",
+      "issuanceDate": "2023-08-14T15:16:21.585Z",
+      "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+        "alumniOf": {
+          "identifier": "did:example:c276e12ec21ebfeb1f712ebc6f1",
+          "name": "Example University"
+        }
+      },
+      "id": "https://playground.chapi.io/credential/gOCqUCjewfMeE4SojdCaj",
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2023-08-14T15:16:21Z",
+        "verificationMethod": "did:key:z6MkfMMx7yTbRBpjTL5PyiHjucZoyjZ3vEXod3d3Yvn2znez#z6MkfMMx7yTbRBpjTL5PyiHjucZoyjZ3vEXod3d3Yvn2znez",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z8FM4tCT6LYf8NjFBP1tV1S6zp4XcpNUXsWzpKZ7KTPSAPbW9RVxh2wEJ6acdqL1YyQqnCNbNAUVsjxDZmauoDUb"
+      }
+    },
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/citizenship/v1",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "https://issuer.oidp.uscis.gov/credentials/83627465",
+      "type": [
+        "VerifiableCredential",
+        "PermanentResidentCard"
+      ],
+      "issuer": {
+        "id": "did:key:z6MkjEPj5Qb3AwG8VBQHcALVVYba7pfTPYQUX5tDs7ujJrTa",
+        "image": "data:image/png;base64,iVBORw0KG....AAAAASUVORK5CYII="
+      },
+      "identifier": "83627465",
+      "name": "Permanent Resident Card",
+      "description": "Government of Utopia Permanent Resident Card.",
+      "issuanceDate": "2023-08-07T00:30:06.886Z",
+      "expirationDate": "2029-12-03T12:19:52Z",
+      "credentialSubject": {
+        "id": "did:example:b34ca6cd37bbf23",
+        "type": [
+          "PermanentResident",
+          "Person"
+        ],
+        "givenName": "JANE",
+        "familyName": "SMITH",
+        "gender": "Female",
+        "image": "data:image/png;base64,iVBORw0KG....Q9eh9EeIAAAAABJRU5ErkJggg==",
+        "residentSince": "2015-01-01",
+        "lprCategory": "C09",
+        "lprNumber": "999-999-999",
+        "commuterClassification": "C1",
+        "birthCountry": "Arcadia",
+        "birthDate": "1978-07-17"
+      },
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2023-08-07T00:30:06Z",
+        "verificationMethod": "did:key:z6MkjEPj5Qb3AwG8VBQHcALVVYba7pfTPYQUX5tDs7ujJrTa#z6MkjEPj5Qb3AwG8VBQHcALVVYba7pfTPYQUX5tDs7ujJrTa",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z5VrEHiQUCL2VWzZX7HfBbR8Ruf6SaoAFJUbygVJv8wpsx12PnR3EN4ZC925uU1nNa7yFWsFEkVPdc859aBVC86EX"
+      }
+    },
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://purl.imsglobal.org/spec/ob/v3p0/context.json",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "urn:uuid:a63a60be-f4af-491c-87fc-2c8fd3007a58",
+      "type": [
+        "VerifiableCredential",
+        "OpenBadgeCredential"
+      ],
+      "name": "JFF x vc-edu PlugFest 2 Interoperability",
+      "issuer": {
+        "type": [
+          "Profile"
+        ],
+        "id": "did:key:z6Mkr59YoVr3RR3ogjbA9q3JFFvGzXA4gykn27yWKZMShFet",
+        "name": "Jobs for the Future (JFF)",
+        "image": {
+          "id": "https://w3c-ccg.github.io/vc-ed/plugfest-1-2022/images/JFF_LogoLockup.png",
+          "type": "Image"
+        }
+      },
+      "issuanceDate": "2023-08-07T00:29:51.919Z",
+      "credentialSubject": {
+        "type": [
+          "AchievementSubject"
+        ],
+        "id": "did:key:123",
+        "achievement": {
+          "id": "urn:uuid:bd6d9316-f7ae-4073-a1e5-2f7f5bd22922",
+          "type": [
+            "Achievement"
+          ],
+          "name": "JFF x vc-edu PlugFest 2 Interoperability",
+          "description": "This credential solution supports the use of OBv3 and w3c Verifiable Credentials and is interoperable with at least two other solutions.  This was demonstrated successfully during JFF x vc-edu PlugFest 2.",
+          "criteria": {
+            "narrative": "Solutions providers earned this badge by demonstrating interoperability between multiple providers based on the OBv3 candidate final standard, with some additional required fields. Credential issuers earning this badge successfully issued a credential into at least two wallets.  Wallet implementers earning this badge successfully displayed credentials issued by at least two different credential issuers."
+          },
+          "image": {
+            "id": "https://w3c-ccg.github.io/vc-ed/plugfest-2-2022/images/JFF-VC-EDU-PLUGFEST2-badge-image.png",
+            "type": "Image"
+          }
+        }
+      },
+      "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2023-08-07T00:29:51Z",
+        "verificationMethod": "did:key:z6Mkr59YoVr3RR3ogjbA9q3JFFvGzXA4gykn27yWKZMShFet#z6Mkr59YoVr3RR3ogjbA9q3JFFvGzXA4gykn27yWKZMShFet",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z2rtzx4MtH4XvSxqqFHfmZCEKA5YG8buWaUq4ZntWxkNsdZJjPFkmg9odBCpbNTBqFZb4TdEXxQppnqNExnxe6UP2"
+      }
+    }
+  ],
+  "proof": {
+    "type": "Ed25519Signature2018",
+    "created": "2023-08-14T20:19:07Z",
+    "verificationMethod": "did:v1:test:nym:z6MkvAiqFoU1PsyvpC1Rc4XBdR7uXvjuGBYHRjH8Kum4Wa8c#z6MkvAiqFoU1PsyvpC1Rc4XBdR7uXvjuGBYHRjH8Kum4Wa8c",
+    "proofPurpose": "authentication",
+    "challenge": "IXcczxXELNzoNNd-wYkVV",
+    "domain": "https://playground.chapi.io",
+    "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19.._HaqYV3OVYFkvZbPlSDgMcYO2-7IWoYMjgdm8BGXX7Ea4U7Jz5vTFofm62N-S0rEhmVty7JY_5Cx5SsKCrslDw"
+  }
+}</textarea>
+    </div>
+  </details>
+</div>
