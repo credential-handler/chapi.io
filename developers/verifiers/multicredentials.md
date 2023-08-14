@@ -20,21 +20,47 @@ Here's how to get a demo Veres Wallet if you need one:
 
 3. Once you click "Register", you'll receive an "Allow Wallet" modal. Make sure to click "Allow" on that modal, so the wallet can handle credentials on your behalf.
 
-Once that's done, proceed to VC Issuance.
+Once that's done, proceed to Verifiable Credential Issuance.
 
-## VC Issuance
+## Verifiable Credential Issuance
 
-1. Visit the Issuer section of the CHAPI Playground by visiting <https://playground.chapi.io/issuer>.
+First, visit [the Issuer section of the playground](https://playground.chapi.io/issuer).
 
-2. Select the "Alumni" icon in the top "Select a credential to issue" section.
+Next, select the "Alumni" icon in the top "Select a credential to issue" section as shown below:
 
-3. Click "Issue Verifiable Credential" to proceed to the (optional) DID Authentication screen.
+![The Alumni credential icon is selected.](select-alumni-credential.jpg)
 
-4. Once you've completed DID Authentication (or not), you'll be provided with the Verifiable Credential JSON. Click "Store in Wallet" to proceed.
+The credential JSON below is similar to what will be passed to the issuer to generate the credential.
 
-5. You'll land at the main CHAPI Playground screen. Click "Issuer Demo".
+{% include example-alumni-credential.html %}
 
-Next, follow the above process a few more times to load up your wallet with example credentials.
+Now, lets issue the credential. Click "Issue Verifiable Credential" to proceed to the (optional) DID Authentication screen.
+
+Once you've completed DID Authentication (or not), you'll be provided with the Verifiable Credential JSON.
+
+{% include example-issued-alumni-credential.html %}
+
+**NOTE:** The credential JSON document now has an absolute URL for it's `id` value and a new `proof` section. The `issuer.id` has also been updated to reflect the playground as the Issuer, and (of course) the `issuanceDate` has also been set.
+
+That credential may now be stored in a wallet. Click "Store in Wallet" to proceed.
+
+A modal will appear - similar to the one below - explaining that the playground wants to send the cerdential for you.
+
+![Playground offering to store a credential. The screen contains two buttons: one to cancel the request and one to go to the next screen.](playground-offering-to-store-credential.jpg)
+
+Clicking "Next" should present you with a list of available wallets:
+
+![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](choose-a-wallet.jpg)
+
+However, if you instead receive a browser window popup warning you that you do not yet have one set up, you will need to return to the [Wallet Sign Up section](#wallet-sign-up) above.
+
+If you received a list of wallet options, pick the one you prefer by clicking on it's name to proceed.
+
+Each wallet will have it's own system for displaying the credential and offering to store it for you.
+
+Once you've clicked "Store" in your preferred wallet system, you will be brought back to the main playground screen.
+
+Follow the above process a few more times by clicking "Issuer Demo" to load your wallet with more example credentials.
 
 ## Multiple VC Verification
 
