@@ -62,18 +62,30 @@ Once you've clicked "Store" in your preferred wallet system, you will be brought
 
 Follow the above process a few more times by clicking "Issuer Demo" to load your wallet with more example credentials.
 
-## Multiple VC Verification
+## Multiple Verifiable Credential Verification
 
-Now that you have several VCs in your wallet, let's get them all verified in one request.
+Now that you have several Verifiable Credentials (VCs) in your wallet, let's get them all verified in one request.
 
-1. Visit the playground's Verifier section at <https://playground.chapi.io/verifier>.
+First, visit the [playground's Verifier section](https://playground.chapi.io/verifier).
 
-2. Click each of the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", and "Permanent Resident" for example).
+2. Click each of the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF2", and "Permanent Resident" for example).
 
-3. Click "Request Verifiable Presentation" to request that your wallet share these credentials.
+![Select multiple credentials to submit them for verification.](select-multiple-credentials.jpg)
 
-4. In the demo Veres Wallet you'll see each of the credentials you selected (plus the ability to select which ones you want to verify). Click the "Share" button to send them to the playground for verification.
+Next, click "Request Verifiable Presentation" to request that your wallet share these credentials with the Playground's Verifier.
 
-5. The process should end with a VerifiablePresentation JSON document and the words "Presentation Verified".
+In the demo Veres Wallet you'll see each of the credentials you selected (plus the ability to select which ones you want to verify).
+
+![Multiple credentials listed within the Veres Demo Wallet are ready for selection. A Share button is available to send credential information to the Verifier.](multiple-credential-selection-within-wallet.jpg)
+
+Click the "Share" button to send some or all of them to the playground for verification.
+
+Once shared, the process should end with a `VerifiablePresentation` JSON document shown and the words "Presentation Verified".
+
+![A VerifiablePresentation JSON document object is shown in the Playgroud user interface followed by the words "Presentation Verified".](verifiable-presentation-received.jpg)
+
+{% include example-verifiable-presentation.html %}
 
 Note that if you pick a credential that you didn't first load into your demo wallet, you'll receive a "Sorry, we can't seem to find any credentials" message. Additionally, you may find a different credential presented if it contains the requested data needed for verification.
+
+Checkout the [`QueryByExample` documentation](/developers/wallets/querybyexample) for examples of how a Verifier may request Wallets to respond with matching credentials.
