@@ -22,8 +22,8 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
 
 ```sh
-npm i credential-handler-polyfill
-npm i web-credential-handler
+npm i credential-handler-polyfill@3
+npm i web-credential-handler@2
 ```
 
 In your code, you can import and load the polyfill library as follows:
