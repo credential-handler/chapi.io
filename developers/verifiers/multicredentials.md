@@ -42,7 +42,7 @@ Now that you have several VCs in your wallet, let's get them all verified in one
 
 1. Visit the playground's Verifier section at <https://playground.chapi.io/verifier>.
 
-2. Click each of the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF2", and "Permanent Resident" for example).
+2. Click each of the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", and "Permanent Resident" for example).
 
 3. Click "Request Verifiable Presentation" to request that your wallet share these credentials.
 

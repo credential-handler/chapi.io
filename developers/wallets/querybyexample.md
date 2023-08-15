@@ -38,7 +38,7 @@ Below you will find the VP Requests which Wallets may receive when testing used 
 }
 ```
 
-## VP Request for JFF x vc-edu PF2 VC
+## VP Request for JFF x vc-edu PF3 VC
 ```json
 {
   "query": [
@@ -53,7 +53,12 @@ Below you will find the VP Requests which Wallets may receive when testing used 
           ],
           "type": [
             "OpenBadgeCredential"
-          ]
+          ],
+          "credentialSubject": {
+            "achievement": {
+              "id": "urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926"
+            }
+          }
         }
       }
     }
@@ -84,7 +89,7 @@ Below you will find the VP Requests which Wallets may receive when testing used 
 }
 ```
 
-## VP Request for Alumni & JFF x vc-edu PF2 & Permanent Resident VC
+## VP Request for Alumni & JFF x vc-edu PF3 & Permanent Resident VC
 ```json
 {
   "query": [
@@ -130,7 +135,12 @@ Below you will find the VP Requests which Wallets may receive when testing used 
           ],
           "type": [
             "OpenBadgeCredential"
-          ]
+          ],
+          "credentialSubject": {
+            "achievement": {
+              "id": "urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926"
+            }
+          }
         }
       }
     }
