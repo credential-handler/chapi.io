@@ -26,19 +26,17 @@ Once that's done, proceed to Verifiable Credential Issuance.
 
 First, visit [the Issuer section of the playground](https://playground.chapi.io/issuer).
 
-Next, select the "Alumni" icon in the top "Select a credential to issue" section as shown below:
-
-![The Alumni credential icon is selected.](select-alumni-credential.jpg)
+Next, select the "JFF x vc-edu PF3" icon in the top "Select a credential to issue" section.
 
 The credential JSON below is similar to what will be passed to the issuer to generate the credential.
 
-{% include example-alumni-credential.html %}
+{% include example-preissuance-credential.html %}
 
 Now, lets issue the credential. Click "Issue Verifiable Credential" to proceed to the (optional) DID Authentication screen.
 
 Once you've completed DID Authentication (or not), you'll be provided with the Verifiable Credential JSON.
 
-{% include example-issued-alumni-credential.html %}
+{% include example-issued-credential.html %}
 
 **NOTE:** The credential JSON document now has an absolute URL for it's `id` value and a new `proof` section. The `issuer.id` has also been updated to reflect the playground as the Issuer, and (of course) the `issuanceDate` has also been set.
 
@@ -68,7 +66,7 @@ Now that you have several Verifiable Credentials (VCs) in your wallet, let's get
 
 First, visit the [playground's Verifier section](https://playground.chapi.io/verifier).
 
-2. Click each of the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF2", and "Permanent Resident" for example).
+Select the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", and "Permanent Resident").
 
 ![Select multiple credentials to submit them for verification.](select-multiple-credentials.jpg)
 
