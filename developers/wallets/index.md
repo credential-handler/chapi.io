@@ -8,16 +8,15 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 
 * [for Web Wallets](#for-web-wallets)
 * [for Native Mobile Wallets](#for-native-mobile-apps)
-
 * [Working with `QueryByExample` format requests](querybyexample)
 
 ## for Web Wallets
 ### Resources
-- **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide. 
+- **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide.
 - **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
 - **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
 
-### First, set up your wallet to register itself with the browser as a Credential Handler.  
+### First, set up your wallet to register itself with the browser as a Credential Handler.
 #### 1. Import the CHAPI Polyfill into your wallet app
 If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
 
@@ -110,10 +109,10 @@ CHAPI supports the presentation of credentials via the `navigator.credentials.ge
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-get.html </a>
 </p>
 
-When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party. 
+When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party.
 
 #### 6. Store Credentials Events
-CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.  
+CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.
 
 ```javascript
 async function handleStoreEvent() {
@@ -139,7 +138,7 @@ This section is written from the perspective of web wallets.  CHAPI provides a s
 - [DID Core Specification](https://www.w3.org/TR/did-core/#authentication)
 
 #### 1. The 3rd Party Site sends a DID Authentication Request
-The individual interacts with a 3rd party website, triggering a request for _DID Authentication_.  The site sends a _Verifiable Presentation Request_ (VPR) using the CHAPI `get()` event.  
+The individual interacts with a 3rd party website, triggering a request for _DID Authentication_.  The site sends a _Verifiable Presentation Request_ (VPR) using the CHAPI `get()` event.
 
 An example VPR is shown below.  Like the other CHAPI examples on this site, the VPR is wrapped in a `web` credential object - this ensures that it is passed to a _Credential Handler_ in the individual's browser.
 ```
