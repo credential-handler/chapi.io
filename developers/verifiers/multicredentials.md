@@ -42,7 +42,7 @@ Once you've completed DID Authentication (or not), you'll be provided with the V
 
 That credential may now be stored in a wallet. Click "Store in Wallet" to proceed.
 
-A modal will appear - similar to the one below - explaining that the playground wants to send the cerdential for you.
+A modal will appear - similar to the one below - explaining that the playground wants to send the credential for you.
 
 ![Playground offering to store a credential. The screen contains two buttons: one to cancel the request and one to go to the next screen.](playground-offering-to-store-credential.jpg)
 
