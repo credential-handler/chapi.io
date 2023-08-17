@@ -17,9 +17,9 @@ async function handleGetEvent() {
   const event = await WebCredentialHandler.receiveCredentialEvent();
   console.log('Get Credential Event:', event.type, event);
 
-  const vp = event.credentialRequestOptions.web.VerifiablePresentation;
+  const vpr = event.credentialRequestOptions.web.VerifiablePresentation;
   // Contains one more QueryByExamples
-  const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
+  const query = Array.isArray(vpr.query) ? vpr.query[0] : vpr.query;
 
   // Your wallet's code for responding to a request for a Verifiable Credential
 }
@@ -29,7 +29,7 @@ A QueryByExample contains a property named `credentialQuery.example` which conta
 
 Next, you will create a signed Verifiable Presentation (VP) using the requested VCs.
 ```js
-async function formDidAuthResponse({challenge, domain,verifiableCredentials}) {
+async function formSignedVPResponse({challenge, domain, verifiableCredentials}) {
   // Add your code for signing a verifiable presentation
   const vp = await signVerifiablePresentation({challenge, domain, verifiableCredentials});
 
@@ -47,16 +47,16 @@ async function handleGetEvent() {
   const event = await WebCredentialHandler.receiveCredentialEvent();
   console.log('Get Credential Event:', event.type, event);
 
-  const vp = event.credentialRequestOptions.web.VerifiablePresentation;
+  const vpr = event.credentialRequestOptions.web.VerifiablePresentation;
   // Contains one more QueryByExamples
-  const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
+  const query = Array.isArray(vpr.query) ? vpr.query[0] : vpr.query;
 
   // Your wallet's code for responding to a request for a Verifiable Credential
   const requestedVCs = getVerifiableCredentials({query});
   event.respondWith(
     formSignedVPResponse({
-      challenge: vp.challenge,
-      domain: vp.domain,
+      challenge: vpr.challenge,
+      domain: vpr.domain,
       verifiableCredentials: requestedVCs
     })
   );
