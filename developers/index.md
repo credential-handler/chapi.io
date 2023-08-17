@@ -16,3 +16,5 @@ a role an entity performs by receiving one or more verifiable credentials, optio
 
 ## [Wallets](/developers/wallets/)
 a program, such as a storage vault or personal verifiable credential wallet, that stores and protects access to holders' verifiable credentials.
+
+Read more about the [open standards that power CHAPI](/standards).

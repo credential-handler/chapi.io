@@ -31,6 +31,8 @@ Interested in making your Verifier/Issuer/Wallet available for experimentation? 
     <a href="developers/playgroundfaq" class="btn2">CHAPI Playground FAQ</a>
 </p>
 
+Read more about the [open standards that power CHAPI](/standards).
+
 ## Contributing
 Contributions are welcome and encouraged!  Please follow [best practices for contributing to open-source code on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github).
 
