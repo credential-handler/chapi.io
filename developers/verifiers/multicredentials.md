@@ -72,7 +72,7 @@ Select the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", a
 
 Next, click "Request Verifiable Presentation" to request that your wallet share these credentials with the Playground's Verifier.
 
-In the demo Veres Wallet you'll see each of the credentials you selected (plus the ability to select which ones you want to verify).
+The Wallet should display each of the credentials it fould based on your selection. It may also provide the ability to select specific ones to be verified. The demo Veres Wallet presents the credential selection as follows:
 
 ![Multiple credentials listed within the Veres Demo Wallet are ready for selection. A Share button is available to send credential information to the Verifier.](multiple-credential-selection-within-wallet.jpg)
 
