@@ -6,18 +6,26 @@ permalink: /developers/wallets/
 # CHAPI for Digital Wallets
 CHAPI integrates easily into digital wallet software, allowing your wallet to receive and present Verifiable Credentials to/from third party sites.
 
-* [for Web Wallets](#for-web-wallets)
-* [for Native Mobile Wallets](#for-native-mobile-apps)
+* [Wallet Registration](#wallet-registration)
+* [VC Storage](#vc-storage)
+* [VC Retrieval](#vc-retrieval)
+* [DID Authentication with CHAPI](#did-authentication-with-chapi)
 * [Working with `QueryByExample` format requests](querybyexample)
 
-## for Web Wallets
-### Resources
+## Resources
 - **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide.
 - **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
 - **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
 
-### First, set up your wallet to register itself with the browser as a Credential Handler.
-#### 1. Import the CHAPI Polyfill into your wallet app
+## Wallet Registration
+
+Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials.
+
+{% tabs wallet %}
+
+{% tab wallet for web wallets %}
+
+### 1. Import the CHAPI Polyfill into your wallet app
 If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
 
 ```sh
@@ -39,7 +47,7 @@ console.log('Ready to work with credentials!');
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
 
-#### 2. Add a `credential_handler` to your app's manifest.json
+### 2. Add a `credential_handler` to your app's manifest.json
 In order to register a credential handler, your web app must serve a "manifest.json" file from its root path ("/manifest.json"). This file must also be CORS-enabled.  At a minimum, add the following `credential_handler` object:
 
 ```json
@@ -55,7 +63,7 @@ In order to register a credential handler, your web app must serve a "manifest.j
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/manifest.json </a>
 </p>
 
-#### 3. Allow your users to register their wallet's credential handler with the browser polyfill
+### 3. Allow your users to register their wallet's credential handler with the browser polyfill
 
 You can register a Credential Handler by calling the `CredentialManager.requestPermission()` API. This call will ensure that the individual using the browser explicitly confirms that they want to use the website as a credential handler. The example below uses the `installHandler()` helper method to perform this action:
 
@@ -68,11 +76,8 @@ You can register a Credential Handler by calling the `CredentialManager.requestP
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
 
-### Then, configure your wallet to respond to Credential Handler events.
-Your wallet app's existing functionality can be configured to respond to CHAPI events.
-
-#### 4. Setup Listeners for CHAPI Events
-The `activateHandler()` function is a helper that sets up listeners for CHAPI `get()` and `store()` events.
+### 4. Setup Listeners for CHAPI Events
+Configure your wallet to respond to Credential Handler events. The `activateHandler()` function is a helper that sets up listeners for CHAPI `get()` and `store()` events.
 
 ```javascript
 WebCredentialHandler.activateHandler({
@@ -91,7 +96,129 @@ WebCredentialHandler.activateHandler({
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-worker.html </a>
 </p>
 
-#### 5. Get Credentials Events
+
+{% endtab %}
+
+{% tab wallet for native mobile wallets %}
+
+To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be able to handle deeplinks. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
+
+During this process you will be required to host the appropriate operating system specific files on a web server. To enable CHAPI registration this web server will also need to host a page that allows the user to register the CHAPI handler with the mobile web browser.
+
+### 1. Import the CHAPI Polyfill into the page
+
+```html
+<script src="https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js"></script>
+
+<script>
+  await credentialHandlerPolyfill.loadOnce();
+</script>
+```
+
+### 2. Add a `credential_handler` to the server's manifest.json
+
+In order to register a credential handler, your registration page's server must serve a "manifest.json" file from its root path ("/manifest.json"). This file must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet will handle:
+
+```json
+{
+  "credential_handler": {
+    "url": "/worker",
+    "enabledTypes": ["VerifiablePresentation"],
+    "acceptedInput": "url",
+    "acceptedProtocols": [
+      "OID4VCI",
+      "OID4VP",
+      "vcapi"
+    ]
+  }
+}
+```
+
+The `url` will be the entry point for your mobile wallet so it must be a deeplink that will open the application. The details about the event that initiated this action will be relayed via query parameters.
+
+### 3. Allow your users to register their wallet's credential handler with the browser polyfill
+```html
+<button id="installHandlerButton">Register Wallet</button>
+
+<script src="https://unpkg.com/web-credential-handler@2/dist/web-credential-handler.min.js"></script>
+
+<script>
+  document.getElementById('installHandlerButton').addEventListener('click', async function() {
+    try {
+      await WebCredentialHandler.installHandler();
+      console.log('Handler Installed Successfully!');
+    } catch (error) {
+      console.error('Error installing handler: ' + error.message);
+    }
+  });
+</script>
+```
+
+### 4. Link users to the registration page from your application
+
+After this registration page is up and running your mobile application can include a link to it that will open the devices browser to the registration page and allow the wallet to be registered as a Credential Handler.
+
+{% endtab %}
+
+{% endtabs %}
+
+## VC Storage
+
+Wallets are able to store Verifiable Credentials issued by third-party websites using CHAPI.
+
+{% tabs storage %}
+
+{% tab storage for web wallets %}
+
+### Store Credentials Events
+
+CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.
+
+```javascript
+async function handleStoreEvent() {
+    const event = await WebCredentialHandler.receiveCredentialEvent();
+    console.log('Store Credential Event:', event.type, event);
+
+    //Your wallet's code for storing a Verifiable Credential
+}
+```
+<p class="code-annotation">
+  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-store.html"
+  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-store.html </a>
+</p>
+
+Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.
+
+{% endtab %}
+
+{% tab storage for native mobile wallets %}
+
+There are currently two possible protocols that issuers may use with CHAPI in order to issue Verifiable Credentials and have them stored in the user's digital wallet. When the application lands on the page specified in the `url` property of the `credential_handler` in the `manifest.json` file there will be a `request` query parameter that will include a URL encoded object with the following properties:
+
+- `credentialRequestOrigin`: This will tell the wallet where the request originated
+- `protocols`: This will include any available credential issuance protocols. The wallet may retrieve the credential for storage from any of the available protocols.
+
+### VC-API
+
+If the protocols property from the request contains a `vcapi` property it will be a URL that will tell the wallet where to go to retrieve the credential. See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
+
+### OID4VCI
+
+If the protocols property from the request contains a `OID4VCI` property it will be a URL that will include all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol. See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
+
+{% endtab %}
+
+{% endtabs %}
+
+## VC Retrieval
+
+Wallets are able to present Verifiable Credentials to third-party websites using CHAPI. 
+
+{% tabs retrieval %}
+
+{% tab retrieval for web wallets %}
+
+### Get Credentials Events
 CHAPI supports the presentation of credentials via the `navigator.credentials.get()` API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `get()` request from a third-party website.
 
 ```javascript
@@ -111,23 +238,15 @@ CHAPI supports the presentation of credentials via the `navigator.credentials.ge
 
 When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party.
 
-#### 6. Store Credentials Events
-CHAPI supports storing credentials via the `navigator.credentials.store()` API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI `store()` request from a third-party website.
+{% endtab %}
 
-```javascript
-async function handleStoreEvent() {
-    const event = await WebCredentialHandler.receiveCredentialEvent();
-    console.log('Store Credential Event:', event.type, event);
+{% tab retrieval for native mobile wallets %}
 
-    //Your wallet's code for storing a Verifiable Credential
-}
-```
-<p class="code-annotation">
-  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-store.html"
-  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-store.html </a>
-</p>
+TODO
 
-Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.
+{% endtab %}
+
+{% endtabs %}
 
 ## DID Authentication with CHAPI
 This section is written from the perspective of web wallets.  CHAPI provides a simple method for a 3rd party website to request an individual present their Decentralized Identifier (DID) and prove their identity.  The individual selects a digital wallet to respond to this DID Authentication request.
@@ -236,10 +355,3 @@ const didAuthPresentation = {
 };
 ```
 
-## for Native Mobile Apps
-
-### Resources
-- WebShare Specification: [this W3C draft](https://w3c.github.io/web-share/) describes the Web Share API.
-- WebShare Documentation: [web.dev](https://web.dev/web-share/) hosts developer docs and examples for the WebShare API
-
-To enable a native wallet to receive VCs via CHAPI, you’ll need to register the wallet as a share target with the mobile OS that is capable of receiving text files.  See appropriate share target documentation for [Android](https://developer.android.com/training/sharing/receive) or [iOS](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1).
