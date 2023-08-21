@@ -1,9 +1,16 @@
 name: Eleventy Build
-on: [push]
+
+on:
+  push:
+    branches:
+      - main  # Set a branch name to trigger deployment
+  pull_request:
 
 jobs:
   build_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@master
       - name: Build
@@ -12,6 +19,7 @@ jobs:
           install_dependencies: true
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
         with:
           publish_dir: _site
           publish_branch: gh-pages
