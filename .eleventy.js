@@ -1,6 +1,7 @@
 const sass = require('sass');
 const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');
+const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function(eleventyConfig) {
   /* Markdown Overrides */
@@ -12,6 +13,8 @@ module.exports = function(eleventyConfig) {
     permalink: false
   });
   eleventyConfig.setLibrary('md', markdownLibrary);
+
+  eleventyConfig.addPlugin(syntaxHighlight);
 
   eleventyConfig.addTemplateFormats('scss');
   // Creates the extension for use

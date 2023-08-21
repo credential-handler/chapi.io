@@ -18,7 +18,8 @@
   "author": "Digital Bazaar, Inc.",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0"
   },
   "dependencies": {
     "markdown-it-anchor": "^8.6.7",
