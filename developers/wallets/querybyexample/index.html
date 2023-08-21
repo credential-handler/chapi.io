@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<title>CHAPI is the Credential Handler API | an open-source solution for communicating Verifiable Credentials on the Web</title>
+<meta property="og:title" content="CHAPI is the Credential Handler API" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="an open-source solution for communicating Verifiable Credentials on the Web" />
+<meta property="og:description" content="an open-source solution for communicating Verifiable Credentials on the Web" />
+<link rel="canonical" href="https://chapi.io/" />
+<meta property="og:url" content="https://chapi.io/" />
+<meta property="og:site_name" content="CHAPI is the Credential Handler API" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CHAPI is the Credential Handler API" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","description":"an open-source solution for communicating Verifiable Credentials on the Web","headline":"CHAPI is the Credential Handler API","name":"CHAPI is the Credential Handler API","url":"https://chapi.io/"}</script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <!-- Sidebar Menu -->
+    <div class="ui vertical inverted right sidebar menu">
+      <a class="item" href="/developers/issuers">VC Issuers</a>
+      <a class="item" href="/developers/wallets">Digital Wallets</a>
+      <a class="item" href="/developers/verifiers">VC Verifiers</a>
+      <span class="item">
+        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+      </span>
+    </div>
+
+    <div class="pusher">
+    <header class="ui top inverted fixed menu" role="banner">
+      <a class="ui header item" href=https://chapi.io/>
+        chapi.io
+        <span class="desktop only">&nbsp; | Credential Handler API</span>
+      </a>
+      <span class="item">
+        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+      </span>
+      <div class="right menu">
+        <a class="toc icon item"><i class="sidebar icon"></i></a>
+        <a class="item" href="/developers/issuers">VC Issuers</a>
+        <a class="item" href="/developers/wallets">Digital Wallets</a>
+        <a class="item" href="/developers/verifiers">VC Verifiers</a>
+      </div>
+    </header>
+    
+
+    <main id="content" class="main-content" role="main">
+      <h1></h1>
+<p>Prerequisite: This document assumes completion of the
+<a href="./">CHAPI integration for Digital Wallets integration instructions</a>.</p>
+<p>Responding to requests for credentials from a verifier is a critical step in building out a complete wallet. There are multiple credential query formats, but today we're focusing on Verifiable Presentation Request's <code>QueryByExample</code> format.</p>
+<p>When integrating with the CHAPI Playground, the JSON sent to the Wallet is in the form of a Verifiable Presentation (VP) Request with one or more QueryByExamples. The payload will be received from the <code>handleGetEvent</code> function:</p>
+<pre><code class="language-js">async function handleGetEvent() {
+  const event = await WebCredentialHandler.receiveCredentialEvent();
+  console.log('Get Credential Event:', event.type, event);
+
+  const vpr = event.credentialRequestOptions.web.VerifiablePresentation;
+  // Contains one more QueryByExamples
+  const query = Array.isArray(vpr.query) ? vpr.query[0] : vpr.query;
+
+  // Your wallet's code for responding to a request for a Verifiable Credential
+}
+</code></pre>
+<p>A QueryByExample contains a property named <code>credentialQuery.example</code> which contains the set of properties that the Verifiable Credential (VC) must match. The <code>@context</code> and <code>type</code> properties of a VC will always be present. Additional properties may be requested for more fine grained querying. Use the QueryByExample(s) in combination with the credentials in your wallet to query for the proper VCs.</p>
+<p>Next, you will create a signed Verifiable Presentation (VP) using the requested VCs.</p>
+<pre><code class="language-js">async function formSignedVPResponse({challenge, domain, verifiableCredentials}) {
+  // Add your code for signing a verifiable presentation
+  const vp = await signVerifiablePresentation({challenge, domain, verifiableCredentials});
+
+  // Wrap the verifiable presentation in a web credential
+  const credentialType = 'VerifiablePresentation';
+  const vpResponse = createWebCredential(credentialType, verifablePresentation);
+
+  return vpResponse;
+}
+</code></pre>
+<p>Finally, you will wrap the signed VP in a WebCredential and send the response.</p>
+<pre><code class="language-js">async function handleGetEvent() {
+  const event = await WebCredentialHandler.receiveCredentialEvent();
+  console.log('Get Credential Event:', event.type, event);
+
+  const vpr = event.credentialRequestOptions.web.VerifiablePresentation;
+  // Contains one more QueryByExamples
+  const query = Array.isArray(vpr.query) ? vpr.query[0] : vpr.query;
+
+  // Your wallet's code for responding to a request for a Verifiable Credential
+  const requestedVCs = getVerifiableCredentials({query});
+  event.respondWith(
+    formSignedVPResponse({
+      challenge: vpr.challenge,
+      domain: vpr.domain,
+      verifiableCredentials: requestedVCs
+    })
+  );
+}
+</code></pre>
+<p>Below you will find the VP Requests which Wallets may receive when testing used with the <a href="https://playground.chapi.io/">CHAPI Playground</a>.</p>
+<h2>VP Request for Alumni VC</h2>
+<pre><code class="language-json">{
+  &quot;query&quot;: [
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://www.w3.org/2018/credentials/examples/v1&quot;,
+            &quot;https://contexts.vcplayground.org/examples/alumni/v1.json&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;AlumniCredential&quot;
+          ]
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<h2>VP Request for JFF x vc-edu PF3 VC</h2>
+<pre><code class="language-json">{
+  &quot;query&quot;: [
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://purl.imsglobal.org/spec/ob/v3p0/context.json&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;OpenBadgeCredential&quot;
+          ],
+          &quot;credentialSubject&quot;: {
+            &quot;achievement&quot;: {
+              &quot;id&quot;: &quot;urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926&quot;
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<h2>VP Request for Permanent Resident VC</h2>
+<pre><code class="language-json">{
+  &quot;query&quot;: [
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://w3id.org/citizenship/v1&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;PermanentResidentCard&quot;
+          ]
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<h2>VP Request for Alumni &amp; JFF x vc-edu PF3 &amp; Permanent Resident VC</h2>
+<pre><code class="language-json">{
+  &quot;query&quot;: [
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://www.w3.org/2018/credentials/examples/v1&quot;,
+            &quot;https://contexts.vcplayground.org/examples/alumni/v1.json&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;AlumniCredential&quot;
+          ]
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://w3id.org/citizenship/v1&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;PermanentResidentCard&quot;
+          ]
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;QueryByExample&quot;,
+      &quot;credentialQuery&quot;: {
+        &quot;reason&quot;: &quot;Please present your Verifiable Credential to complete the verification process.&quot;,
+        &quot;example&quot;: {
+          &quot;@context&quot;: [
+            &quot;https://www.w3.org/2018/credentials/v1&quot;,
+            &quot;https://purl.imsglobal.org/spec/ob/v3p0/context.json&quot;
+          ],
+          &quot;type&quot;: [
+            &quot;OpenBadgeCredential&quot;
+          ],
+          &quot;credentialSubject&quot;: {
+            &quot;achievement&quot;: {
+              &quot;id&quot;: &quot;urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926&quot;
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
+    <script>
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item');
+    </script>
+
+  </body>
+</html>
