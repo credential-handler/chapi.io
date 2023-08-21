@@ -8,3 +8,6 @@ theme: jekyll-theme-cayman
 
 exclude:
   - README.md
+  - node_modules/
+  - package.json
+  - package-lock.json
