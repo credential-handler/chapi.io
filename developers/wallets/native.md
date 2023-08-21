@@ -21,9 +21,9 @@ permalink: /developers/wallets/native/
 
 ## Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials.
+Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials on the Web.
 
-To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be able to handle deeplinks. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
+To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be able to handle deep links. Deep links, also known as app links, cause a user's Web browser to open a native application and pass the URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
 
 During this process you will be required to host the appropriate operating system specific files on a web server. To enable CHAPI registration this web server will also need to host a page that allows the user to register the CHAPI handler with the mobile web browser.
 
