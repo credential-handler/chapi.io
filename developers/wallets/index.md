@@ -26,7 +26,7 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 
 ## Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials.
+Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials on the Web.
 
 ### 1. Import the CHAPI Polyfill into your wallet app
 If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
