@@ -8,3 +8,6 @@ theme: jekyll-theme-cayman
 
 exclude:
   - README.md
+
+plugins:
+  - jekyll-tabs
