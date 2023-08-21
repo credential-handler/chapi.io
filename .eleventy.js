@@ -1,6 +1,18 @@
 const sass = require('sass');
+const markdownIt = require('markdown-it');
+const markdownItAnchor = require('markdown-it-anchor');
 
 module.exports = function(eleventyConfig) {
+  /* Markdown Overrides */
+  const markdownLibrary = markdownIt({
+    html: true,
+    breaks: true,
+    linkify: true
+  }).use(markdownItAnchor, {
+    permalink: false
+  });
+  eleventyConfig.setLibrary('md', markdownLibrary);
+
   eleventyConfig.addTemplateFormats('scss');
   // Creates the extension for use
   eleventyConfig.addExtension('scss', {
