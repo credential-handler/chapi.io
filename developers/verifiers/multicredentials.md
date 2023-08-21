@@ -1,7 +1,7 @@
 ---
 layout: subpage
 title: "Developer Docs for Verifying Multiple Verifiable Credentials"
-permalink: /developers/verifiers/multicredentials
+permalink: /developers/verifiers/multicredentials/
 ---
 # {{ page.title }}
 
@@ -30,13 +30,13 @@ Next, select the "JFF x vc-edu PF3" icon in the top "Select a credential to issu
 
 The credential JSON below is similar to what will be passed to the issuer to generate the credential.
 
-{% include example-preissuance-credential.html %}
+{% include 'example-preissuance-credential.html' %}
 
 Now, lets issue the credential. Click "Issue Verifiable Credential" to proceed to the (optional) DID Authentication screen.
 
 Once you've completed DID Authentication (or not), you'll be provided with the Verifiable Credential JSON.
 
-{% include example-issued-credential.html %}
+{% include 'example-issued-credential.html' %}
 
 **NOTE:** The credential JSON document now has an absolute URL for it's `id` value and a new `proof` section. The `issuer.id` has also been updated to reflect the playground as the Issuer, and (of course) the `issuanceDate` has also been set.
 
@@ -82,7 +82,7 @@ Once shared, the process should end with a `VerifiablePresentation` JSON documen
 
 ![A VerifiablePresentation JSON document object is shown in the Playgroud user interface followed by the words "Presentation Verified".](verifiable-presentation-received.jpg)
 
-{% include example-verifiable-presentation.html %}
+{% include 'example-verifiable-presentation.html' %}
 
 Note that if you pick a credential that you didn't first load into your demo wallet, you'll receive a "Sorry, we can't seem to find any credentials" message. Additionally, you may find a different credential presented if it contains the requested data needed for verification.
 

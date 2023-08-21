@@ -1,0 +1,25 @@
+{
+  "name": "chapi.io",
+  "version": "0.0.0",
+  "description": "chapi.io website & developer documentation site for the Credential Handler API",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CHAPI",
+    "Credential",
+    "Handler",
+    "Verifiable",
+    "Credentials"
+  ],
+  "author": "Digital Bazaar, Inc.",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  },
+  "dependencies": {
+    "sass": "^1.66.0"
+  }
+}

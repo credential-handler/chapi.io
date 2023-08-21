@@ -1,7 +1,7 @@
 ---
 layout: subpage
 title: "Developer Docs for CHAPI Wallet QueryByExample"
-permalink: /developers/wallets/querybyexample
+permalink: /developers/wallets/querybyexample/
 ---
 # {{ page.title }}
 
