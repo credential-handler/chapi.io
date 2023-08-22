@@ -86,21 +86,41 @@ Your mobile application should include a link to your registration page. That li
 
 Once done, your Wallet should now be enabled to handle various credential related requests from across the Web.
 
-## VC Storage
+## Verifiable Credential Storage
 
-There are currently two possible protocols that issuers may use with CHAPI in order to issue Verifiable Credentials and have them stored in the user's digital wallet. When the application lands on the page specified in the `url` property of the `credential_handler` in the `manifest.json` file there will be a `request` query parameter that will include a URL encoded object with the following properties:
+Now that your native wallet has been registered with CHAPI, it can receive requests to store credentials at the URL stated in the `credential_handler.url` of the `manifest.json` above.
+
+The endpoint declared there (i.e. `/switchboard`) will receive a `request` query parameter that will include a URL encoded object with the following properties:
 
 - `credentialRequestOrigin`: This will tell the wallet where the request originated
 - `protocols`: This will include any available credential issuance protocols. The wallet may retrieve the credential for storage from any of the available protocols.
 
-Example URL that includes both `vcapi` as well as `OID4VCI` issuance protocols.
+Here is an example URL showing the `request` query parameter and its URL encoded value:
 
-`https://wallet.example.com/worker?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%2C%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexample.exchanger.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
+<pre><code style="white-space: normal;overflow: auto;word-break: break-word;">
+https://wallet.example.com/switchboard
+  ?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%2C%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexample.exchanger.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D
+</code></pre>
 
+The `request` value is URL encoded. It's contents look like this when unencoded:
+
+```json
+{
+  "credentialRequestOrigin": "https://playground.chapi.io",
+  "protocols": {
+    "vcapi": "https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ",
+    "OID4VCI": "openid-credential-offer://?credential_offer={"credential_issuer":"https://example.exchanger.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC","credentials":[{"format":"ldp_vc","credential_definition":{"@context":["https://www.w3.org/2018/credentials/v1","https://purl.imsglobal.org/spec/ob/v3p0/context.json"],"type":["VerifiableCredential","OpenBadgeCredential"]}}],"grants":{"urn:ietf:params:oauth:grant-type:pre-authorized_code":{"pre-authorized_code":"0065a8a0-069b-46f1-a857-4e1ce5047afd"}"
+  }
+}
+```
+
+There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: `vcapi` and `OID4VCI`.
+
+Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter.
 
 ### VC-API
 
-If the protocols property from the request contains a `vcapi` property it will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `GET` request to this URL to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details. 
+The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `GET` request to this URL to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
 
 See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
 
@@ -109,7 +129,9 @@ Example VCAPI protocol URL:
 
 ### OID4VCI
 
-If the protocols property from the request contains a `OID4VCI` property it will be a URL that will include all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol. See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
+The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
+
+See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
 
 Example OID4VCI protocol URL:
 `openid-credential-offer://?credential_offer={"credential_issuer":"https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC","credentials":[{"format":"ldp_vc","credential_definition":{"@context":["https://www.w3.org/2018/credentials/v1","https://purl.imsglobal.org/spec/ob/v3p0/context.json"],"type":["VerifiableCredential","OpenBadgeCredential"]}}],"grants":{"urn:ietf:params:oauth:grant-type:pre-authorized_code":{"pre-authorized_code":"0065a8a0-069b-46f1-a857-4e1ce5047afd"}}}`
