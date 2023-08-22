@@ -21,37 +21,21 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 
 * [Working with `QueryByExample` format requests](querybyexample)
 - **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide.
-- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
+- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed `CredentialHandler` API within the browser.
 - **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
 
-## Wallet Registration
+## Web Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials on the Web.
+All Wallets need to be registered as a Credential Handler in the user's browser in order to store or retrieve Verifiable Credentials (VCs) from across the Web.
 
-### 1. Import the CHAPI Polyfill into your wallet app
-If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.
+A Web Wallet is typically made up of three main parts:
+* `/index.html` - main page for the wallet
+* `/manifest.json` - Web App Manifest containting credential handler affordances
+* `/wallet-worker.html` - routing endpoint for passing URLs between CHAPI and the Wallet
 
-```sh
-npm i credential-handler-polyfill@3
-npm i web-credential-handler@2
-```
+### 1. Add a `credential_handler` to your Web app's `manifest.json`
 
-In your code, you can import and load the polyfill library as follows:
-
-```javascript
-import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
-import * as WebCredentialHandler from 'web-credential-handler';
-
-await CredentialHandlerPolyfill.loadOnce();
-console.log('Ready to work with credentials!');
-```
-<p class="code-annotation">
-  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
-  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
-</p>
-
-### 2. Add a `credential_handler` to your app's manifest.json
-In order to register a credential handler, your web app must serve a "manifest.json" file from its root path ("/manifest.json"). This file must also be CORS-enabled.  At a minimum, add the following `credential_handler` object:
+In order to register a credential handler, your Web app must serve a `manifest.json` file from its root path (`/manifest.json`). This file _must_ be CORS-enabled. At a minimum, the `manifest.json` file should contain the following `credential_handler` object:
 
 ```json
 {
@@ -66,21 +50,66 @@ In order to register a credential handler, your web app must serve a "manifest.j
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/manifest.json </a>
 </p>
 
-### 3. Allow your users to register their wallet's credential handler with the browser polyfill
+The `/wallet-worker.html` page will setup listeners for CHAPI-sent events
+which can then be handled by your Wallet. More on that in a bit.
 
-You can register a Credential Handler by calling the `CredentialManager.requestPermission()` API. This call will ensure that the individual using the browser explicitly confirms that they want to use the website as a credential handler. The example below uses the `installHandler()` helper method to perform this action:
+### 2. Import the CHAPI Polyfill into your wallet's main page
+
+To register with CHAPI, your user must trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
+
+We will load two libraries into the Wallet code to enable the registration:
+- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed `CredentialHandler` API within the browser.
+- **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
+
+You can add these libraries via `<script>` tags and watch a click event to
+trigger the CHAPI registration and handler installation:
+
+```html
+<button id="installHandlerButton">Register Wallet</button>
+
+<script src="https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js"></script>
+<script src="https://unpkg.com/web-credential-handler@2/dist/web-credential-handler.min.js"></script>
+
+<script>
+  document.getElementById('installHandlerButton').addEventListener('click', async function() {
+    try {
+      await credentialHandlerPolyfill.loadOnce();
+      await WebCredentialHandler.installHandler();
+      console.log('Handler Installed Successfully!');
+    } catch (error) {
+      console.error('Error installing handler: ' + error.message);
+    }
+  });
+</script>
+```
+
+**Alternatively**, if you're developing your Web Wallet using Node.js tooling and bundling your
+applications JavaScript, you can add the [credential-handler-polyfill](https://www.npmjs.com/package/credential-handler-polyfill) library to your project via NPM. The [web-credential-handler](https://www.npmjs.com/package/web-credential-handler) helper library can also be added to simplify your code.
+
+```sh
+npm i credential-handler-polyfill@3
+npm i web-credential-handler@2
+```
+
+In your code, you can import and load the polyfill library as follows:
 
 ```javascript
-  await WebCredentialHandler.installHandler();
-  console.log('Wallet installed.');
+import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
+import * as WebCredentialHandler from 'web-credential-handler';
 ```
-<p class="code-annotation">
-  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
-  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
-</p>
 
-### 4. Setup Listeners for CHAPI Events
-Configure your wallet to respond to Credential Handler events. The `activateHandler()` function is a helper that sets up listeners for CHAPI `get()` and `store()` events.
+Once you've done that and bundled it, reference the output/bundled `.js` in
+your `index.html`.
+
+### 3. Setup Listeners for CHAPI Events
+
+Lastly, we need to setup event listeners in the `/wallet-worker.html` file that
+was setup as the `credential_handler.url` in the `manifest.json` file.
+
+That can be done by configuring your wallet to respond to Credential Handler events. The `activateHandler()` function is a helper that sets up listeners for CHAPI `get()` and `store()` events.
+
+Add the following code (as well as the polyfill and helper library above) to
+your `/wallet-worker.html`:
 
 ```javascript
 WebCredentialHandler.activateHandler({
@@ -98,6 +127,14 @@ WebCredentialHandler.activateHandler({
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-worker.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-worker.html </a>
 </p>
+
+Now, with those things in place, you can test the process out on the
+[Playground](https://playground.chapi.io/). First, click the button in your
+`/index.html` to register with CHAPI. Then, use either the Verifier or Issuer
+sections of the Playground to trigger `get()` (Verifier) or `store()`
+(Issuer) events when you select your Wallet in the CHAPI Wallet selector modal.
+
+![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](/images/VeresCHAPIaccept.png)
 
 ## Verifiable Credential Storage
 
