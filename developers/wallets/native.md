@@ -29,29 +29,16 @@ Deep links, also known as app links, cause a user's Web browser to open a native
 
 Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.
 
-In addition, to enable CHAPI registration, your Web server will also need to host a page that allows the user to register your wallet with CHAPI within their mobile Web browser.
+In addition, to enable CHAPI registration, your Web server will also need to host a `manifest.json` file as well as a registration page that allows the user to register your wallet with CHAPI within their mobile Web browser.
 
-### 1. Import the CHAPI Polyfill into the page
-
-The page that receives the deep link must include the CHAPI Polyfill to liaison
-the registration of your Native Wallet with your user's browser:
-
-```html
-<script src="https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js"></script>
-
-<script>
-  await credentialHandlerPolyfill.loadOnce();
-</script>
-```
-
-### 2. Add a `credential_handler` to the server's `manifest.json`
+### 1. Add a `credential_handler` to the server's `manifest.json`
 
 In order to register as a Credential Handler, your registration page's server must serve a `manifest.json` file from its root path (`/manifest.json`). This endpoint must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet can handle:
 
 ```json
 {
   "credential_handler": {
-    "url": "/worker",
+    "url": "/switchboard",
     "enabledTypes": ["VerifiablePresentation"],
     "acceptedInput": "url",
     "acceptedProtocols": [
@@ -67,7 +54,7 @@ The `url` property must be the entry point for your mobile wallet so it must be 
 
 The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive data via opening the URL and providing query parameters rather than browser sent events typically used with Web wallets.
 
-### 3. Allow your users to register their wallet as a Credential Handler with the browser polyfill
+### 2. Allow your users to register their wallet as a Credential Handler with the browser polyfill
 
 Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
 
@@ -76,9 +63,12 @@ Add something similar to your registration page:
 ```html
 <button id="installHandlerButton">Register Wallet</button>
 
+<script src="https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js"></script>
 <script src="https://unpkg.com/web-credential-handler@2/dist/web-credential-handler.min.js"></script>
 
 <script>
+  await credentialHandlerPolyfill.loadOnce();
+
   document.getElementById('installHandlerButton').addEventListener('click', async function() {
     try {
       await WebCredentialHandler.installHandler();
@@ -90,7 +80,7 @@ Add something similar to your registration page:
 </script>
 ```
 
-### 4. Link users to the registration page from your application
+### 3. Link users to the registration page from your application
 
 Your mobile application should include a link to your registration page. That link should open the device's default browser and allow them to register the wallet as a Credential Handler.
 
