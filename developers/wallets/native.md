@@ -21,13 +21,20 @@ permalink: /developers/wallets/native/
 
 ## Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials on the Web.
+Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.
 
-To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be able to handle deep links. Deep links, also known as app links, cause a user's Web browser to open a native application and pass the URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
+To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be configured to receive deep links from the mobile OS.
 
-During this process you will be required to host the appropriate operating system specific files on a web server. To enable CHAPI registration this web server will also need to host a page that allows the user to register the CHAPI handler with the mobile web browser.
+Deep links, also known as app links, cause a user's Web browser to open a native application and pass any URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
+
+Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.
+
+In addition, to enable CHAPI registration, your Web server will also need to host a page that allows the user to register your wallet with CHAPI within their mobile Web browser.
 
 ### 1. Import the CHAPI Polyfill into the page
+
+The page that receives the deep link must include the CHAPI Polyfill to liaison
+the registration of your Native Wallet with your user's browser:
 
 ```html
 <script src="https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js"></script>
@@ -37,9 +44,9 @@ During this process you will be required to host the appropriate operating syste
 </script>
 ```
 
-### 2. Add a `credential_handler` to the server's manifest.json
+### 2. Add a `credential_handler` to the server's `manifest.json`
 
-In order to register a credential handler, your registration page's server must serve a "manifest.json" file from its root path ("/manifest.json"). This file must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet will handle:
+In order to register as a Credential Handler, your registration page's server must serve a `manifest.json` file from its root path (`/manifest.json`). This endpoint must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet can handle:
 
 ```json
 {
@@ -56,13 +63,15 @@ In order to register a credential handler, your registration page's server must 
 }
 ```
 
-The `url` property will be the entry point for your mobile wallet so it must be a deeplink that will open the application. The details about the event that initiated this action will be relayed via query parameters.
+The `url` property must be the entry point for your mobile wallet so it must be a deep link that will open the application. Details about the event that initiates the opening of this URL will be relayed via query parameters appended to it.
 
-The `acceptedInput` property is what tells CHAPI that the wallet receives data through URL and query parameters rather than events like a web wallet does.
+The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive data via opening the URL and providing query parameters rather than browser sent events typically used with Web wallets.
 
-### 3. Allow your users to register their wallet's credential handler with the browser polyfill
+### 3. Allow your users to register their wallet as a Credential Handler with the browser polyfill
 
-Add to your registration page the ability for a user to register the wallet as a Credential Handler. This must be initiated by user interaction so you cannot automatically register without the user clicking a button.
+Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
+
+Add something similar to your registration page:
 
 ```html
 <button id="installHandlerButton">Register Wallet</button>
@@ -83,7 +92,9 @@ Add to your registration page the ability for a user to register the wallet as a
 
 ### 4. Link users to the registration page from your application
 
-After this registration page is up and running your mobile application can include a link to it that will open the devices browser to the registration page and allow them to register the wallet as a Credential Handler.
+Your mobile application should include a link to your registration page. That link should open the device's default browser and allow them to register the wallet as a Credential Handler.
+
+Once done, your Wallet should now be enabled to handle various credential related requests from across the Web.
 
 ## VC Storage
 
