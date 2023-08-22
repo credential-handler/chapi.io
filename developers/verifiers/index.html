@@ -21,8 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -56,89 +57,83 @@
     
 
     <main id="content" class="main-content" role="main">
-      <h1>CHAPI for VC Verifiers</h1>
+      <h1 id="chapi-for-vc-verifiers" tabindex="-1">CHAPI for VC Verifiers</h1>
 <p>CHAPI integrates easily into verifier websites, allowing your site to request Verifiable Credentials from a digital wallet.</p>
 <ul>
 <li><a href="multicredentials">Verifying Multiple Credentials</a></li>
 </ul>
-<h2>Resources</h2>
+<h2 id="resources" tabindex="-1">Resources</h2>
 <ul>
 <li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-verifier">chapi-demo-verifier</a> contains a full example implementation and is referenced throughout this guide.</li>
 <li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
 </ul>
-<h2>Import the CHAPI Polyfill into your Verifier Site</h2>
+<h2 id="import-the-chapi-polyfill-into-your-verifier-site" tabindex="-1">Import the CHAPI Polyfill into your Verifier Site</h2>
 <p>If you're working in vanilla JavaScript, you can add the <code>navigator.credentials</code> and <code>credentialHandlerPolyfill</code> globals to your code and then load the polyfill library:</p>
-<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js&quot;&gt;&lt;/script&gt;
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 
-&lt;script&gt;
-await credentialHandlerPolyfill.loadOnce();
-&lt;/script&gt;
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">await</span> credentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-verifier/index.html </a>
 </p>
 <p>Or, if you're developing on Node.js, add the credential-handler-polyfill library to your project...</p>
-<pre><code class="language-sh">npm i credential-handler-polyfill@3
-</code></pre>
+<pre class="language-sh"><code class="language-sh"><span class="token function">npm</span> i credential-handler-polyfill@3</code></pre>
 <p>and then import and load the polyfill library as follows:</p>
-<pre><code class="language-javascript">import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> CredentialHandlerPolyfill <span class="token keyword">from</span> <span class="token string">'credential-handler-polyfill'</span><span class="token punctuation">;</span>
 
-await CredentialHandlerPolyfill.loadOnce();
-console.log('Ready to work with credentials!');
-</code></pre>
-<h2>Construct a Web Credential Query</h2>
-<h4>1. Make a Verifiable Presentation Request</h4>
+<span class="token keyword">await</span> CredentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Ready to work with credentials!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="construct-a-web-credential-query" tabindex="-1">Construct a Web Credential Query</h2>
+<h4 id="1.-make-a-verifiable-presentation-request" tabindex="-1">1. Make a Verifiable Presentation Request</h4>
 <p>A verifier can request credentials over CHAPI by forming a <em><a href="https://w3c-ccg.github.io/vp-request-spec/">Verifiable Presentation Request</a></em>.  The example below illustrates a <code>QueryByExample</code>, which specifies the type of Verifiable Credential being requested and an optional reason for the request.</p>
-<pre><code class="language-javascript">const testVpr = {
-  query: [{
-    type: &quot;QueryByExample&quot;,
-    credentialQuery: {
-      reason: &quot;Please present your University Degree to continue the teacher application process.&quot;,
-      example: {
-        &quot;@context&quot;: [
-          &quot;https://w3id.org/credentials/v1&quot;,
-          &quot;https://www.w3.org/2018/credentials/examples/v1&quot;
-        ],
-        type: [&quot;UniversityDegreeCredential&quot;],
-        credentialSubject: {
-          &quot;id&quot;: &quot;did:example:ebfeb1f712ebc6f1c276e12ec21&quot;
-        }
-      }
-    }
-  }]
-};
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> testVpr <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">query</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"QueryByExample"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">credentialQuery</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">reason</span><span class="token operator">:</span> <span class="token string">"Please present your University Degree to continue the teacher application process."</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">example</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token string-property property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"https://w3id.org/credentials/v1"</span><span class="token punctuation">,</span>
+          <span class="token string">"https://www.w3.org/2018/credentials/examples/v1"</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"UniversityDegreeCredential"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">credentialSubject</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token string-property property">"id"</span><span class="token operator">:</span> <span class="token string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-verifier/index.html </a>
 </p>
-<h4>2. Wrap the Request in a Web Credential Query</h4>
+<h4 id="2.-wrap-the-request-in-a-web-credential-query" tabindex="-1">2. Wrap the Request in a Web Credential Query</h4>
 <p>Next, construct a generalized <em><a href="https://www.w3.org/TR/credential-management-1/">Credential Interface Query</a></em> of type <code>web</code>.  This will be passed through the browser to a CHAPI Credential Handler, which recognizes generalized <em>Web Credentials</em>. The example below illustrates a Web Credential request for a <code>VerifiablePresentation</code> which uses the specific query parameters defined above.  The <code>recommendedHandlerOrigins</code> parameter allows verifiers to suggest Credential Handlers (e.g. digital wallets) for the user to present the requested data.</p>
-<pre><code class="language-javascript">const credentialInterfaceQuery = {
-  web: {
-    VerifiablePresentation: testVpr,
-    recommendedHandlerOrigins: [
-      &quot;https://wallet.example.chapi.io/&quot;
-    ]
-  }
-};
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> credentialInterfaceQuery <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">web</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">VerifiablePresentation</span><span class="token operator">:</span> testVpr<span class="token punctuation">,</span>
+    <span class="token literal-property property">recommendedHandlerOrigins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">"https://wallet.example.chapi.io/"</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-verifier/index.html </a>
 </p>
-<h2>Request a Web Credential</h2>
+<h2 id="request-a-web-credential" tabindex="-1">Request a Web Credential</h2>
 <p>An verifier can get() and store() credentials without knowing anything about the user's wallet. This is intentional; for privacy reasons, the verifier must not be able to query any information (without user consent) about which wallets or credential handlers a user may have installed (otherwise, fingerprinting and other attacks would be possible).</p>
 <p>A credential verifier can ask to store a Verifiable Credential during a user gesture event, for example when the user pushes a button to receive a credential.</p>
-<pre><code class="language-javascript">const result = await navigator.credentials.get(credentialQuery);
-console.log('Result of get() request:', JSON.stringify(result, null, 2));
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> navigator<span class="token punctuation">.</span>credentials<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>credentialQuery<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Result of get() request:'</span><span class="token punctuation">,</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-verifier/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-verifier/index.html </a>
 </p>
-<h2>Handle Null Results</h2>
+<h2 id="handle-null-results" tabindex="-1">Handle Null Results</h2>
 <p>If the get() or store() operation resolves to a null value, this means one of two things:</p>
 <ul>
 <li>The user has denied or canceled the request</li>

@@ -21,8 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -56,9 +57,9 @@
     
 
     <main id="content" class="main-content" role="main">
-      <h1>CHAPI Related Web Standards</h1>
+      <h1 id="chapi-related-web-standards" tabindex="-1">CHAPI Related Web Standards</h1>
 <p>The Credential Handler API (CHAPI) was originally described in a draft report for the <a href="https://www.w3.org/community/credentials/">W3C Credentials Community Group</a>. It is being developed now as a ready-to-use API, libraries, and as integration documentation. This work supports the W3G CCG's mission to explore the technologies and use cases involving <a href="https://www.w3.org/TR/vc-data-model-2.0/#dfn-verifiable-credential">Verifiable Credentials</a>.</p>
-<h2>Verifiable Credentials</h2>
+<h2 id="verifiable-credentials" tabindex="-1">Verifiable Credentials</h2>
 <p>A <a href="https://www.w3.org/TR/vc-data-model-2.0/#dfn-verifiable-credential">Verifiable Credential</a> is a set of digital <em>claims</em> stated by an <em>issuer</em> about a <em>subject</em>.  The <a href="https://www.w3.org/TR/vc-data-model/">Verifiable Credentials Data Model</a> recommendads a standard digital format for Verifiable Credentials on the Web - so that digital credentials can be easily issued, presented, and verified by anyone - while preserving the privacy of the parties involved.</p>
 <p>A wide variety of <a href="https://www.w3.org/TR/vc-use-cases/">Verifiable Credentials Use Cases</a> are emerging, as users and organizations move more of their everday activities online.</p>
 <blockquote>
@@ -66,11 +67,11 @@
 <p>Standardization of digital claim technologies makes it possible for many stakeholders to issue, earn, and trust these essential records about their counterparties, without being locked into proprietary platforms.</p>
 <p><cite>from <a href="https://www.w3.org/TR/vc-use-cases/#importance-of-this-work">Verifiable Credentials Use Cases</a></cite></p>
 </blockquote>
-<h2>Establishing Trusted Communication</h2>
+<h2 id="establishing-trusted-communication" tabindex="-1">Establishing Trusted Communication</h2>
 <p>The diversity of Verifiable Credentials applications means that users will be presented with Verifiable Credentials from many different issuers.  Users may be asked to present Verifiable Credentials by any third-party website.</p>
 <p>How can we empower users to safely make these transactions?  CHAPI defines a method for users to designate trusted Web applications as <em>handlers</em> for credential requests and credential storage.  When the user visits a website that asks to present or requests Verifiable Credentials, the user is informed and consents to the transaction, and the designated <em>handler</em> responds to the request.</p>
 <p>CHAPI can be implemented now by any third-party Web application - so users are not limited in their choices for software services that work with Verifiable Credentials.</p>
-<h2>Get Involved</h2>
+<h2 id="get-involved" tabindex="-1">Get Involved</h2>
 <p>The <a href="https://www.w3.org/community/credentials/">Credentials Community Group</a> is a free and open forum for Web developers and stakeholders to connect and develop input for the next generation of Web standards.  Checkout the latest meeting notes or join the discussion at <a href="https://www.w3.org/community/credentials/">the community group's site</a>.</p>
 
 

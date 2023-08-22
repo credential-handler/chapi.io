@@ -21,8 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -56,82 +57,76 @@
     
 
     <main id="content" class="main-content" role="main">
-      <h1>CHAPI for VC Issuers</h1>
+      <h1 id="chapi-for-vc-issuers" tabindex="-1">CHAPI for VC Issuers</h1>
 <p>CHAPI integrates easily into issuer websites, allowing your site to issue Verifiable Credentials and present them for storage in the recipient's digital wallet:</p>
-<h2>Resources</h2>
+<h2 id="resources" tabindex="-1">Resources</h2>
 <ul>
 <li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-issuer">chapi-demo-issuer</a> contains a full example implementation and is referenced throughout this guide.</li>
 <li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
 </ul>
-<h2>Import the CHAPI Polyfill into your Issuer Site</h2>
+<h2 id="import-the-chapi-polyfill-into-your-issuer-site" tabindex="-1">Import the CHAPI Polyfill into your Issuer Site</h2>
 <p>If you're working in vanilla JavaScript, you can add the <code>navigator.credentials</code> and <code>credentialHandlerPolyfill</code> globals to your code and then load the polyfill library:</p>
-<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js&quot;&gt;&lt;/script&gt;
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 
-&lt;script&gt;
-await credentialHandlerPolyfill.loadOnce();
-&lt;/script&gt;
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">await</span> credentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-issuer/index.html </a>
 </p>
 <p>Or, if you're developing on Node.js, add the credential-handler-polyfill library to your project...</p>
-<pre><code class="language-sh">npm i credential-handler-polyfill@3
-</code></pre>
+<pre class="language-sh"><code class="language-sh"><span class="token function">npm</span> i credential-handler-polyfill@3</code></pre>
 <p>and then import and load the polyfill library as follows:</p>
-<pre><code class="language-javascript">import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> CredentialHandlerPolyfill <span class="token keyword">from</span> <span class="token string">'credential-handler-polyfill'</span><span class="token punctuation">;</span>
 
-await CredentialHandlerPolyfill.loadOnce();
-console.log('Ready to work with credentials!');
-</code></pre>
-<h2>Create a WebCredential Object</h2>
+<span class="token keyword">await</span> CredentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Ready to work with credentials!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="create-a-webcredential-object" tabindex="-1">Create a WebCredential Object</h2>
 <p>To communicate a Verifiable Credential over CHAPI, it must be wrapped in a <code>WebCredential</code> object, which is constructed as follows:</p>
-<h4>1. Make a Verifiable Presentation</h4>
+<h4 id="1.-make-a-verifiable-presentation" tabindex="-1">1. Make a Verifiable Presentation</h4>
 <p>Incorporate the Verifiable Credential(s) into a <em><a href="https://www.w3.org/TR/vc-data-model/#presentations-0">Verifiable Presentation</a></em>.  A Verifiable Presentation contains an array of one or more Verifiable Credentials. For CHAPI, the Verifiable Presentation object does not need to be separately signed.</p>
-<pre><code class="language-javascript">const testPresentation = {
-    &quot;@context&quot;: [
-      &quot;https://www.w3.org/2018/credentials/v1&quot;,
-      &quot;https://www.w3.org/2018/credentials/examples/v1&quot;
-    ],
-    &quot;type&quot;: &quot;VerifiablePresentation&quot;,
-    verifiableCredential: [
-        //your Verifiable Credential,
-        //other VCs, if you want to include multiple
-    ],
-    //A proof is not required on the Verifiable Presentation (only on the VCs themselves)
-};
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> testPresentation <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+      <span class="token string">"https://www.w3.org/2018/credentials/examples/v1"</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"type"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">verifiableCredential</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token comment">//your Verifiable Credential,</span>
+        <span class="token comment">//other VCs, if you want to include multiple</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">//A proof is not required on the Verifiable Presentation (only on the VCs themselves)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-issuer/index.html </a>
 </p>
-<h4>2. Make a Web Credential</h4>
+<h4 id="2.-make-a-web-credential" tabindex="-1">2. Make a Web Credential</h4>
 <p>Add wrapper data to the Verifiable Presentation to construct a <em>WebCredential</em> object.  The <code>recommendedHandlerOrigins</code> parameter allows issuers to suggest Credential Handlers (e.g. digital wallets) for the user to receive the data.</p>
-<pre><code class="language-javascript">const credentialType = 'VerifiablePresentation';
-const webCredentialWrapper = new WebCredential(
-    credentialType, testPresentation, {
-    recommendedHandlerOrigins: [
-        'https://wallet.example.chapi.io/'
-    ]
-});
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> credentialType <span class="token operator">=</span> <span class="token string">'VerifiablePresentation'</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> webCredentialWrapper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebCredential</span><span class="token punctuation">(</span>
+    credentialType<span class="token punctuation">,</span> testPresentation<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">recommendedHandlerOrigins</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">'https://wallet.example.chapi.io/'</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-issuer/index.html </a>
 </p>
-<h2>Issue and Store Credentials</h2>
+<h2 id="issue-and-store-credentials" tabindex="-1">Issue and Store Credentials</h2>
 <p>An issuer can get() and store() credentials without knowing anything about the user's wallet. This is intentional; for privacy reasons, the issuer must not be able to query any information (without user consent) about which wallets or credential handlers a user may have installed (otherwise, fingerprinting and other attacks would be possible).</p>
 <p>A credential issuer can ask to store a Verifiable Credential during a user gesture event, for example when the user pushes a button to receive a credential.</p>
-<pre><code class="language-javascript">const result = await navigator.credentials.store(webCredentialWrapper);
-if(!result) {
-  console.log('store credential operation did not succeed');
-}
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> navigator<span class="token punctuation">.</span>credentials<span class="token punctuation">.</span><span class="token function">store</span><span class="token punctuation">(</span>webCredentialWrapper<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'store credential operation did not succeed'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-issuer/blob/master/index.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-issuer/index.html </a>
 </p>
-<h2>Handle Empty Results</h2>
+<h2 id="handle-empty-results" tabindex="-1">Handle Empty Results</h2>
 <p>If the get() or store() operation resolves to a null value, this means one of two things:</p>
 <ul>
 <li>The user has denied or canceled the request</li>

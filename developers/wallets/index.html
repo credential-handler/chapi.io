@@ -21,8 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -56,117 +57,110 @@
     
 
     <main id="content" class="main-content" role="main">
-      <h1>CHAPI for Digital Wallets</h1>
+      <h1 id="chapi-for-digital-wallets" tabindex="-1">CHAPI for Digital Wallets</h1>
 <p>CHAPI integrates easily into digital wallet software, allowing your wallet to receive and present Verifiable Credentials to/from third party sites.</p>
 <ul>
 <li><a href="#for-web-wallets">for Web Wallets</a></li>
 <li><a href="#for-native-mobile-apps">for Native Mobile Wallets</a></li>
 <li><a href="querybyexample">Working with <code>QueryByExample</code> format requests</a></li>
 </ul>
-<h2>for Web Wallets</h2>
-<h3>Resources</h3>
+<h2 id="for-web-wallets" tabindex="-1">for Web Wallets</h2>
+<h3 id="resources" tabindex="-1">Resources</h3>
 <ul>
 <li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-wallet">chapi-demo-wallet</a> contains a full example implementation and is referenced throughout this guide.</li>
 <li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
 <li><strong>Helper Library</strong>: The <a href="https://github.com/credential-handler/web-credential-handler">web-credential-handler</a> library provides helper functions for CHAPI integration in your code.</li>
 </ul>
-<h3>First, set up your wallet to register itself with the browser as a Credential Handler.</h3>
-<h4>1. Import the CHAPI Polyfill into your wallet app</h4>
+<h3 id="first%2C-set-up-your-wallet-to-register-itself-with-the-browser-as-a-credential-handler." tabindex="-1">First, set up your wallet to register itself with the browser as a Credential Handler.</h3>
+<h4 id="1.-import-the-chapi-polyfill-into-your-wallet-app" tabindex="-1">1. Import the CHAPI Polyfill into your wallet app</h4>
 <p>If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.</p>
-<pre><code class="language-sh">npm i credential-handler-polyfill@3
-npm i web-credential-handler@2
-</code></pre>
+<pre class="language-sh"><code class="language-sh"><span class="token function">npm</span> i credential-handler-polyfill@3
+<span class="token function">npm</span> i web-credential-handler@2</code></pre>
 <p>In your code, you can import and load the polyfill library as follows:</p>
-<pre><code class="language-javascript">import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
-import * as WebCredentialHandler from 'web-credential-handler';
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> CredentialHandlerPolyfill <span class="token keyword">from</span> <span class="token string">'credential-handler-polyfill'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> WebCredentialHandler <span class="token keyword">from</span> <span class="token string">'web-credential-handler'</span><span class="token punctuation">;</span>
 
-await CredentialHandlerPolyfill.loadOnce();
-console.log('Ready to work with credentials!');
-</code></pre>
+<span class="token keyword">await</span> CredentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Ready to work with credentials!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
-<h4>2. Add a <code>credential_handler</code> to your app's manifest.json</h4>
+<h4 id="2.-add-a-credential_handler-to-your-app's-manifest.json" tabindex="-1">2. Add a <code>credential_handler</code> to your app's manifest.json</h4>
 <p>In order to register a credential handler, your web app must serve a &quot;manifest.json&quot; file from its root path (&quot;/manifest.json&quot;). This file must also be CORS-enabled.  At a minimum, add the following <code>credential_handler</code> object:</p>
-<pre><code class="language-json">{
-  &quot;credential_handler&quot;: {
-    &quot;url&quot;: &quot;/wallet-worker.html&quot;,
-    &quot;enabledTypes&quot;: [&quot;VerifiablePresentation&quot;]
-  }
-}
-</code></pre>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"credential_handler"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"/wallet-worker.html"</span><span class="token punctuation">,</span>
+    <span class="token property">"enabledTypes"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"VerifiablePresentation"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/manifest.json"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/manifest.json </a>
 </p>
-<h4>3. Allow your users to register their wallet's credential handler with the browser polyfill</h4>
+<h4 id="3.-allow-your-users-to-register-their-wallet's-credential-handler-with-the-browser-polyfill" tabindex="-1">3. Allow your users to register their wallet's credential handler with the browser polyfill</h4>
 <p>You can register a Credential Handler by calling the <code>CredentialManager.requestPermission()</code> API. This call will ensure that the individual using the browser explicitly confirms that they want to use the website as a credential handler. The example below uses the <code>installHandler()</code> helper method to perform this action:</p>
-<pre><code class="language-javascript">  await WebCredentialHandler.installHandler();
-  console.log('Wallet installed.');
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">installHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Wallet installed.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
-<h3>Then, configure your wallet to respond to Credential Handler events.</h3>
+<h3 id="then%2C-configure-your-wallet-to-respond-to-credential-handler-events." tabindex="-1">Then, configure your wallet to respond to Credential Handler events.</h3>
 <p>Your wallet app's existing functionality can be configured to respond to CHAPI events.</p>
-<h4>4. Setup Listeners for CHAPI Events</h4>
+<h4 id="4.-setup-listeners-for-chapi-events" tabindex="-1">4. Setup Listeners for CHAPI Events</h4>
 <p>The <code>activateHandler()</code> function is a helper that sets up listeners for CHAPI <code>get()</code> and <code>store()</code> events.</p>
-<pre><code class="language-javascript">WebCredentialHandler.activateHandler({
-    async get(event) {
-        console.log('WCH: Received get() event:', event);
-        return { type: 'redirect', url: '/wallet-ui-get.html' };
-    },
-    async store(event) {
-        console.log('WCH: Received store() event:', event);
-        return { type: 'redirect', url: '/wallet-ui-store.html' };
-    }
-})
-</code></pre>
+<pre class="language-javascript"><code class="language-javascript">WebCredentialHandler<span class="token punctuation">.</span><span class="token function">activateHandler</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token keyword">async</span> <span class="token function">get</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'WCH: Received get() event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'redirect'</span><span class="token punctuation">,</span> <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">'/wallet-ui-get.html'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token keyword">async</span> <span class="token function">store</span><span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'WCH: Received store() event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'redirect'</span><span class="token punctuation">,</span> <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">'/wallet-ui-store.html'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-worker.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-worker.html </a>
 </p>
-<h4>5. Get Credentials Events</h4>
+<h4 id="5.-get-credentials-events" tabindex="-1">5. Get Credentials Events</h4>
 <p>CHAPI supports the presentation of credentials via the <code>navigator.credentials.get()</code> API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI <code>get()</code> request from a third-party website.</p>
-<pre><code class="language-javascript">  async function handleGetEvent() {
-    const event = await WebCredentialHandler.receiveCredentialEvent();
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleGetEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    console.log('Wallet processing get() event:', event);
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Wallet processing get() event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    //Your wallet's code for responding to a request for a Verifiable Credential
-  }
-
+    <span class="token comment">//Your wallet's code for responding to a request for a Verifiable Credential</span>
+  <span class="token punctuation">}</span>
 </code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-get.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-get.html </a>
 </p>
 <p>When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party.</p>
-<h4>6. Store Credentials Events</h4>
+<h4 id="6.-store-credentials-events" tabindex="-1">6. Store Credentials Events</h4>
 <p>CHAPI supports storing credentials via the <code>navigator.credentials.store()</code> API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI <code>store()</code> request from a third-party website.</p>
-<pre><code class="language-javascript">async function handleStoreEvent() {
-    const event = await WebCredentialHandler.receiveCredentialEvent();
-    console.log('Store Credential Event:', event.type, event);
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleStoreEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Store Credential Event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>type<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    //Your wallet's code for storing a Verifiable Credential
-}
-</code></pre>
+    <span class="token comment">//Your wallet's code for storing a Verifiable Credential</span>
+<span class="token punctuation">}</span></code></pre>
 <p class="code-annotation">
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-store.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-store.html </a>
 </p>
 <p>Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.</p>
-<h2>DID Authentication with CHAPI</h2>
+<h2 id="did-authentication-with-chapi" tabindex="-1">DID Authentication with CHAPI</h2>
 <p>This section is written from the perspective of web wallets.  CHAPI provides a simple method for a 3rd party website to request an individual present their Decentralized Identifier (DID) and prove their identity.  The individual selects a digital wallet to respond to this DID Authentication request.</p>
-<h3>Resources</h3>
+<h3 id="resources-1" tabindex="-1">Resources</h3>
 <ul>
 <li><a href="https://w3c-ccg.github.io/vp-request-spec/#did-authentication">Verifiable Presentation Request</a></li>
 <li><a href="https://www.w3.org/TR/vc-data-model/#presentations">Verifiable Credentials Data Model</a></li>
 <li><a href="https://www.w3.org/TR/did-core/#authentication">DID Core Specification</a></li>
 </ul>
-<h4>1. The 3rd Party Site sends a DID Authentication Request</h4>
+<h4 id="1.-the-3rd-party-site-sends-a-did-authentication-request" tabindex="-1">1. The 3rd Party Site sends a DID Authentication Request</h4>
 <p>The individual interacts with a 3rd party website, triggering a request for <em>DID Authentication</em>.  The site sends a <em>Verifiable Presentation Request</em> (VPR) using the CHAPI <code>get()</code> event.</p>
 <p>An example VPR is shown below.  Like the other CHAPI examples on this site, the VPR is wrapped in a <code>web</code> credential object - this ensures that it is passed to a <em>Credential Handler</em> in the individual's browser.</p>
 <pre><code>&quot;web&quot;: {
@@ -182,81 +176,78 @@ console.log('Ready to work with credentials!');
   ]
 }
 </code></pre>
-<h4>2. The Digital Wallet responds with a Verifiable Presentation</h4>
+<h4 id="2.-the-digital-wallet-responds-with-a-verifiable-presentation" tabindex="-1">2. The Digital Wallet responds with a Verifiable Presentation</h4>
 <p>The individual selects a digital wallet, which responds to the CHAPI <code>get()</code> event.  The example code below shows two functions, plus a third function that your wallet will need to create</p>
 <ul>
 <li><code>handleGetEvent()</code> responds to the CHAPI <code>get()</code> event and calls <code>formDIDAuthResponse()</code> if it sees a request for DID Authentication.</li>
 <li><code>formDIDAuthResponse()</code> creates a &quot;web&quot; credential containing a signed Verifiable Presentation meeting the VPR Spec for DID Authentication</li>
 <li><code>signDidAuthPresentation()</code> is the lower-level function in your wallet that creates a signed Verifiable Presentation with the user's DID.</li>
 </ul>
-<pre><code class="language-javascript">async function formDidAuthResponse({challenge, domain}) {
-    const dataType = 'VerifiablePresentation';
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">formDidAuthResponse</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>challenge<span class="token punctuation">,</span> domain<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> dataType <span class="token operator">=</span> <span class="token string">'VerifiablePresentation'</span><span class="token punctuation">;</span>
 
-    //Add your code for signing a verifiable presentation
-    didAuthPresentation = await signDidAuthPresentation({challenge, domain});
+    <span class="token comment">//Add your code for signing a verifiable presentation</span>
+    didAuthPresentation <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">signDidAuthPresentation</span><span class="token punctuation">(</span><span class="token punctuation">{</span>challenge<span class="token punctuation">,</span> domain<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    //wrap the DID Auth presentation in a web credential
-    const credentialType = 'VerifiablePresentation';
-    const didAuthResponse = new WebCredential(
-      credentialType, didAuthPresentation, {
-      recommendedHandlerOrigins: []
-    });
+    <span class="token comment">//wrap the DID Auth presentation in a web credential</span>
+    <span class="token keyword">const</span> credentialType <span class="token operator">=</span> <span class="token string">'VerifiablePresentation'</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> didAuthResponse <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebCredential</span><span class="token punctuation">(</span>
+      credentialType<span class="token punctuation">,</span> didAuthPresentation<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">recommendedHandlerOrigins</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return didAuthResponse;
-}
+    <span class="token keyword">return</span> didAuthResponse<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-async function handleGetEvent() {
-    const event = await WebCredentialHandler.receiveCredentialEvent();
-    console.log('Get Credential Event:', event.type, event);
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleGetEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Get Credential Event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>type<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    const vp = event.credentialRequestOptions.web.VerifiablePresentation;
-    const query = Array.isArray(vp.query) ? vp.query[0] : vp.query;
+    <span class="token keyword">const</span> vp <span class="token operator">=</span> event<span class="token punctuation">.</span>credentialRequestOptions<span class="token punctuation">.</span>web<span class="token punctuation">.</span>VerifiablePresentation<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> query <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>vp<span class="token punctuation">.</span>query<span class="token punctuation">)</span> <span class="token operator">?</span> vp<span class="token punctuation">.</span>query<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">:</span> vp<span class="token punctuation">.</span>query<span class="token punctuation">;</span>
 
-    const {type} = query.value;
-    if(type ==='DIDAuthentication') {
-      event.respondWith(formDidAuthResponse({challenge: vp.challenge, domain: vp.domain}))
-    }
-}
-</code></pre>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span>type<span class="token punctuation">}</span> <span class="token operator">=</span> query<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>type <span class="token operator">===</span><span class="token string">'DIDAuthentication'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      event<span class="token punctuation">.</span><span class="token function">respondWith</span><span class="token punctuation">(</span><span class="token function">formDidAuthResponse</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token literal-property property">challenge</span><span class="token operator">:</span> vp<span class="token punctuation">.</span>challenge<span class="token punctuation">,</span> <span class="token literal-property property">domain</span><span class="token operator">:</span> vp<span class="token punctuation">.</span>domain<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>Your wallet's version of <code>signDidAuthPresentation()</code> should create a signed Verifiable Presentation with the <code>holder</code> equal to the user's DID.  The example below shows what this looks like with the Ed25519Signature2020 and 2018 signature suites, respectively.</p>
-<pre><code class="language-javascript">const didAuthPresentation = {
-    '@context': [
-        'https://www.w3.org/2018/credentials/v1',
-        'https://w3id.org/security/suites/ed25519-2020/v1'
-    ],
-    type: ['VerifiablePresentation'],
-    holder: 'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ',
-    proof: {
-        type: 'Ed25519Signature2020',
-        created: '2022-11-09T22:04:18Z',
-        verificationMethod: 'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ#z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ',
-        proofPurpose: 'authentication',
-        challenge: 'qd4_rg4FvyYDUIuy-DmN9',
-        domain: 'https://localhost:51443',
-        proofValue: 'zinUxNo4eLvMRU7QaYwSKTKRkvYud7cDeh3B8zm3G1FLZGiSKjCXFgZiQTLKJmpLuatgpcqCTpRZBj4ETAsddcfe'
-    }
-};
-
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> didAuthPresentation <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">'@context'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">'https://www.w3.org/2018/credentials/v1'</span><span class="token punctuation">,</span>
+        <span class="token string">'https://w3id.org/security/suites/ed25519-2020/v1'</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'VerifiablePresentation'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">holder</span><span class="token operator">:</span> <span class="token string">'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">proof</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'Ed25519Signature2020'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">created</span><span class="token operator">:</span> <span class="token string">'2022-11-09T22:04:18Z'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">verificationMethod</span><span class="token operator">:</span> <span class="token string">'did:key:z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ#z6MkeprvBw4RFHJPQEmtioq4xRrN6Tk8EBSJ37eBCBQNHRjZ'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">proofPurpose</span><span class="token operator">:</span> <span class="token string">'authentication'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">challenge</span><span class="token operator">:</span> <span class="token string">'qd4_rg4FvyYDUIuy-DmN9'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">domain</span><span class="token operator">:</span> <span class="token string">'https://localhost:51443'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">proofValue</span><span class="token operator">:</span> <span class="token string">'zinUxNo4eLvMRU7QaYwSKTKRkvYud7cDeh3B8zm3G1FLZGiSKjCXFgZiQTLKJmpLuatgpcqCTpRZBj4ETAsddcfe'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre>
-<pre><code class="language-javascript">const didAuthPresentation = {
-    &quot;@context&quot;: [
-        &quot;https://www.w3.org/2018/credentials/v1&quot;,
-    ],
-    &quot;type&quot;: &quot;VerifiablePresentation&quot;,
-    &quot;holder&quot;: &quot;did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr&quot;,
-    &quot;proof&quot;: {
-        &quot;type&quot;: &quot;Ed25519Signature2018&quot;,
-        &quot;created&quot;: &quot;2022-10-28T20:24:27Z&quot;,
-        &quot;verificationMethod&quot;: &quot;did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr&quot;,
-        &quot;proofPurpose&quot;: &quot;authentication&quot;,
-        &quot;challenge&quot;: &quot;IME0WNG2MIOsYsPgezxAM&quot;,
-        &quot;domain&quot;: &quot;https://playground.chapi.io&quot;,
-        &quot;jws&quot;: &quot;eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg&quot;
-    }
-};
-</code></pre>
-<h2>for Native Mobile Apps</h2>
-<h3>Resources</h3>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> didAuthPresentation <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"type"</span><span class="token operator">:</span> <span class="token string">"VerifiablePresentation"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"holder"</span><span class="token operator">:</span> <span class="token string">"did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"proof"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token string-property property">"type"</span><span class="token operator">:</span> <span class="token string">"Ed25519Signature2018"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"created"</span><span class="token operator">:</span> <span class="token string">"2022-10-28T20:24:27Z"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"verificationMethod"</span><span class="token operator">:</span> <span class="token string">"did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"proofPurpose"</span><span class="token operator">:</span> <span class="token string">"authentication"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"challenge"</span><span class="token operator">:</span> <span class="token string">"IME0WNG2MIOsYsPgezxAM"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"domain"</span><span class="token operator">:</span> <span class="token string">"https://playground.chapi.io"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"jws"</span><span class="token operator">:</span> <span class="token string">"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<h2 id="for-native-mobile-apps" tabindex="-1">for Native Mobile Apps</h2>
+<h3 id="resources-2" tabindex="-1">Resources</h3>
 <ul>
 <li>WebShare Specification: <a href="https://w3c.github.io/web-share/">this W3C draft</a> describes the Web Share API.</li>
 <li>WebShare Documentation: <a href="https://web.dev/web-share/">web.dev</a> hosts developer docs and examples for the WebShare API</li>

@@ -21,8 +21,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -56,11 +57,11 @@
     
 
     <main id="content" class="main-content" role="main">
-      <h1></h1>
-<p>The <a href="https://playground.chapi.io/">CHAPI Playground</a> supports the delivery of
-<code>QueryByExample</code> requests for doing Multi-Credential Verification as a
+      <h1 id="" tabindex="-1"></h1>
+<p>The <a href="https://playground.chapi.io/">CHAPI Playground</a> supports the delivery of<br>
+<code>QueryByExample</code> requests for doing Multi-Credential Verification as a<br>
 <a href="./">Verifiable Credential Verifier</a>.</p>
-<h2>Wallet Sign Up</h2>
+<h2 id="wallet-sign-up" tabindex="-1">Wallet Sign Up</h2>
 <p>If you already have a CHAPI-enabled digital wallet (<a href="https://demo.vereswallet.dev/">Veres Wallet</a>, <a href="https://learncard.app/">LearnCard</a>, etc.), you can skip to the <a href="#vc-issuance">VC Issuance section</a>.</p>
 <p>Here's how to get a demo Veres Wallet if you need one:</p>
 <ol>
@@ -68,14 +69,14 @@
 <p>Visit <a href="https://demo.vereswallet.dev/">https://demo.vereswallet.dev/</a> and click &quot;Try Veres Wallet&quot;.</p>
 </li>
 <li>
-<p>Use an email address that you can access. The Veres Wallet supports email address tags, so you can modify a valid email address by adding &quot;+chapi&quot; to create multiple accounts: myname+chapi@example.com The &quot;+chapi&quot; can be anything you like and you can use this approach to make multiple accounts at a single email address.</p>
+<p>Use an email address that you can access. The Veres Wallet supports email address tags, so you can modify a valid email address by adding &quot;+chapi&quot; to create multiple accounts: <a href="mailto:myname+chapi@example.com">myname+chapi@example.com</a> The &quot;+chapi&quot; can be anything you like and you can use this approach to make multiple accounts at a single email address.</p>
 </li>
 <li>
 <p>Once you click &quot;Register&quot;, you'll receive an &quot;Allow Wallet&quot; modal. Make sure to click &quot;Allow&quot; on that modal, so the wallet can handle credentials on your behalf.</p>
 </li>
 </ol>
 <p>Once that's done, proceed to Verifiable Credential Issuance.</p>
-<h2>Verifiable Credential Issuance</h2>
+<h2 id="verifiable-credential-issuance" tabindex="-1">Verifiable Credential Issuance</h2>
 <p>First, visit <a href="https://playground.chapi.io/issuer">the Issuer section of the playground</a>.</p>
 <p>Next, select the &quot;JFF x vc-edu PF3&quot; icon in the top &quot;Select a credential to issue&quot; section.</p>
 <p>The credential JSON below is similar to what will be passed to the issuer to generate the credential.</p>
@@ -204,7 +205,7 @@
 <p>Each wallet will have it's own system for displaying the credential and offering to store it for you.</p>
 <p>Once you've clicked &quot;Store&quot; in your preferred wallet system, you will be brought back to the main playground screen.</p>
 <p>Follow the above process a few more times by clicking &quot;Issuer Demo&quot; to load your wallet with more example credentials.</p>
-<h2>Multiple Verifiable Credential Verification</h2>
+<h2 id="multiple-verifiable-credential-verification" tabindex="-1">Multiple Verifiable Credential Verification</h2>
 <p>Now that you have several Verifiable Credentials (VCs) in your wallet, let's get them all verified in one request.</p>
 <p>First, visit the <a href="https://playground.chapi.io/verifier">playground's Verifier section</a>.</p>
 <p>Select the VCs you loaded into your wallet (i.e. &quot;Alumni&quot;, &quot;JFF x vc-edu PF3&quot;, and &quot;Permanent Resident&quot;).</p>
