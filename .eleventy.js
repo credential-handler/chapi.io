@@ -32,6 +32,9 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  eleventyConfig.addPassthroughCopy('**/*.jpg');
+  eleventyConfig.addPassthroughCopy('**/*.png');
+
   // Return your Object options:
   return {
     dir: {
