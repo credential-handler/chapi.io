@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<title>CHAPI is the Credential Handler API | an open-source solution for communicating Verifiable Credentials on the Web</title>
+<meta property="og:title" content="CHAPI is the Credential Handler API" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="an open-source solution for communicating Verifiable Credentials on the Web" />
+<meta property="og:description" content="an open-source solution for communicating Verifiable Credentials on the Web" />
+<link rel="canonical" href="https://chapi.io/" />
+<meta property="og:url" content="https://chapi.io/" />
+<meta property="og:site_name" content="CHAPI is the Credential Handler API" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CHAPI is the Credential Handler API" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","description":"an open-source solution for communicating Verifiable Credentials on the Web","headline":"CHAPI is the Credential Handler API","name":"CHAPI is the Credential Handler API","url":"https://chapi.io/"}</script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/prismjs@1/themes/prism.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <!-- Sidebar Menu -->
+    <div class="ui vertical inverted right sidebar menu">
+      <a class="item" href="/developers/issuers">VC Issuers</a>
+      <a class="item" href="/developers/wallets">Digital Wallets</a>
+      <a class="item" href="/developers/verifiers">VC Verifiers</a>
+      <span class="item">
+        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+      </span>
+    </div>
+
+    <div class="pusher">
+    <header class="ui top inverted fixed menu" role="banner">
+      <a class="ui header item" href=https://chapi.io/>
+        chapi.io
+        <span class="desktop only">&nbsp; | Credential Handler API</span>
+      </a>
+      <span class="item">
+        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+      </span>
+      <div class="right menu">
+        <a class="toc icon item"><i class="sidebar icon"></i></a>
+        <a class="item" href="/developers/issuers">VC Issuers</a>
+        <a class="item" href="/developers/wallets">Digital Wallets</a>
+        <a class="item" href="/developers/verifiers">VC Verifiers</a>
+      </div>
+    </header>
+    
+
+    <main id="content" class="main-content" role="main">
+      <p><a href="../">Back to Wallet Documentation</a></p>
+<h1 id="native-wallets" tabindex="-1">Native Wallets</h1>
+<ul>
+<li><a href="#wallet-registration">Wallet Registration</a></li>
+<li><a href="#verifiable-credential-storage">Verifiable Credential Storage</a></li>
+</ul>
+<h2 id="resources" tabindex="-1">Resources</h2>
+<ul>
+<li><a href="querybyexample">Working with <code>QueryByExample</code> format requests</a></li>
+</ul>
+<ul>
+<li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-wallet">chapi-demo-wallet</a> contains a full example implementation and is referenced throughout this guide.</li>
+<li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
+<li><strong>Helper Library</strong>: The <a href="https://github.com/credential-handler/web-credential-handler">web-credential-handler</a> library provides helper functions for CHAPI integration in your code.</li>
+</ul>
+<h2 id="wallet-registration" tabindex="-1">Wallet Registration</h2>
+<p>Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.</p>
+<p>To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be configured to receive deep links from the mobile OS.</p>
+<p>Deep links, also known as app links, cause a user's Web browser to open a native application and pass any URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for <a href="https://developer.android.com/training/app-links/deep-linking">Android</a> or <a href="https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc">iOS</a>.</p>
+<p>Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.</p>
+<p>In addition, to enable CHAPI registration, your Web server will also need to host a <code>manifest.json</code> file as well as a registration page that allows the user to register your wallet with CHAPI within their mobile Web browser.</p>
+<h3 id="1.-add-a-credential_handler-to-the-server's-manifest.json" tabindex="-1">1. Add a <code>credential_handler</code> to the server's <code>manifest.json</code></h3>
+<p>In order to register as a Credential Handler, your registration page's server must serve a <code>manifest.json</code> file from its root path (<code>/manifest.json</code>). This endpoint must also be CORS-enabled. Add the following <code>credential_handler</code> object with the appropriate <code>acceptedProtocols</code> your wallet can handle:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"credential_handler"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"/switchboard"</span><span class="token punctuation">,</span>
+    <span class="token property">"enabledTypes"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"VerifiablePresentation"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"acceptedInput"</span><span class="token operator">:</span> <span class="token string">"url"</span><span class="token punctuation">,</span>
+    <span class="token property">"acceptedProtocols"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">"OID4VCI"</span><span class="token punctuation">,</span>
+      <span class="token string">"OID4VP"</span><span class="token punctuation">,</span>
+      <span class="token string">"vcapi"</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The <code>url</code> property must be the entry point for your mobile wallet so it must be a deep link that will open the application. Details about the event that initiates the opening of this URL will be relayed via query parameters appended to it.</p>
+<p>The <code>&quot;acceptedInput&quot;: &quot;url&quot;</code> line tells CHAPI that the wallet should receive data via opening the URL and providing query parameters rather than browser sent events typically used with Web wallets.</p>
+<h3 id="2.-allow-your-users-to-register-their-wallet-as-a-credential-handler-with-the-browser-polyfill" tabindex="-1">2. Allow your users to register their wallet as a Credential Handler with the browser polyfill</h3>
+<p>Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.</p>
+<p>Add something similar to your registration page:</p>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>installHandlerButton<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Register Wallet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/web-credential-handler@2/dist/web-credential-handler.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'installHandlerButton'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      <span class="token keyword">await</span> credentialHandlerPolyfill<span class="token punctuation">.</span><span class="token function">loadOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">installHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Handler Installed Successfully!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error installing handler: '</span> <span class="token operator">+</span> error<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<h3 id="3.-link-users-to-the-registration-page-from-your-application" tabindex="-1">3. Link users to the registration page from your application</h3>
+<p>Your mobile application should include a link to your registration page. That link should open the device's default browser and allow them to register the wallet as a Credential Handler.</p>
+<p>Once done, your Wallet should now be enabled to handle various credential related requests from across the Web.</p>
+<h2 id="verifiable-credential-storage" tabindex="-1">Verifiable Credential Storage</h2>
+<p>Now that your native wallet has been registered with CHAPI, it can receive requests to store credentials at the URL stated in the <code>credential_handler.url</code> of the <code>manifest.json</code> above.</p>
+<p>The endpoint declared there (<code>/switchboard</code> in the example above) will receive a <code>request</code> query parameter that will include a URL encoded object with the following properties:</p>
+<ul>
+<li><code>credentialRequestOrigin</code>: This will tell the wallet where the request originated</li>
+<li><code>protocols</code>: This will include any available credential exchange protocols (for issuance and/or presentation). The wallet may retrieve the credential for storage from any of the available protocols.</li>
+</ul>
+<p>Here is an example URL showing the <code>request</code> query parameter and its URL encoded value:</p>
+<pre><code style="white-space: normal;overflow: auto;word-break: break-word;">
+https://wallet.example.com/switchboard
+?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%257B%2522credential_issuer%2522%253A%2522https%253A%252F%252Fexample.exchanger.com%252Fexchangers%252Fz1A1GqykGBWKbwhFCDqFjMfnG%252Fexchanges%252Fz1A36rr6wEL25EEiikKvisVEC%2522%252C%2522credentials%2522%253A%255B%257B%2522format%2522%253A%2522ldp_vc%2522%252C%2522credential_definition%2522%253A%257B%2522%2540context%2522%253A%255B%2522https%253A%252F%252Fwww.w3.org%252F2018%252Fcredentials%252Fv1%2522%252C%2522https%253A%252F%252Fpurl.imsglobal.org%252Fspec%252Fob%252Fv3p0%252Fcontext.json%2522%255D%252C%2522type%2522%253A%255B%2522VerifiableCredential%2522%252C%2522OpenBadgeCredential%2522%255D%257D%257D%255D%252C%2522grants%2522%253A%257B%2522urn%253Aietf%253Aparams%253Aoauth%253Agrant-type%253Apre-authorized_code%2522%253A%257B%2522pre-authorized_code%2522%253A%25220065a8a0-069b-46f1-a857-4e1ce5047afd%2522%257D%257D%257D%22%2C%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%7D%7D
+</code></pre>
+<p>The <code>request</code> value is URL encoded. Its contents look like this when unencoded:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"credentialRequestOrigin"</span><span class="token operator">:</span> <span class="token string">"https://playground.chapi.io"</span><span class="token punctuation">,</span>
+  <span class="token property">"protocols"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"vcapi"</span><span class="token operator">:</span> <span class="token string">"https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ"</span><span class="token punctuation">,</span>
+    <span class="token property">"OID4VCI"</span><span class="token operator">:</span> <span class="token string">"openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexample.exchanger.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D"</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: <code>vcapi</code> and <code>OID4VCI</code>.</p>
+<p>Depending on what you declared in your <code>acceptedProtocols</code> you may receive either or both as properties in the <code>protocols</code> object carried in the <code>request</code> query parameter. It is up to wallet providers to decide (or they may delegate this to advanced users) which protocol to use if multiple protocols are supported.</p>
+<h3 id="vc-api" tabindex="-1">VC-API</h3>
+<p>The <code>vcapi</code> property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a <code>POST</code> request to this URL with an empty JSON object (<code>{}</code>) to attempt to download the VC to be stored. The VC will be found in the <code>verifiablePresentation</code> object of the response to that <code>POST</code> request. If there are further steps required in the flow such as DID Auth a <code>verifiablePresentationRequest</code> object will describe the details.</p>
+<p>See the <a href="https://w3c-ccg.github.io/vc-api/">VC API Specification</a> for more details on this protocol.</p>
+<p>Example VCAPI protocol URL:<br>
+<code>https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ</code></p>
+<h3 id="oid4vci" tabindex="-1">OID4VCI</h3>
+<p>The <code>OID4VCI</code> property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.</p>
+<p>See the <a href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html">OID4VCI Specification</a> for more details of this protocol.</p>
+<p>Example OID4VCI protocol URL:<br>
+<code>openid-credential-offer://?credential_offer={&quot;credential_issuer&quot;:&quot;https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC&quot;,&quot;credentials&quot;:[{&quot;format&quot;:&quot;ldp_vc&quot;,&quot;credential_definition&quot;:{&quot;@context&quot;:[&quot;https://www.w3.org/2018/credentials/v1&quot;,&quot;https://purl.imsglobal.org/spec/ob/v3p0/context.json&quot;],&quot;type&quot;:[&quot;VerifiableCredential&quot;,&quot;OpenBadgeCredential&quot;]}}],&quot;grants&quot;:{&quot;urn:ietf:params:oauth:grant-type:pre-authorized_code&quot;:{&quot;pre-authorized_code&quot;:&quot;0065a8a0-069b-46f1-a857-4e1ce5047afd&quot;}}}</code></p>
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
+    <script>
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item');
+    </script>
+    <script src="/assets/js/tabs.js"></script>
+
+  </body>
+</html>

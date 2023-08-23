@@ -59,20 +59,30 @@
     <main id="content" class="main-content" role="main">
       <h1 id="chapi-for-digital-wallets" tabindex="-1">CHAPI for Digital Wallets</h1>
 <p>CHAPI integrates easily into digital wallet software, allowing your wallet to receive and present Verifiable Credentials to/from third party sites.</p>
+<h2 id="web-wallets" tabindex="-1">Web Wallets</h2>
 <ul>
-<li><a href="#for-web-wallets">for Web Wallets</a></li>
-<li><a href="#for-native-mobile-apps">for Native Mobile Wallets</a></li>
+<li><a href="#wallet-registration">Wallet Registration</a></li>
+<li><a href="#verifiable-credential-storage">Verifiable Credential Storage</a></li>
+<li><a href="#verifiable-credential-presentation">Verifiable Credential Presentation</a></li>
+<li><a href="#did-authentication-with-chapi">DID Authentication with CHAPI</a></li>
+</ul>
+<h2 id="native-wallets" tabindex="-1">Native Wallets</h2>
+<ul>
+<li><a href="native/#wallet-registration">Wallet Registration</a></li>
+<li><a href="native/#verifiable-credential-storage">Verifiable Credential Storage</a></li>
+</ul>
+<h2 id="resources" tabindex="-1">Resources</h2>
+<ul>
 <li><a href="querybyexample">Working with <code>QueryByExample</code> format requests</a></li>
 </ul>
-<h2 id="for-web-wallets" tabindex="-1">for Web Wallets</h2>
-<h3 id="resources" tabindex="-1">Resources</h3>
 <ul>
 <li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-wallet">chapi-demo-wallet</a> contains a full example implementation and is referenced throughout this guide.</li>
 <li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
 <li><strong>Helper Library</strong>: The <a href="https://github.com/credential-handler/web-credential-handler">web-credential-handler</a> library provides helper functions for CHAPI integration in your code.</li>
 </ul>
-<h3 id="first%2C-set-up-your-wallet-to-register-itself-with-the-browser-as-a-credential-handler." tabindex="-1">First, set up your wallet to register itself with the browser as a Credential Handler.</h3>
-<h4 id="1.-import-the-chapi-polyfill-into-your-wallet-app" tabindex="-1">1. Import the CHAPI Polyfill into your wallet app</h4>
+<h2 id="wallet-registration" tabindex="-1">Wallet Registration</h2>
+<p>Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials on the Web.</p>
+<h3 id="1.-import-the-chapi-polyfill-into-your-wallet-app" tabindex="-1">1. Import the CHAPI Polyfill into your wallet app</h3>
 <p>If you're developing on Node.js, add the credential-handler-polyfill library to your project.  You can also install the web-credential-handler helper library to simplify your code.</p>
 <pre class="language-sh"><code class="language-sh"><span class="token function">npm</span> i credential-handler-polyfill@3
 <span class="token function">npm</span> i web-credential-handler@2</code></pre>
@@ -86,7 +96,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
-<h4 id="2.-add-a-credential_handler-to-your-app's-manifest.json" tabindex="-1">2. Add a <code>credential_handler</code> to your app's manifest.json</h4>
+<h3 id="2.-add-a-credential_handler-to-your-app's-manifest.json" tabindex="-1">2. Add a <code>credential_handler</code> to your app's manifest.json</h3>
 <p>In order to register a credential handler, your web app must serve a &quot;manifest.json&quot; file from its root path (&quot;/manifest.json&quot;). This file must also be CORS-enabled.  At a minimum, add the following <code>credential_handler</code> object:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"credential_handler"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -98,7 +108,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/manifest.json"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/manifest.json </a>
 </p>
-<h4 id="3.-allow-your-users-to-register-their-wallet's-credential-handler-with-the-browser-polyfill" tabindex="-1">3. Allow your users to register their wallet's credential handler with the browser polyfill</h4>
+<h3 id="3.-allow-your-users-to-register-their-wallet's-credential-handler-with-the-browser-polyfill" tabindex="-1">3. Allow your users to register their wallet's credential handler with the browser polyfill</h3>
 <p>You can register a Credential Handler by calling the <code>CredentialManager.requestPermission()</code> API. This call will ensure that the individual using the browser explicitly confirms that they want to use the website as a credential handler. The example below uses the <code>installHandler()</code> helper method to perform this action:</p>
 <pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">installHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Wallet installed.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -106,10 +116,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/install-wallet.js"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/install-wallet.js </a>
 </p>
-<h3 id="then%2C-configure-your-wallet-to-respond-to-credential-handler-events." tabindex="-1">Then, configure your wallet to respond to Credential Handler events.</h3>
-<p>Your wallet app's existing functionality can be configured to respond to CHAPI events.</p>
-<h4 id="4.-setup-listeners-for-chapi-events" tabindex="-1">4. Setup Listeners for CHAPI Events</h4>
-<p>The <code>activateHandler()</code> function is a helper that sets up listeners for CHAPI <code>get()</code> and <code>store()</code> events.</p>
+<h3 id="4.-setup-listeners-for-chapi-events" tabindex="-1">4. Setup Listeners for CHAPI Events</h3>
+<p>Configure your wallet to respond to Credential Handler events. The <code>activateHandler()</code> function is a helper that sets up listeners for CHAPI <code>get()</code> and <code>store()</code> events.</p>
 <pre class="language-javascript"><code class="language-javascript">WebCredentialHandler<span class="token punctuation">.</span><span class="token function">activateHandler</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
     <span class="token keyword">async</span> <span class="token function">get</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'WCH: Received get() event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -124,7 +132,24 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-worker.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-worker.html </a>
 </p>
-<h4 id="5.-get-credentials-events" tabindex="-1">5. Get Credentials Events</h4>
+<h2 id="verifiable-credential-storage" tabindex="-1">Verifiable Credential Storage</h2>
+<p>Wallets are able to store Verifiable Credentials issued by third-party websites using CHAPI.</p>
+<h3 id="store-credentials-events" tabindex="-1">Store Credentials Events</h3>
+<p>CHAPI supports storing credentials via the <code>navigator.credentials.store()</code> API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI <code>store()</code> request from a third-party website.</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleStoreEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Store Credential Event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>type<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Your wallet's code for storing a Verifiable Credentials</span>
+<span class="token punctuation">}</span></code></pre>
+<p class="code-annotation">
+  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-store.html"
+  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-store.html </a>
+</p>
+<p>Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.</p>
+<h2 id="verifiable-credential-presentation" tabindex="-1">Verifiable Credential Presentation</h2>
+<p>Wallets are able to present Verifiable Credentials to third-party websites using CHAPI.</p>
+<h3 id="get-credentials-events" tabindex="-1">Get Credentials Events</h3>
 <p>CHAPI supports the presentation of credentials via the <code>navigator.credentials.get()</code> API. CHAPI is agnostic to the presentation request query language and passes the query directly through to the credential handler. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI <code>get()</code> request from a third-party website.</p>
 <pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleGetEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -138,20 +163,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-get.html"
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-get.html </a>
 </p>
-<p>When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party.</p>
-<h4 id="6.-store-credentials-events" tabindex="-1">6. Store Credentials Events</h4>
-<p>CHAPI supports storing credentials via the <code>navigator.credentials.store()</code> API. If you've configured an event listener, you can follow the example below to call the relevant code in your wallet whenever it receives a CHAPI <code>store()</code> request from a third-party website.</p>
-<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handleStoreEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> event <span class="token operator">=</span> <span class="token keyword">await</span> WebCredentialHandler<span class="token punctuation">.</span><span class="token function">receiveCredentialEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Store Credential Event:'</span><span class="token punctuation">,</span> event<span class="token punctuation">.</span>type<span class="token punctuation">,</span> event<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//Your wallet's code for storing a Verifiable Credential</span>
-<span class="token punctuation">}</span></code></pre>
-<p class="code-annotation">
-  <a href="https://github.com/credential-handler/chapi-demo-wallet/blob/master/wallet-ui-store.html"
-  target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-store.html </a>
-</p>
-<p>Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.</p>
+<p>When credentials are requested, wallets should show the user what will be shared and require the user's explicit consent before the credentials are presented to the requesting party.</p>
 <h2 id="did-authentication-with-chapi" tabindex="-1">DID Authentication with CHAPI</h2>
 <p>This section is written from the perspective of web wallets.  CHAPI provides a simple method for a 3rd party website to request an individual present their Decentralized Identifier (DID) and prove their identity.  The individual selects a digital wallet to respond to this DID Authentication request.</p>
 <h3 id="resources-1" tabindex="-1">Resources</h3>
@@ -246,13 +258,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
         <span class="token string-property property">"jws"</span><span class="token operator">:</span> <span class="token string">"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg"</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<h2 id="for-native-mobile-apps" tabindex="-1">for Native Mobile Apps</h2>
-<h3 id="resources-2" tabindex="-1">Resources</h3>
-<ul>
-<li>WebShare Specification: <a href="https://w3c.github.io/web-share/">this W3C draft</a> describes the Web Share API.</li>
-<li>WebShare Documentation: <a href="https://web.dev/web-share/">web.dev</a> hosts developer docs and examples for the WebShare API</li>
-</ul>
-<p>To enable a native wallet to receive VCs via CHAPI, you’ll need to register the wallet as a share target with the mobile OS that is capable of receiving text files.  See appropriate share target documentation for <a href="https://developer.android.com/training/sharing/receive">Android</a> or <a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1">iOS</a>.</p>
 
 
       <footer class="site-footer">
@@ -269,6 +274,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
       $('.ui.sidebar')
         .sidebar('attach events', '.toc.item');
     </script>
+    <script src="/assets/js/tabs.js"></script>
 
   </body>
 </html>
