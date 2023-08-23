@@ -96,7 +96,7 @@ The endpoint declared there (`/switchboard` in the example above) will receive a
 
 Here is an example URL showing the `request` query parameter and its URL encoded value:
 
-<pre><code style="white-space: normal;overflow: auto;word-break: break-word;">
+<pre><code style="white-space: normal;overflow: auto;word-break: break-all;">
 https://wallet.example.com/switchboard?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%257B%2522credential_issuer%2522%253A%2522https%253A%252F%252Fexample.exchanger.com%252Fexchangers%252Fz1A1GqykGBWKbwhFCDqFjMfnG%252Fexchanges%252Fz1A36rr6wEL25EEiikKvisVEC%2522%252C%2522credentials%2522%253A%255B%257B%2522format%2522%253A%2522ldp_vc%2522%252C%2522credential_definition%2522%253A%257B%2522%2540context%2522%253A%255B%2522https%253A%252F%252Fwww.w3.org%252F2018%252Fcredentials%252Fv1%2522%252C%2522https%253A%252F%252Fpurl.imsglobal.org%252Fspec%252Fob%252Fv3p0%252Fcontext.json%2522%255D%252C%2522type%2522%253A%255B%2522VerifiableCredential%2522%252C%2522OpenBadgeCredential%2522%255D%257D%257D%255D%252C%2522grants%2522%253A%257B%2522urn%253Aietf%253Aparams%253Aoauth%253Agrant-type%253Apre-authorized_code%2522%253A%257B%2522pre-authorized_code%2522%253A%25220065a8a0-069b-46f1-a857-4e1ce5047afd%2522%257D%257D%257D%22%2C%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%7D%7D
 </code></pre>
 
