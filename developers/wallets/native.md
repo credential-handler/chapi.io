@@ -130,14 +130,14 @@ Example VCAPI protocol URL:
 The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
 
 Example OID4VCI protocol URL:
-`openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fqa.veresexchanger.dev%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
+`openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
 
 The `credential_offer` query parameter will be URL decoded resulting in a JSON
 object containing the following details:
 
 ```json
 {
-  "credential_issuer": "https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC",
+  "credential_issuer": "https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC",
   "credentials": [
     {
       "format": "ldp_vc",
