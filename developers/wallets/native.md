@@ -9,7 +9,7 @@ permalink: /developers/wallets/native/
 # Native Wallets
 
 * [Wallet Registration](#wallet-registration)
-* [VC Storage](#vc-storage)
+* [Verifiable Credential Storage](#verifiable-credential-storage)
 
 ## Resources
 
@@ -90,10 +90,10 @@ Once done, your Wallet should now be enabled to handle various credential relate
 
 Now that your native wallet has been registered with CHAPI, it can receive requests to store credentials at the URL stated in the `credential_handler.url` of the `manifest.json` above.
 
-The endpoint declared there (i.e. `/switchboard`) will receive a `request` query parameter that will include a URL encoded object with the following properties:
+The endpoint declared there (`/switchboard` in the example above) will receive a `request` query parameter that will include a URL encoded object with the following properties:
 
 - `credentialRequestOrigin`: This will tell the wallet where the request originated
-- `protocols`: This will include any available credential issuance protocols. The wallet may retrieve the credential for storage from any of the available protocols.
+- `protocols`: This will include any available credential exchange protocols (for issuance and/or presentation). The wallet may retrieve the credential for storage from any of the available protocols.
 
 Here is an example URL showing the `request` query parameter and its URL encoded value:
 
@@ -102,7 +102,7 @@ https://wallet.example.com/switchboard
   ?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%2C%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexample.exchanger.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D
 </code></pre>
 
-The `request` value is URL encoded. It's contents look like this when unencoded:
+The `request` value is URL encoded. Its contents look like this when unencoded:
 
 ```json
 {
@@ -116,11 +116,11 @@ The `request` value is URL encoded. It's contents look like this when unencoded:
 
 There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: `vcapi` and `OID4VCI`.
 
-Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter.
+Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. It is up to wallet providers to decide (or they may delegate this to advanced users) which protocol to use if multiple protocols are supported.
 
 ### VC-API
 
-The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `GET` request to this URL to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
+The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
 
 See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
 

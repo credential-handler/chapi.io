@@ -9,13 +9,13 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 ## Web Wallets
 
 * [Wallet Registration](#wallet-registration)
-* [VC Storage](#vc-storage)
-* [VC Retrieval](#vc-retrieval)
+* [Verifiable Credential Storage](#verifiable-credential-storage)
+* [Verifiable Credential Presentation](#verifiable-credential-presentation)
 * [DID Authentication with CHAPI](#did-authentication-with-chapi)
 
 ## Native Wallets
 * [Wallet Registration](native/#wallet-registration)
-* [VC Storage](native/#vc-storage)
+* [Verifiable Credential Storage](native/#verifiable-credential-storage)
 
 ## Resources
 
@@ -99,7 +99,7 @@ WebCredentialHandler.activateHandler({
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-worker.html </a>
 </p>
 
-## VC Storage
+## Verifiable Credential Storage
 
 Wallets are able to store Verifiable Credentials issued by third-party websites using CHAPI.
 
@@ -112,7 +112,7 @@ async function handleStoreEvent() {
     const event = await WebCredentialHandler.receiveCredentialEvent();
     console.log('Store Credential Event:', event.type, event);
 
-    //Your wallet's code for storing a Verifiable Credential
+    // Your wallet's code for storing a Verifiable Credentials
 }
 ```
 <p class="code-annotation">
@@ -122,7 +122,7 @@ async function handleStoreEvent() {
 
 Storage of credentials prompts the individual using the browser to confirm that they want to store the credential in their digital wallet.
 
-## VC Retrieval
+## Verifiable Credential Presentation
 
 Wallets are able to present Verifiable Credentials to third-party websites using CHAPI. 
 
@@ -144,7 +144,7 @@ CHAPI supports the presentation of credentials via the `navigator.credentials.ge
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/wallet-ui-get.html </a>
 </p>
 
-When presenting credentials, the user is shown what they will be sharing and must provide explicit consent before the credentials are shared with the requesting party.
+When credentials are requested, wallets should show the user what will be shared and require the user's explicit consent before the credentials are presented to the requesting party.
 
 ## DID Authentication with CHAPI
 This section is written from the perspective of web wallets.  CHAPI provides a simple method for a 3rd party website to request an individual present their Decentralized Identifier (DID) and prove their identity.  The individual selects a digital wallet to respond to this DID Authentication request.
