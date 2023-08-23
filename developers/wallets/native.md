@@ -8,32 +8,53 @@ permalink: /developers/wallets/native/
 
 # Native Wallets
 
-* [Wallet Registration](#wallet-registration)
-* [Verifiable Credential Storage](#verifiable-credential-storage)
+- [Wallet Registration](#wallet-registration)
+- [Verifiable Credential Storage](#verifiable-credential-storage)
 
 ## Resources
 
-* [Working with `QueryByExample` format requests](querybyexample)
-- **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide.
-- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
-- **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
+- [Working with `QueryByExample` format requests](querybyexample)
 
+* **Example Code**: the
+  [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet)
+  contains a full example implementation and is referenced throughout this
+  guide.
+* **Polyfill Library**: The
+  [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill)
+  library provides the needed functionality in the browser.
+* **Helper Library**: The
+  [web-credential-handler](https://github.com/credential-handler/web-credential-handler)
+  library provides helper functions for CHAPI integration in your code.
 
 ## Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.
+Wallets need to be registered with the browser as a Credential Handler in order
+to store or retrieve Verifiable Credentials (VCs) on the Web.
 
-To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be configured to receive deep links from the mobile OS.
+To enable a native mobile wallet to receive VCs via CHAPI, your application will
+need to be configured to receive deep links from the mobile OS.
 
-Deep links, also known as app links, cause a user's Web browser to open a native application and pass any URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for [Android](https://developer.android.com/training/app-links/deep-linking) or [iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
+Deep links, also known as app links, cause a user's Web browser to open a native
+application and pass any URL to it when particular links are followed. This
+enables the user's Web browser to open a native mobile wallet from the CHAPI
+wallet selection menu and pass the CHAPI request to it. See appropriate deep
+link documentation for
+[Android](https://developer.android.com/training/app-links/deep-linking) or
+[iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc).
 
-Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.
+Consequently, you will be required by the mobile OS to host the appropriate
+operating system specific files on a Web server.
 
-In addition, to enable CHAPI registration, your Web server will also need to host a `manifest.json` file as well as a registration page that allows the user to register your wallet with CHAPI within their mobile Web browser.
+In addition, to enable CHAPI registration, your Web server will also need to
+host a `manifest.json` file as well as a registration page that allows the user
+to register your wallet with CHAPI within their mobile Web browser.
 
 ### 1. Add a `credential_handler` to the server's `manifest.json`
 
-In order to register as a Credential Handler, your registration page's server must serve a `manifest.json` file from its root path (`/manifest.json`). This endpoint must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet can handle:
+In order to register as a Credential Handler, your registration page's server
+must serve a `manifest.json` file from its root path (`/manifest.json`). This
+endpoint must also be CORS-enabled. Add the following `credential_handler`
+object with the appropriate `acceptedProtocols` your wallet can handle:
 
 ```json
 {
@@ -41,22 +62,26 @@ In order to register as a Credential Handler, your registration page's server mu
     "url": "/switchboard",
     "enabledTypes": ["VerifiablePresentation"],
     "acceptedInput": "url",
-    "acceptedProtocols": [
-      "OID4VCI",
-      "OID4VP",
-      "vcapi"
-    ]
+    "acceptedProtocols": ["OID4VCI", "OID4VP", "vcapi"]
   }
 }
 ```
 
-The `url` property must be the entry point for your mobile wallet so it must be a deep link that will open the application. Details about the event that initiates the opening of this URL will be relayed via query parameters appended to it.
+The `url` property must be the entry point for your mobile wallet so it must be
+a deep link that will open the application. Details about the event that
+initiates the opening of this URL will be relayed via query parameters appended
+to it.
 
-The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive data via opening the URL and providing query parameters rather than browser sent events typically used with Web wallets.
+The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive
+data via opening the URL and providing query parameters rather than browser sent
+events typically used with Web wallets.
 
 ### 2. Allow your users to register their wallet as a Credential Handler with the browser polyfill
 
-Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
+Next, we need to have the user trigger the registration of your wallet as a
+Credential Handler within their browser. This must be initiated by user
+interaction, so you cannot automatically register without the user clicking a
+button.
 
 Add something similar to your registration page:
 
@@ -67,34 +92,47 @@ Add something similar to your registration page:
 <script src="https://unpkg.com/web-credential-handler@2/dist/web-credential-handler.min.js"></script>
 
 <script>
-  document.getElementById('installHandlerButton').addEventListener('click', async function() {
-    try {
-      await credentialHandlerPolyfill.loadOnce();
-      await WebCredentialHandler.installHandler();
-      console.log('Handler Installed Successfully!');
-    } catch (error) {
-      console.error('Error installing handler: ' + error.message);
-    }
-  });
+  document
+    .getElementById("installHandlerButton")
+    .addEventListener("click", async function () {
+      try {
+        await credentialHandlerPolyfill.loadOnce();
+        await WebCredentialHandler.installHandler();
+        console.log("Handler Installed Successfully!");
+      } catch (error) {
+        console.error("Error installing handler: " + error.message);
+      }
+    });
 </script>
 ```
 
 ### 3. Link users to the registration page from your application
 
-Your mobile application should include a link to your registration page. That link should open the device's default browser and allow them to register the wallet as a Credential Handler.
+Your mobile application should include a link to your registration page. That
+link should open the device's default browser and allow them to register the
+wallet as a Credential Handler.
 
-Once done, your Wallet should now be enabled to handle various credential related requests from across the Web.
+Once done, your Wallet should now be enabled to handle various credential
+related requests from across the Web.
 
 ## Verifiable Credential Storage
 
-Now that your native wallet has been registered with CHAPI, it can receive requests to store credentials at the URL stated in the `credential_handler.url` of the `manifest.json` above.
+Now that your native wallet has been registered with CHAPI, it can receive
+requests to store credentials at the URL stated in the `credential_handler.url`
+of the `manifest.json` above.
 
-The endpoint declared there (`/switchboard` in the example above) will receive a `request` query parameter that will include a URL encoded object with the following properties:
+The endpoint declared there (`/switchboard` in the example above) will receive a
+`request` query parameter that will include a URL encoded object with the
+following properties:
 
-- `credentialRequestOrigin`: This will tell the wallet where the request originated
-- `protocols`: This will include any available credential exchange protocols (for issuance and/or presentation). The wallet may retrieve the credential for storage from any of the available protocols.
+- `credentialRequestOrigin`: This will tell the wallet where the request
+  originated
+- `protocols`: This will include any available credential exchange protocols
+  (for issuance and/or presentation). The wallet may retrieve the credential for
+  storage from any of the available protocols.
 
-Here is an example URL showing the `request` query parameter and its URL encoded value:
+Here is an example URL showing the `request` query parameter and its URL encoded
+value:
 
 <pre><code style="white-space: normal;overflow: auto;word-break: break-word;">
 https://wallet.example.com/switchboard
@@ -113,24 +151,44 @@ The `request` value is URL encoded. Its contents look like this when unencoded:
 }
 ```
 
-There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: `vcapi` and `OID4VCI`.
+There are currently two possible protocols that Issuers may use with CHAPI in
+order to issue Verifiable Credentials to be stored in the user's digital wallet:
+`vcapi` and `OID4VCI`.
 
-Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. It is up to wallet providers to decide (or they may delegate this to advanced users) which protocol to use if multiple protocols are supported.
+Depending on what you declared in your `acceptedProtocols` you may receive
+either or both as properties in the `protocols` object carried in the `request`
+query parameter. It is up to wallet providers to decide (or they may delegate
+this to advanced users) which protocol to use if multiple protocols are
+supported.
 
 ### VC-API
 
-The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
+The `vcapi` property will be a URL that will tell the wallet where to go to
+retrieve the credential. The wallet can send a `POST` request to this URL with
+an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC
+will be found in the `verifiablePresentation` object of the response to that
+`POST` request. If there are further steps required in the flow such as DID Auth
+there will instead be a `verifiablePresentationRequest` object that will
+describe the details. A `VerifiablePresentation` will need to be sent back to
+the same endpoint to fulfill the request and complete the issuance process.
 
-See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
+See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more
+details on this protocol.
 
 Example VCAPI protocol URL:
 `https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ`
 
 ### OID4VCI
 
-The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
+The `OID4VCI` property will be a URL that includes all of the required
+information to complete the issuance of the Verifiable Credential using the
+OID4VCI protocol.
 
-See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
+See the
+[OID4VCI Specification v11](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
+for more details of this protocol. You can also find an open source
+implementation of an OID4VCI client
+[here](https://github.com/digitalbazaar/oid4-client).
 
 Example OID4VCI protocol URL:
 `openid-credential-offer://?credential_offer={"credential_issuer":"https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC","credentials":[{"format":"ldp_vc","credential_definition":{"@context":["https://www.w3.org/2018/credentials/v1","https://purl.imsglobal.org/spec/ob/v3p0/context.json"],"type":["VerifiableCredential","OpenBadgeCredential"]}}],"grants":{"urn:ietf:params:oauth:grant-type:pre-authorized_code":{"pre-authorized_code":"0065a8a0-069b-46f1-a857-4e1ce5047afd"}}}`
