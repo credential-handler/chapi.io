@@ -3,7 +3,7 @@ layout: subpage
 title: "Developer Docs for Verifying Multiple Verifiable Credentials"
 permalink: /developers/verifiers/multicredentials/
 ---
-# {{ page.title }}
+# {{ title }}
 
 The [CHAPI Playground](https://playground.chapi.io/) supports the delivery of
 `QueryByExample` requests for doing Multi-Credential Verification as a

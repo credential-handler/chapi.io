@@ -3,7 +3,7 @@ layout: subpage
 title: "Developer Docs for CHAPI Wallet QueryByExample"
 permalink: /developers/wallets/querybyexample/
 ---
-# {{ page.title }}
+# {{ title }}
 
 Prerequisite: This document assumes completion of the
 [CHAPI integration for Digital Wallets integration instructions](./).
