@@ -119,7 +119,7 @@ Depending on what you declared in your `acceptedProtocols` you may receive eithe
 
 ### VC-API
 
-The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
+The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth there will instead be a `verifiablePresentationRequest` object that will describe the details. A `VerifiablePresentation` will need to be sent back to the same endpoint to fulfill the request and complete the issuance process.
 
 See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
 
@@ -130,7 +130,7 @@ Example VCAPI protocol URL:
 
 The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
 
-See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
+See the [OID4VCI Specification v11](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
 
 Example OID4VCI protocol URL:
 `openid-credential-offer://?credential_offer={"credential_issuer":"https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC","credentials":[{"format":"ldp_vc","credential_definition":{"@context":["https://www.w3.org/2018/credentials/v1","https://purl.imsglobal.org/spec/ob/v3p0/context.json"],"type":["VerifiableCredential","OpenBadgeCredential"]}}],"grants":{"urn:ietf:params:oauth:grant-type:pre-authorized_code":{"pre-authorized_code":"0065a8a0-069b-46f1-a857-4e1ce5047afd"}}}`
