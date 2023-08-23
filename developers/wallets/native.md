@@ -118,7 +118,7 @@ Depending on what you declared in your `acceptedProtocols` you may receive eithe
 
 ### VC-API
 
-The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth there will instead be a `verifiablePresentationRequest` object that will describe the details. A `VerifiablePresentation` will need to be sent back to the same endpoint to fulfill the request and complete the issuance process.
+The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
 
 See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
 
@@ -129,7 +129,30 @@ Example VCAPI protocol URL:
 
 The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
 
-See the [OID4VCI Specification v11](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details of this protocol.
-
 Example OID4VCI protocol URL:
-`openid-credential-offer://?credential_offer={"credential_issuer":"https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC","credentials":[{"format":"ldp_vc","credential_definition":{"@context":["https://www.w3.org/2018/credentials/v1","https://purl.imsglobal.org/spec/ob/v3p0/context.json"],"type":["VerifiableCredential","OpenBadgeCredential"]}}],"grants":{"urn:ietf:params:oauth:grant-type:pre-authorized_code":{"pre-authorized_code":"0065a8a0-069b-46f1-a857-4e1ce5047afd"}}}`
+`openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fqa.veresexchanger.dev%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
+
+The `credential_offer` query parameter will be URL decoded resulting in a JSON
+object containing the following details:
+
+```json
+{
+  "credential_issuer": "https://qa.veresexchanger.dev/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z1A36rr6wEL25EEiikKvisVEC",
+  "credentials": [
+    {
+      "format": "ldp_vc",
+      "credential_definition": {
+        "@context": ["https://www.w3.org/2018/credentials/v1", "https://purl.imsglobal.org/spec/ob/v3p0/context.json"],
+        "type": ["VerifiableCredential","OpenBadgeCredential"]
+      }
+    }
+  ],
+  "grants": {
+    "urn:ietf:params:oauth:grant-type:pre-authorized_code": {
+      "pre-authorized_code": "0065a8a0-069b-46f1-a857-4e1ce5047afd"
+    }
+  }
+}
+```
+
+See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details on this protocol.
