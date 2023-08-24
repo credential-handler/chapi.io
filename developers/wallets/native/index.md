@@ -15,13 +15,13 @@ permalink: /developers/wallets/native/
 
 * [Working with `QueryByExample` format requests](../querybyexample)
 - **Example Code**: the [chapi-demo-wallet](https://github.com/credential-handler/chapi-demo-wallet) contains a full example implementation and is referenced throughout this guide.
-- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed functionality in the browser.
+- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed `CredentialHandler` API within the browser.
 - **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
 
 
-## Wallet Registration
+## Native Wallet Registration
 
-Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.
+All Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.
 
 To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be configured to receive deep links from the mobile OS.
 
@@ -56,9 +56,14 @@ The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive dat
 
 ### 2. Allow your users to register their wallet as a Credential Handler with the browser polyfill
 
-Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
+To register with CHAPI, your user must trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
 
-Add something similar to your registration page:
+We will load two libraries into the Wallet code to enable the registration:
+- **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed `CredentialHandler` API within the browser.
+- **Helper Library**: The [web-credential-handler](https://github.com/credential-handler/web-credential-handler) library provides helper functions for CHAPI integration in your code.
+
+You can add these libraries via `<script>` tags and watch a click event to
+trigger the CHAPI registration and handler installation:
 
 ```html
 <button id="installHandlerButton">Register Wallet</button>
