@@ -94,7 +94,12 @@ Once done, your Wallet should now be enabled to handle various credential relate
 
 Now that your native wallet has been registered with CHAPI, it can receive requests to store credentials at the URL stated in the `credential_handler.url` of the `manifest.json` above.
 
-The endpoint declared there (`/switchboard` in the example above) will receive a `request` query parameter that will include a URL encoded object with the following properties:
+CHAPI will use the endpoint declared (`/switchboard` in the example above) when it provides links to available wallets in the user's browser:
+
+![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](/images/VeresCHAPIaccept.png)
+
+The user will click the provided link to selection your Wallet from the list.
+That link will contain a `request` query parameter with a URL encoded JSON object containting the following properties:
 
 - `credentialRequestOrigin`: This will tell the wallet where the request originated
 - `protocols`: This will include any available credential exchange protocols (for issuance and/or presentation). The wallet may retrieve the credential for storage from any of the available protocols.
@@ -119,7 +124,7 @@ The `request` value is URL encoded. Its contents look like this when unencoded:
 
 There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: `vcapi` and `OID4VCI`.
 
-Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. It is up to wallet providers to decide (or they may delegate this to advanced users) which protocol to use if multiple protocols are supported.
+Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. Your Wallet's code (i.e. in `/switchboard`) should decide which protocol to use (or it may delegate this choice to advanced users) when multiple protocols are available.
 
 ### VC-API
 
@@ -135,7 +140,9 @@ Example VCAPI protocol URL:
 The `OID4VCI` property will be a URL that includes all of the required information to complete the issuance of the Verifiable Credential using the OID4VCI protocol.
 
 Example OID4VCI protocol URL:
+<pre><code style="white-space: normal;overflow: auto;word-break: break-all;">
 `openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
+</code></pre>
 
 The `credential_offer` query parameter will be URL decoded resulting in a JSON
 object containing the following details:
