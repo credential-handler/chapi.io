@@ -44,11 +44,11 @@ That credential may now be stored in a wallet. Click "Store in Wallet" to procee
 
 A modal will appear - similar to the one below - explaining that the playground wants to send the credential for you.
 
-![Playground offering to store a credential. The screen contains two buttons: one to cancel the request and one to go to the next screen.](playground-offering-to-store-credential.jpg)
+![Playground offering to store a credential. The screen contains two buttons: one to cancel the request and one to go to the next screen.](../playground-offering-to-store-credential.jpg)
 
 Clicking "Next" should present you with a list of available wallets:
 
-![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](choose-a-wallet.jpg)
+![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](../choose-a-wallet.jpg)
 
 However, if you instead receive a browser window popup warning you that you do not yet have one set up, you will need to return to the [Wallet Sign Up section](#wallet-sign-up) above.
 
@@ -68,19 +68,19 @@ First, visit the [playground's Verifier section](https://playground.chapi.io/ver
 
 Select the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", and "Permanent Resident").
 
-![Select multiple credentials to submit them for verification.](select-multiple-credentials.jpg)
+![Select multiple credentials to submit them for verification.](../select-multiple-credentials.jpg)
 
 Next, click "Request Verifiable Presentation" to request that your wallet share these credentials with the Playground's Verifier.
 
 The Wallet should display each of the credentials it found based on your selection. It may also provide the ability to select specific ones to be verified. The demo Veres Wallet presents the credential selection as follows:
 
-![Multiple credentials listed within the Veres Demo Wallet are ready for selection. A Share button is available to send credential information to the Verifier.](multiple-credential-selection-within-wallet.jpg)
+![Multiple credentials listed within the Veres Demo Wallet are ready for selection. A Share button is available to send credential information to the Verifier.](../multiple-credential-selection-within-wallet.jpg)
 
 Click the "Share" button to send some or all of them to the playground for verification.
 
 Once shared, the process should end with a `VerifiablePresentation` JSON document shown and the words "Presentation Verified".
 
-![A VerifiablePresentation JSON document object is shown in the Playgroud user interface followed by the words "Presentation Verified".](verifiable-presentation-received.jpg)
+![A VerifiablePresentation JSON document object is shown in the Playgroud user interface followed by the words "Presentation Verified".](../verifiable-presentation-received.jpg)
 
 {% include 'example-verifiable-presentation.html' %}
 
