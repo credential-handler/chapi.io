@@ -69,11 +69,11 @@
 </ul>
 <ul>
 <li><strong>Example Code</strong>: the <a href="https://github.com/credential-handler/chapi-demo-wallet">chapi-demo-wallet</a> contains a full example implementation and is referenced throughout this guide.</li>
-<li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed functionality in the browser.</li>
+<li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed <code>CredentialHandler</code> API within the browser.</li>
 <li><strong>Helper Library</strong>: The <a href="https://github.com/credential-handler/web-credential-handler">web-credential-handler</a> library provides helper functions for CHAPI integration in your code.</li>
 </ul>
-<h2 id="wallet-registration" tabindex="-1">Wallet Registration</h2>
-<p>Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.</p>
+<h2 id="native-wallet-registration" tabindex="-1">Native Wallet Registration</h2>
+<p>All Wallets need to be registered with the browser as a Credential Handler in order to store or retrieve Verifiable Credentials (VCs) on the Web.</p>
 <p>To enable a native mobile wallet to receive VCs via CHAPI, your application will need to be configured to receive deep links from the mobile OS.</p>
 <p>Deep links, also known as app links, cause a user's Web browser to open a native application and pass any URL to it when particular links are followed. This enables the user's Web browser to open a native mobile wallet from the CHAPI wallet selection menu and pass the CHAPI request to it. See appropriate deep link documentation for <a href="https://developer.android.com/training/app-links/deep-linking">Android</a> or <a href="https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content?language=objc">iOS</a>.</p>
 <p>Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.</p>
@@ -95,8 +95,14 @@
 <p>The <code>url</code> property must be the entry point for your mobile wallet so it must be a deep link that will open the application. Details about the event that initiates the opening of this URL will be relayed via query parameters appended to it.</p>
 <p>The <code>&quot;acceptedInput&quot;: &quot;url&quot;</code> line tells CHAPI that the wallet should receive data via opening the URL and providing query parameters rather than browser sent events typically used with Web wallets.</p>
 <h3 id="2.-allow-your-users-to-register-their-wallet-as-a-credential-handler-with-the-browser-polyfill" tabindex="-1">2. Allow your users to register their wallet as a Credential Handler with the browser polyfill</h3>
-<p>Next, we need to have the user trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.</p>
-<p>Add something similar to your registration page:</p>
+<p>To register with CHAPI, your user must trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking or tapping a button or link.</p>
+<p>We will load two libraries into the Wallet code to enable the registration:</p>
+<ul>
+<li><strong>Polyfill Library</strong>: The <a href="https://github.com/credential-handler/credential-handler-polyfill">credential-handler-polyfill</a> library provides the needed <code>CredentialHandler</code> API within the browser.</li>
+<li><strong>Helper Library</strong>: The <a href="https://github.com/credential-handler/web-credential-handler">web-credential-handler</a> library provides helper functions for CHAPI integration in your code.</li>
+</ul>
+<p>You can add these libraries via <code>&lt;script&gt;</code> tags and watch a click event to<br>
+trigger the CHAPI registration and handler installation:</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>installHandlerButton<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Register Wallet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://unpkg.com/credential-handler-polyfill@3/dist/credential-handler-polyfill.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
