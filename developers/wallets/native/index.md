@@ -128,12 +128,57 @@ Depending on what you declared in your `acceptedProtocols` you may receive eithe
 
 ### VC-API
 
-The `vcapi` property will be a URL that will tell the wallet where to go to retrieve the credential. The wallet can send a `POST` request to this URL with an empty JSON object (`{}`) to attempt to download the VC to be stored. The VC will be found in the `verifiablePresentation` object of the response to that `POST` request. If there are further steps required in the flow such as DID Auth a `verifiablePresentationRequest` object will describe the details.
+The `vcapi` property will contain a URL that tells the wallet where it can the credential.
 
-See the [VC API Specification](https://w3c-ccg.github.io/vc-api/) for more details on this protocol.
+To retrieve the credential via VC-API, the wallet first sends a `POST` request
+to the URL (extracted from `protocols.vcapi` above) with an empty JSON object
+(`{}`) in the body of the request to attempt to download the VC to be stored.
 
-Example VCAPI protocol URL:
-`https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ`
+```http
+POST /exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ
+Host: exchanger.example.com
+Content-Type: application/json
+
+{}
+```
+
+The response to that request will contain a Verifiable Credential within a
+`verifiablePresentation` object. Additionally, if there are further steps
+required in the flow such as DID Auth a `verifiablePresentationRequest` object
+will describe the details.
+
+Below is a partial example response:
+
+```json
+{
+  "verifiablePresentation": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "type": ["VerifiablePresentation"],
+    "holder": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "verifiableCredential": [{
+          "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "http://example.edu/credentials/3732",
+      "type": [
+        "VerifiableCredential",
+        "UniversityDegreeCredential"
+      ],
+      ...
+    }]
+  }
+}
+```
+
+More complete examples can be found in the
+[Example Exchanges](https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ)
+section of the [VC-API Specification](https://w3c-ccg.github.io/vc-api/).
 
 ### OID4VCI
 
