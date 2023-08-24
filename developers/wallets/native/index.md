@@ -56,7 +56,7 @@ The `"acceptedInput": "url"` line tells CHAPI that the wallet should receive dat
 
 ### 2. Allow your users to register their wallet as a Credential Handler with the browser polyfill
 
-To register with CHAPI, your user must trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking a button.
+To register with CHAPI, your user must trigger the registration of your wallet as a Credential Handler within their browser. This must be initiated by user interaction, so you cannot automatically register without the user clicking or tapping a button or link.
 
 We will load two libraries into the Wallet code to enable the registration:
 - **Polyfill Library**: The [credential-handler-polyfill](https://github.com/credential-handler/credential-handler-polyfill) library provides the needed `CredentialHandler` API within the browser.
