@@ -29,9 +29,9 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 All Wallets need to be registered as a Credential Handler in the user's browser in order to store or retrieve Verifiable Credentials (VCs) from across the Web.
 
 A Web Wallet is typically made up of three main parts:
-* `/index.html` - main page for the wallet
-* `/manifest.json` - Web App Manifest containting credential handler affordances
-* `/wallet-worker.html` - routing endpoint for passing URLs between CHAPI and the Wallet
+* A main page for the wallet (e.g., `/index.html`)
+* Web App Manifest containing credential handler affordances (using `/manifest.json`)
+* A routing endpoint for handling requests between CHAPI and the Wallet (e.g., `/wallet-worker.html`) 
 
 ### 1. Add a `credential_handler` to your Web app's `manifest.json`
 
