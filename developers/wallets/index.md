@@ -50,8 +50,9 @@ In order to register a credential handler, your Web app must serve a `manifest.j
   target="_blank" rel="noopener noreferrer"> chapi-demo-wallet/manifest.json </a>
 </p>
 
-The `/wallet-worker.html` page will setup listeners for CHAPI-sent events
-which can then be handled by your Wallet. More on that in a bit.
+The `/wallet-worker.html` page (note: you can use another name if you'd like)
+will setup listeners for CHAPI-sent events which can then be handled by your
+Wallet. More on that in a bit.
 
 ### 2. Import the CHAPI Polyfill into your wallet's main page
 
@@ -99,7 +100,7 @@ import * as WebCredentialHandler from 'web-credential-handler';
 ```
 
 Once you've done that and bundled it, reference the output/bundled `.js` in
-your `index.html`.
+your `index.html` (note: you can use another name if you'd like).
 
 ### 3. Setup Listeners for CHAPI Events
 
