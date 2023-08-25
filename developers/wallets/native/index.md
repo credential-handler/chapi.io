@@ -33,7 +33,9 @@ In addition, to enable CHAPI registration, your Web server will also need to hos
 
 ### 1. Add a `credential_handler` to the server's `manifest.json`
 
-In order to register as a Credential Handler, your registration page's server must serve a `manifest.json` file from its root path (`/manifest.json`). This endpoint must also be CORS-enabled. Add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet can handle:
+In order to register as a Credential Handler, your registration page's server must serve a `manifest.json` file from its root path (`/manifest.json`). This endpoint must be CORS-enabled which can be done by adding the `Access-Control-Allow-Origin: *` header to responses for that URL.
+
+Now, add the following `credential_handler` object with the appropriate `acceptedProtocols` your wallet can handle:
 
 ```json
 {
