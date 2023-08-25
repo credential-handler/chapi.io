@@ -98,7 +98,7 @@ CHAPI will use the endpoint declared (`/switchboard` in the example above) when 
 
 ![Choose a wallet modal presenting all preregistered wallet systems which can be clicked on to proceed to store the credentials there.](/images/VeresCHAPIaccept.png)
 
-The user will click the provided link to selection your Wallet from the list.
+The user will click the provided link to select your wallet from the list.
 That link will contain a `request` query parameter with a URL encoded JSON object containting the following properties:
 
 - `credentialRequestOrigin`: This will tell the wallet where the request originated
@@ -124,13 +124,13 @@ The `request` value is URL encoded. Its contents look like this when unencoded:
 
 There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: `vcapi` and `OID4VCI`.
 
-Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. Your Wallet's code (i.e. in `/switchboard`) should decide which protocol to use (or it may delegate this choice to advanced users) when multiple protocols are available.
+Depending on what you declared in your `acceptedProtocols` you may receive either or both as properties in the `protocols` object carried in the `request` query parameter. Your wallet's code (i.e. in `/switchboard`) should decide which protocol to use (or it may delegate this choice to advanced users) when multiple protocols are available.
 
 ### VC-API
 
-The `vcapi` property will contain a URL that tells the wallet where it can the credential.
+The `vcapi` property will contain a URL the wallet can use to get the credential(s).
 
-To retrieve the credential via VC-API, the wallet first sends a `POST` request
+To retrieve one or more credentials via VC-API, the wallet first sends a `POST` request
 to the URL (extracted from `protocols.vcapi` above) with an empty JSON object
 (`{}`) in the body of the request to attempt to download the VC to be stored.
 
@@ -164,7 +164,7 @@ Below is a partial example response:
     "type": ["VerifiablePresentation"],
     "holder": "did:example:ebfeb1f712ebc6f1c276e12ec21",
     "verifiableCredential": [{
-          "@context": [
+      "@context": [
         "https://www.w3.org/2018/credentials/v1",
         "https://www.w3.org/2018/credentials/examples/v1",
         "https://w3id.org/security/suites/ed25519-2020/v1"
@@ -181,7 +181,7 @@ Below is a partial example response:
 ```
 
 More complete examples can be found in the
-[Example Exchanges](https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ)
+[Example Exchanges](https://w3c-ccg.github.io/vc-api/#exchange-examples)
 section of the [VC-API Specification](https://w3c-ccg.github.io/vc-api/).
 
 ### OID4VCI
@@ -190,7 +190,7 @@ The `OID4VCI` property will be a URL that includes all of the required informati
 
 Example OID4VCI protocol URL:
 <pre><code style="white-space: normal;overflow: auto;word-break: break-all;">
-`openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D`
+openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D
 </code></pre>
 
 The `credential_offer` query parameter will be URL decoded resulting in a JSON
