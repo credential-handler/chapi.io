@@ -101,7 +101,7 @@ CHAPI will use the endpoint declared (`/switchboard` in the example above) when 
 ![Choose a wallet modal presenting all preregistered wallet systems which can be clicked on to proceed to store the credentials there.](/images/VeresCHAPIaccept.png)
 
 The user will click the provided link to select your wallet from the list.
-That link will contain a `request` query parameter with a URL encoded JSON object containting the following properties:
+That link will contain a `request` query parameter with a URL encoded JSON object containing the following properties:
 
 - `credentialRequestOrigin`: This will tell the wallet where the request originated
 - `protocols`: This will include any available credential exchange protocols (for issuance and/or presentation). The wallet may retrieve the credential for storage from any of the available protocols.
