@@ -7,7 +7,6 @@ module.exports = function(eleventyConfig) {
   /* Markdown Overrides */
   const markdownLibrary = markdownIt({
     html: true,
-    breaks: true,
     linkify: true
   }).use(markdownItAnchor, {
     permalink: false
