@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "eleventy",
-    "serve": "eleventy --serve",
+    "serve": "rm -rf _site/ && eleventy --serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
