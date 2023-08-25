@@ -35,7 +35,9 @@ A Web Wallet is typically made up of three main parts:
 
 ### 1. Add a `credential_handler` to your Web app's `manifest.json`
 
-In order to register a credential handler, your Web app must serve a `manifest.json` file from its root path (`/manifest.json`). This file _must_ be CORS-enabled. At a minimum, the `manifest.json` file should contain the following `credential_handler` object:
+In order to register a credential handler, your Web app must serve a `manifest.json` file from its root path (`/manifest.json`). This file must be CORS-enabled which can be done by adding the `Access-Control-Allow-Origin: *` header to responses for that URL.
+
+At a minimum, the `manifest.json` file should contain the following `credential_handler` object:
 
 ```json
 {
