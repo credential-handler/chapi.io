@@ -142,10 +142,14 @@ Content-Type: application/json
 {}
 ```
 
-The response to that request will contain a Verifiable Credential within a
-`verifiablePresentation` object. Additionally, if there are further steps
-required in the flow such as DID Auth a `verifiablePresentationRequest` object
-will describe the details.
+The response to that request will be an object that may have a
+`verifiablePresentation` object and / or a `verifiablePresentationRequest`
+object. If a `verifiablePresentation` object is present, it will contain any
+verifiable credentials that were issued. If a `verifiablePresentationRequest`
+object is present, then there are further steps required in the exchange
+such as DID Auth. The `verifiablePresentationRequest` object will describe
+what is required to continue the exchange. When no
+`verifiablePresentationRequest` object is present, the exchange is complete.
 
 Below is a partial example response:
 
