@@ -79,7 +79,8 @@
 <p>Consequently, you will be required by the mobile OS to host the appropriate operating system specific files on a Web server.</p>
 <p>In addition, to enable CHAPI registration, your Web server will also need to host a <code>manifest.json</code> file as well as a registration page that allows the user to register your wallet with CHAPI within their mobile Web browser.</p>
 <h3 id="1.-add-a-credential_handler-to-the-server's-manifest.json" tabindex="-1">1. Add a <code>credential_handler</code> to the server's <code>manifest.json</code></h3>
-<p>In order to register as a Credential Handler, your registration page's server must serve a <code>manifest.json</code> file from its root path (<code>/manifest.json</code>). This endpoint must also be CORS-enabled. Add the following <code>credential_handler</code> object with the appropriate <code>acceptedProtocols</code> your wallet can handle:</p>
+<p>In order to register as a Credential Handler, your registration page's server must serve a <code>manifest.json</code> file from its root path (<code>/manifest.json</code>). This endpoint must be CORS-enabled which can be done by adding the <code>Access-Control-Allow-Origin: *</code> header to responses for that URL.</p>
+<p>Now, add the following <code>credential_handler</code> object with the appropriate <code>acceptedProtocols</code> your wallet can handle:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"credential_handler"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"/switchboard"</span><span class="token punctuation">,</span>

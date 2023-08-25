@@ -89,7 +89,8 @@
 <li>A routing endpoint for handling requests between CHAPI and the Wallet (e.g., <code>/wallet-worker.html</code>)</li>
 </ul>
 <h3 id="1.-add-a-credential_handler-to-your-web-app's-manifest.json" tabindex="-1">1. Add a <code>credential_handler</code> to your Web app's <code>manifest.json</code></h3>
-<p>In order to register a credential handler, your Web app must serve a <code>manifest.json</code> file from its root path (<code>/manifest.json</code>). This file <em>must</em> be CORS-enabled. At a minimum, the <code>manifest.json</code> file should contain the following <code>credential_handler</code> object:</p>
+<p>In order to register a credential handler, your Web app must serve a <code>manifest.json</code> file from its root path (<code>/manifest.json</code>). This file must be CORS-enabled which can be done by adding the <code>Access-Control-Allow-Origin: *</code> header to responses for that URL.</p>
+<p>At a minimum, the <code>manifest.json</code> file should contain the following <code>credential_handler</code> object:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"credential_handler"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"/wallet-worker.html"</span><span class="token punctuation">,</span>
