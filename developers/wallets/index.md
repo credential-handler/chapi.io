@@ -135,7 +135,7 @@ Now, with those things in place, you can test the process out on the
 sections of the Playground to trigger `get()` (Verifier) or `store()`
 (Issuer) events when you select your Wallet in the CHAPI Wallet selector modal.
 
-![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](/images/VeresCHAPIaccept.png)
+![Choose a wallet modal presenting all preregistered wallet systems which can be clicked on to proceed to store the credentials there.](/images/VeresCHAPIaccept.png)
 
 ## Verifiable Credential Storage
 

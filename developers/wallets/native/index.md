@@ -96,7 +96,7 @@ Now that your native wallet has been registered with CHAPI, it can receive reque
 
 CHAPI will use the endpoint declared (`/switchboard` in the example above) when it provides links to available wallets in the user's browser:
 
-![Choose a wallet modal presenting all preregisterd wallet systems which can be clicked on to proceed to storing the credentials there.](/images/VeresCHAPIaccept.png)
+![Choose a wallet modal presenting all preregistered wallet systems which can be clicked on to proceed to store the credentials there.](/images/VeresCHAPIaccept.png)
 
 The user will click the provided link to selection your Wallet from the list.
 That link will contain a `request` query parameter with a URL encoded JSON object containting the following properties:
