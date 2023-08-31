@@ -130,9 +130,9 @@ Depending on what you declared in your `acceptedProtocols` you may receive eithe
 
 ### VC-API
 
-The `vcapi` property will contain a URL the wallet can use to get the credential(s).
+The `vcapi` property will contain a URL the wallet can use to retrieve the issued credential(s).
 
-To retrieve one or more credentials via VC-API, the wallet first sends a `POST` request
+To store one or more credentials via VC-API, the wallet first sends a `POST` request
 to the URL (extracted from `protocols.vcapi` above) with an empty JSON object
 (`{}`) in the body of the request to attempt to download the VC to be stored.
 
@@ -219,3 +219,106 @@ object containing the following details:
 ```
 
 See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) for more details on this protocol.
+
+## Verifiable Credential Presentation
+
+Browser side verification flows will open the CHAPI wallet selector in the user's
+browser. If they select a native wallet, that URL will open the pre-registered
+native wallet apps link (see above for how to register...).
+
+That URL will to the Wallet's pre-registered domain--which will (thanks to the
+magic of app links!) open in the user's wallet:
+```
+https://wallet.example.com/switchboard?request=
+```
+
+Depending on the protocols supported, the value of request will contain one
+or more encoded JSON objects with nifty details...
+
+...explain when this happens...maybe with mermaid chart?
+
+### VC-API
+
+The `vcapi` property within the object parsed above will contain a URL the wallet can use to handle that request.
+
+To respond with zero or more credentials via a VC-API exchanger, the wallet MUST first send a `POST` request
+to the URL (extracted from `protocols.vcapi` above) with an empty JSON object
+(`{}`) in the body of the request to attempt to get a Verifiable Presentation
+Request with the details about what the verifier wants.
+
+```http
+POST /exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ
+Host: exchanger.example.com
+Content-Type: application/json
+
+{}
+```
+
+The response to that request will be a `verifiablePresentationRequest`
+object. The `verifiablePresentationRequest` object will describe
+what is required to continue the exchange.
+
+Below is an example `verifiablePresentationRequest` containing a `QueryByExample`
+query:
+
+```json
+{
+  "verifiablePresentationRequest": {
+    "query": [
+      {
+        "type": "QueryByExample",
+        "credentialQuery": {
+          "reason": "Please present your Verifiable Credential to complete the verification process.",
+          "example": {
+            "@context": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://www.w3.org/2018/credentials/examples/v1"
+            ],
+            "type": [
+              "UniversityDegreeCredential"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+The wallet should fulfill the request by sending another `POST` request to the
+same exchange URL with a `verifiablePresentation` containing the user selected
+credentials:
+
+```json
+{
+  "verifiablePresentation": {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "type": ["VerifiablePresentation"],
+    "holder": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "verifiableCredential": [{
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1",
+        "https://w3id.org/security/suites/ed25519-2020/v1"
+      ],
+      "id": "http://example.edu/credentials/3732",
+      "type": [
+        "VerifiableCredential",
+        "UniversityDegreeCredential"
+      ],
+      ...
+    }]
+  }
+}
+```
+
+When no `verifiablePresentationRequest` object is present, the exchange is
+complete.
+
+More complete examples can be found in the
+[Example Exchanges](https://w3c-ccg.github.io/vc-api/#exchange-examples)
+section of the [VC-API Specification](https://w3c-ccg.github.io/vc-api/).
