@@ -1,6 +1,7 @@
 const sass = require('sass');
 const markdownIt = require('markdown-it');
 const markdownItAnchor = require('markdown-it-anchor');
+const eleventyMermaidPlugin = require('@kevingimbel/eleventy-plugin-mermaid');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function(eleventyConfig) {
@@ -14,6 +15,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.setLibrary('md', markdownLibrary);
 
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(eleventyMermaidPlugin);
 
   eleventyConfig.addTemplateFormats('scss');
   // Creates the extension for use
