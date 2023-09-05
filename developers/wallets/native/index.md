@@ -239,6 +239,30 @@ or more encoded JSON objects with nifty details...
 
 ### VC-API
 
+```mermaid
+sequenceDiagram
+  # User visits Relying Party website and clicks something. Then this happens...
+
+  participant site as OpenBadge Verifier Site
+  participant chapi as User's Browser / CHAPI
+  participant app as Native Wallet App
+  participant exchanger as VC-API Exchanger
+
+  site ->> exchanger: 1. creates an exchange within a workflow
+  exchanger ->> site: 2. exchange URL/ID returned (in some JSON)
+  site ->> chapi: 3. triggers CHAPI `get()` request w/blank VP + `protocols.vcapi` containing URL
+  chapi ->> app: 4. triggers app URL to open app w/`?request=`
+  app ->> exchanger: 5. uses VC-API  URL from `?request=` to send VPR
+  exchanger ->> app: 6. returns VPR to wallet
+  app ->> exchanger: 7. responds with VP
+  exchanger ->> app: 9. sends success response to wallet
+  # Webhooks here maybe?
+  loop poll exchange status
+    site ->> exchanger: exchange complete?
+    exchanger ->> site: ...wait for it...
+  end
+```
+
 The `vcapi` property within the object parsed above will contain a URL the wallet can use to handle that request.
 
 To respond with zero or more credentials via a VC-API exchanger, the wallet MUST first send a `POST` request
