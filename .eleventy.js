@@ -16,6 +16,27 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(eleventyMermaidPlugin);
+  // add custom JS for loading SVG pan/zoom features
+  eleventyConfig.addShortcode('mermaid_with_callback_js', () => {
+    const src = 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+    return `<script type="module" async>
+      import mermaid from '${src}';
+      mermaid.run({
+        querySelector: '.mermaid',
+        postRenderCallback: (id) => {
+          const selector = '#'.concat(id);
+          const chart = document.getElementById(id);
+          chart.setAttribute('height', chart.getBoundingClientRect().height);
+          const zoomable = svgPanZoom(selector, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true
+          });
+        }
+      });
+    </script>`;
+  });
 
   eleventyConfig.addTemplateFormats('scss');
   // Creates the extension for use
