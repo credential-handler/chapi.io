@@ -4,6 +4,9 @@ const markdownItAnchor = require('markdown-it-anchor');
 const eleventyMermaidPlugin = require('@kevingimbel/eleventy-plugin-mermaid');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
+const mermaidShortcode = require('./_shortcodes/mermaid');
+const mermaidFullscreenJsShortcode = require('./_shortcodes/mermaid_fullscreen_js');
+
 module.exports = function(eleventyConfig) {
   /* Markdown Overrides */
   const markdownLibrary = markdownIt({
@@ -15,28 +18,11 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.setLibrary('md', markdownLibrary);
 
   eleventyConfig.addPlugin(syntaxHighlight);
-  eleventyConfig.addPlugin(eleventyMermaidPlugin);
+  eleventyConfig.addPlugin(eleventyMermaidPlugin, { extra_classes: 'attached' });
   // add custom JS for loading SVG pan/zoom features
-  eleventyConfig.addShortcode('mermaid_with_callback_js', () => {
-    const src = 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
-    return `<script type="module" async>
-      import mermaid from '${src}';
-      mermaid.run({
-        querySelector: '.mermaid',
-        postRenderCallback: (id) => {
-          const selector = '#'.concat(id);
-          const chart = document.getElementById(id);
-          chart.setAttribute('height', chart.getBoundingClientRect().height);
-          const zoomable = svgPanZoom(selector, {
-            zoomEnabled: true,
-            controlIconsEnabled: true,
-            fit: true,
-            center: true
-          });
-        }
-      });
-    </script>`;
-  });
+  eleventyConfig.addShortcode('mermaid_with_callback_js', mermaidFullscreenJsShortcode);
+  // add fullscreen-able mermaid display
+  eleventyConfig.addPairedShortcode('mermaid', mermaidShortcode);
 
   eleventyConfig.addTemplateFormats('scss');
   // Creates the extension for use
