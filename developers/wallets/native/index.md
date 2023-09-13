@@ -233,23 +233,20 @@ https://wallet.example.com/switchboard?request=
 ```
 
 Depending on the protocols supported, the value of request will contain one
-or more encoded JSON objects with nifty details...
-
-...explain when this happens...maybe with mermaid chart?
-
-### VC-API
+or more encoded JSON objects with the applicable details needed for using that
+protocol.
 
 {% mermaid %}
 sequenceDiagram
-  # User visits Relying Party website and clicks something. Then this happens...
+  # User visits a Verifier's website and interacts with it to trigger a verification
 
-  participant site as OpenBadge Verifier Site
+  participant site as Verifier Site
   participant chapi as User's Browser / CHAPI
   participant app as Native Wallet App
   participant exchanger as VC-API Exchanger
 
   site ->> exchanger: 1. creates an exchange within a workflow
-  exchanger ->> site: 2. exchange URL/ID returned (in some JSON)
+  exchanger ->> site: 2. JSON response contains the exchange URL/ID
   site ->> chapi: 3. triggers CHAPI `get()` request w/blank VP + `protocols.vcapi` containing URL
   chapi ->> app: 4. triggers app URL to open app w/`?request=`
   app ->> exchanger: 5. uses VC-API  URL from `?request=` to send VPR
@@ -262,6 +259,8 @@ sequenceDiagram
     exchanger ->> site: ...wait for it...
   end
 {% endmermaid %}
+
+### VC-API
 
 The `vcapi` property within the object parsed above will contain a URL the wallet can use to handle that request.
 
