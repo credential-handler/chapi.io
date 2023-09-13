@@ -239,7 +239,7 @@ or more encoded JSON objects with nifty details...
 
 ### VC-API
 
-```mermaid
+{% mermaid %}
 sequenceDiagram
   # User visits Relying Party website and clicks something. Then this happens...
 
@@ -261,7 +261,7 @@ sequenceDiagram
     site ->> exchanger: exchange complete?
     exchanger ->> site: ...wait for it...
   end
-```
+{% endmermaid %}
 
 The `vcapi` property within the object parsed above will contain a URL the wallet can use to handle that request.
 
