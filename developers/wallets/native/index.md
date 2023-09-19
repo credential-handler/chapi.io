@@ -247,7 +247,7 @@ sequenceDiagram
 
   site ->> exchanger: 1. creates an exchange within a workflow
   exchanger ->> site: 2. JSON response contains the exchange URL/ID
-  site ->> chapi: 3. triggers CHAPI `get()` request w/blank VP + `protocols.vcapi` containing URL
+  site ->> chapi: 3. triggers CHAPI `get()` request w/blank `VerifiablePresentation` object + `protocols.vcapi` containing URL
   chapi ->> app: 4. triggers app URL to open app w/`?request=`
   app ->> exchanger: 5. uses VC-API  URL from `?request=` to send VPR
   exchanger ->> app: 6. returns VPR to wallet
