@@ -223,18 +223,20 @@ See the [OID4VCI Specification](https://openid.net/specs/openid-4-verifiable-cre
 ## Verifiable Credential Presentation
 
 Browser side verification flows will open the CHAPI wallet selector in the user's
-browser. If they select a native wallet, that URL will open the pre-registered
-native wallet apps link (see above for how to register...).
+browser. If they select a native wallet, the URL will at the Wallet's
+pre-registered domain. The app link setup done earlier will cause the URL to
+open in the user's wallet (rather than the default browser).
 
-That URL will to the Wallet's pre-registered domain--which will (thanks to the
-magic of app links!) open in the user's wallet:
+Based on our example above, the URL would look similar to this one:
 ```
 https://wallet.example.com/switchboard?request=
 ```
 
-Depending on the protocols supported, the value of request will contain one
-or more encoded JSON objects with the applicable details needed for using that
-protocol.
+Depending on the protocols supported, the value of the `request` query parameter
+will contain one or more encoded JSON objects with the applicable details needed
+for using that protocol.
+
+Below is a step-by-step sequence diagram of what's taking place:
 
 {% mermaid %}
 sequenceDiagram
@@ -248,12 +250,11 @@ sequenceDiagram
   site ->> exchanger: 1. creates an exchange within a workflow
   exchanger ->> site: 2. JSON response contains the exchange URL/ID
   site ->> chapi: 3. triggers CHAPI `get()` request w/blank `VerifiablePresentation` object + `protocols.vcapi` containing URL
-  chapi ->> app: 4. triggers app URL to open app w/`?request=`
+  chapi ->> app: 4. offers app URL (w/`?request=`) to open app
   app ->> exchanger: 5. uses VC-API  URL from `?request=` to send VPR
   exchanger ->> app: 6. returns VPR to wallet
   app ->> exchanger: 7. responds with VP
   exchanger ->> app: 9. sends success response to wallet
-  # Webhooks here maybe?
   loop poll exchange status
     site ->> exchanger: exchange complete?
     exchanger ->> site: ...wait for it...
