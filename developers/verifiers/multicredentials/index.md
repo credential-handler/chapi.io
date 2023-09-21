@@ -5,7 +5,7 @@ permalink: /developers/verifiers/multicredentials/
 ---
 # {{ title }}
 
-The [CHAPI Playground](https://playground.chapi.io/) supports the delivery of
+The [CHAPI Playground](https://vcplayground.org/) supports the delivery of
 `QueryByExample` requests for doing Multi-Credential Verification as a
 [Verifiable Credential Verifier](./).
 
@@ -24,7 +24,7 @@ Once that's done, proceed to Verifiable Credential Issuance.
 
 ## Verifiable Credential Issuance
 
-First, visit [the Issuer section of the playground](https://playground.chapi.io/issuer).
+First, visit [the Issuer section of the playground](https://vcplayground.org/issuer).
 
 Next, select the "JFF x vc-edu PF3" icon in the top "Select a credential to issue" section.
 
@@ -64,7 +64,7 @@ Follow the above process a few more times by clicking "Issuer Demo" to load your
 
 Now that you have several Verifiable Credentials (VCs) in your wallet, let's get them all verified in one request.
 
-First, visit the [playground's Verifier section](https://playground.chapi.io/verifier).
+First, visit the [playground's Verifier section](https://vcplayground.org/verifier).
 
 Select the VCs you loaded into your wallet (i.e. "Alumni", "JFF x vc-edu PF3", and "Permanent Resident").
 

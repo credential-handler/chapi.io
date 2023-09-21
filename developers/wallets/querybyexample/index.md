@@ -63,7 +63,7 @@ async function handleGetEvent() {
 }
 ```
 
-Below you will find the VP Requests which Wallets may receive when testing used with the [CHAPI Playground](https://playground.chapi.io/).
+Below you will find the VP Requests which Wallets may receive when testing used with the [CHAPI Playground](https://vcplayground.org/).
 
 ## VP Request for Alumni VC
 ```json

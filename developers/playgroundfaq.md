@@ -9,7 +9,7 @@ Have you already integrated CHAPI into your project and now you’re interested 
 
 ## Issuers
 ### Introduction
-You can integrate your Issuer into our tooling with the [CHAPI Playground Issuer](https://playground.chapi.io/issuer).
+You can integrate your Issuer into our tooling with the [CHAPI Playground Issuer](https://vcplayground.org/issuer).
 
 If you provide a [VC-API Issue Credential Endpoint](https://w3c-ccg.github.io/vc-api/#issue-credential), we can add your issuer to the list of options accessible from the "Gear" icon on the site.  Your endpoint should end in `/credentials/issue`.
 
@@ -34,7 +34,7 @@ Issuer backends do not need CORS because the CHAPI Playground web app makes a ba
 ### Introduction
 Wallets can integrate with the CHAPI Playground using two different methods:
 
-1. **Basic CHAPI store() workflow:** this workflow uses CHAPI to directly communicate a Verifiable Credential.  The [CHAPI Playground](https://playground.chapi.io) site uses VCAPI on the backend to connect to various issuer sites.  This is a simplified workflow that can get developers up-and-running without the need to implement a credential pickup using VC-API Exchanges.
+1. **Basic CHAPI store() workflow:** this workflow uses CHAPI to directly communicate a Verifiable Credential.  The [CHAPI Playground](https://vcplayground.org/) site uses VCAPI on the backend to connect to various issuer sites.  This is a simplified workflow that can get developers up-and-running without the need to implement a credential pickup using VC-API Exchanges.
 2. **VC-API Exchanges workflow:** in this workflow, the Playground site uses CHAPI to communicate the URL of a VC-API `/exchanges` endpoint where a Verifiable Credential can be picked up.  The use of CHAPI here preserves the individual's choice of wallet and avoids the need to make assumptions about credential types, wallet apps, etc.  The wallet then hits the specified `/exchanges` endpoint and receives a Verifiable Presentation containing the Credential.  DID Authentication and credential pickup are performed in the same step.  This is especially useful for native mobile apps.
 
 ### Integrating with the basic CHAPI store() workflow
@@ -68,7 +68,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
     "service": [
       {
         "type": "VerifiableCredentialApiExchangeService",
-        "serviceEndpoint": "https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
+        "serviceEndpoint": "https://vcplayground.org/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"
       },
       {
         "type": "CredentialHandlerService"
@@ -76,7 +76,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
     ]
   },
   "challenge": "g2Wvqg7-cQGWYCCH55rUl",
-  "domain": "playground.chapi.io"
+  "domain": "vcplayground.org"
 }
 ```
 
@@ -97,7 +97,7 @@ The CHAPI Playground implementation follows the general pattern, via the followi
       "verificationMethod": "did:example:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr",
       "proofPurpose": "authentication",
       "challenge": "TTkKgear2sBt4TYxr_zrL",
-      "domain": "playground.chapi.io",
+      "domain": "vcplayground.org",
       "proofValue": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..gaG1RaxRy-xLkjVN-7ulh0dbUU1EX"
     }
   }
