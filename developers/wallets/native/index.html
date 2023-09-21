@@ -148,8 +148,8 @@ https://wallet.example.com/switchboard?request=%7B%22credentialRequestOrigin%22%
 <p>There are currently two possible protocols that Issuers may use with CHAPI in order to issue Verifiable Credentials to be stored in the user's digital wallet: <code>vcapi</code> and <code>OID4VCI</code>.</p>
 <p>Depending on what you declared in your <code>acceptedProtocols</code> you may receive either or both as properties in the <code>protocols</code> object carried in the <code>request</code> query parameter. Your wallet's code (i.e. in <code>/switchboard</code>) should decide which protocol to use (or it may delegate this choice to advanced users) when multiple protocols are available.</p>
 <h3 id="vc-api" tabindex="-1">VC-API</h3>
-<p>The <code>vcapi</code> property will contain a URL the wallet can use to get the credential(s).</p>
-<p>To retrieve one or more credentials via VC-API, the wallet first sends a <code>POST</code> request
+<p>The <code>vcapi</code> property will contain a URL the wallet can use to retrieve the issued credential(s).</p>
+<p>To store one or more credentials via VC-API, the wallet first sends a <code>POST</code> request
 to the URL (extracted from <code>protocols.vcapi</code> above) with an empty JSON object
 (<code>{}</code>) in the body of the request to attempt to download the VC to be stored.</p>
 <pre class="language-http"><code class="language-http">POST /exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ
@@ -220,11 +220,103 @@ object containing the following details:</p>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>See the <a href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html">OID4VCI Specification</a> for more details on this protocol.</p>
+<h2 id="verifiable-credential-presentation" tabindex="-1">Verifiable Credential Presentation</h2>
+<p>Browser side verification flows will open the CHAPI wallet selector in the user's
+browser. If they select a native wallet, the URL will at the Wallet's
+pre-registered domain. The app link setup done earlier will cause the URL to
+open in the user's wallet (rather than the default browser).</p>
+<p>Based on our example above, the URL would look similar to this one:</p>
+<pre><code>https://wallet.example.com/switchboard?request=
+</code></pre>
+<p>Depending on the protocols supported, the value of the <code>request</code> query parameter
+will contain one or more encoded JSON objects with the applicable details needed
+for using that protocol.</p>
+<p>Below is a step-by-step sequence diagram of what's taking place:</p>
+<div style="position: relative">
+<span class="ui top right attached blue icon label">
+  <i class="expand icon"></i>
+</span>
+<pre class="mermaid attached">&#10;sequenceDiagram&#10;  # User visits a Verifier&#39;s website and interacts with it to trigger a verification&#10;&#10;  participant site as Verifier Site&#10;  participant chapi as User&#39;s Browser / CHAPI&#10;  participant app as Native Wallet App&#10;  participant exchanger as VC-API Exchanger&#10;&#10;  site -&gt;&gt; exchanger: 1. creates an exchange within a workflow&#10;  exchanger -&gt;&gt; site: 2. JSON response contains the exchange URL/ID&#10;  site -&gt;&gt; chapi: 3. triggers CHAPI `get()` request w/blank `VerifiablePresentation` object + `protocols.vcapi` containing URL&#10;  chapi -&gt;&gt; app: 4. offers app URL (w/`?request=`) to open app&#10;  app -&gt;&gt; exchanger: 5. uses VC-API  URL from `?request=` to send VPR&#10;  exchanger -&gt;&gt; app: 6. returns VPR to wallet&#10;  app -&gt;&gt; exchanger: 7. responds with VP&#10;  exchanger -&gt;&gt; app: 9. sends success response to wallet&#10;  loop poll exchange status&#10;    site -&gt;&gt; exchanger: exchange complete?&#10;    exchanger -&gt;&gt; site: ...wait for it...&#10;  end&#10;&#10;</pre>
+</div>
+<h3 id="vc-api-1" tabindex="-1">VC-API</h3>
+<p>The <code>vcapi</code> property within the object parsed above will contain a URL the wallet can use to handle that request.</p>
+<p>To respond with zero or more credentials via a VC-API exchanger, the wallet MUST first send a <code>POST</code> request
+to the URL (extracted from <code>protocols.vcapi</code> above) with an empty JSON object
+(<code>{}</code>) in the body of the request to attempt to get a Verifiable Presentation
+Request with the details about what the verifier wants.</p>
+<pre class="language-http"><code class="language-http">POST /exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ
+<span class="token header"><span class="token header-name keyword">Host</span><span class="token punctuation">:</span> <span class="token header-value">exchanger.example.com</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span><span class="token punctuation">}</span>
+</span></code></pre>
+<p>The response to that request will be a <code>verifiablePresentationRequest</code>
+object. The <code>verifiablePresentationRequest</code> object will describe
+what is required to continue the exchange.</p>
+<p>Below is an example <code>verifiablePresentationRequest</code> containing a <code>QueryByExample</code>
+query:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"verifiablePresentationRequest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"query"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"QueryByExample"</span><span class="token punctuation">,</span>
+        <span class="token property">"credentialQuery"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"reason"</span><span class="token operator">:</span> <span class="token string">"Please present your Verifiable Credential to complete the verification process."</span><span class="token punctuation">,</span>
+          <span class="token property">"example"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+              <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+              <span class="token string">"https://www.w3.org/2018/credentials/examples/v1"</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+              <span class="token string">"UniversityDegreeCredential"</span>
+            <span class="token punctuation">]</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The wallet should fulfill the request by sending another <code>POST</code> request to the
+same exchange URL with a <code>verifiablePresentation</code> containing the user selected
+credentials:</p>
+<pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"verifiablePresentation"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+      <span class="token string">"https://www.w3.org/2018/credentials/examples/v1"</span><span class="token punctuation">,</span>
+      <span class="token string">"https://w3id.org/security/suites/ed25519-2020/v1"</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"VerifiablePresentation"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"holder"</span><span class="token operator">:</span> <span class="token string">"did:example:ebfeb1f712ebc6f1c276e12ec21"</span><span class="token punctuation">,</span>
+    <span class="token property">"verifiableCredential"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+      <span class="token property">"@context"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"https://www.w3.org/2018/credentials/v1"</span><span class="token punctuation">,</span>
+        <span class="token string">"https://www.w3.org/2018/credentials/examples/v1"</span><span class="token punctuation">,</span>
+        <span class="token string">"https://w3id.org/security/suites/ed25519-2020/v1"</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"http://example.edu/credentials/3732"</span><span class="token punctuation">,</span>
+      <span class="token property">"type"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"VerifiableCredential"</span><span class="token punctuation">,</span>
+        <span class="token string">"UniversityDegreeCredential"</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      ...
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>When no <code>verifiablePresentationRequest</code> object is present, the exchange is
+complete.</p>
+<p>More complete examples can be found in the
+<a href="https://w3c-ccg.github.io/vc-api/#exchange-examples">Example Exchanges</a>
+section of the <a href="https://w3c-ccg.github.io/vc-api/">VC-API Specification</a>.</p>
 
 
       <footer class="site-footer">
-        
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+        <div class="site-footer-credits">This site content is open-source
+          licensed by contributors under the <a href="/license">BSD 3-Clause</a>.
+        </div>
+        <div class="site-footer-credits">
+          Please contribute at <a href="https://github.com/credential-handler/chapi.io"><i class="github link icon"></i>credential-handler/chapi.io</a>
+        </div>
       </footer>
     </main>
     </div>
@@ -236,7 +328,50 @@ object containing the following details:</p>
       $('.ui.sidebar')
         .sidebar('attach events', '.toc.item');
     </script>
-    <script src="/assets/js/tabs.js"></script>
+    <script type="module" async>
+    import mermaid from 'https://unpkg.com/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.run({
+      querySelector: '.mermaid',
+      postRenderCallback: (id) => {
+        const selector = '#'.concat(id);
+        const chart = document.getElementById(id);
+        chart.setAttribute('height', chart.getBoundingClientRect().height);
+        chart.style.backgroundColor = 'inherit';
+        const zoomable = svgPanZoom(selector, {
+          zoomEnabled: true,
+          controlIconsEnabled: true,
+          fit: true,
+          center: true
+        });
+        console.log(zoomable);
 
+        const fullscreenIcon = chart.parentElement.previousElementSibling;
+        const pre = chart.parentElement.parentElement;
+
+        const observer = new ResizeObserver(() => zoomable.resize().reset());
+        observer.observe(pre);
+
+        const classes = fullscreenIcon.querySelector('i').classList;
+        fullscreenIcon.addEventListener('click', (ev) => {
+          if (classes.contains('expand')) {
+            pre.requestFullscreen().then(() => {
+              classes.replace('expand', 'compress');
+            });
+          } else if (classes.contains('compress')) {
+            document.exitFullscreen();
+          }
+        });
+
+        document.addEventListener('fullscreenchange', (ev) => {
+          if (!document.fullscreenElement) {
+            // leaving fullscreen, so scroll to the element that was open
+            ev.target.scrollIntoView();
+            classes.replace('compress', 'expand');
+          }
+        });
+      }
+    });
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3/dist/svg-pan-zoom.min.js"></script>
   </body>
 </html>
