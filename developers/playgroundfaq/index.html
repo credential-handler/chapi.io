@@ -34,7 +34,7 @@
       <a class="item" href="/developers/wallets">Digital Wallets</a>
       <a class="item" href="/developers/verifiers">VC Verifiers</a>
       <span class="item">
-        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+        <a class="ui basic inverted button" href="https://vcplayground.org/">Try the Playground!</a>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
         <span class="desktop only">&nbsp; | Credential Handler API</span>
       </a>
       <span class="item">
-        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+        <a class="ui basic inverted button" href="https://vcplayground.org/">Try the Playground!</a>
       </span>
       <div class="right menu">
         <a class="toc icon item"><i class="sidebar icon"></i></a>
@@ -61,7 +61,7 @@
 <p>Have you already integrated CHAPI into your project and now you’re interested in making your Issuer, Wallet, or Verifier available for experimentation? This Integration Guide/FAQ for the CHAPI Playground will help you accomplish this!</p>
 <h2 id="issuers" tabindex="-1">Issuers</h2>
 <h3 id="introduction" tabindex="-1">Introduction</h3>
-<p>You can integrate your Issuer into our tooling with the <a href="https://playground.chapi.io/issuer">CHAPI Playground Issuer</a>.</p>
+<p>You can integrate your Issuer into our tooling with the <a href="https://vcplayground.org/issuer">CHAPI Playground Issuer</a>.</p>
 <p>If you provide a <a href="https://w3c-ccg.github.io/vc-api/#issue-credential">VC-API Issue Credential Endpoint</a>, we can add your issuer to the list of options accessible from the &quot;Gear&quot; icon on the site.  Your endpoint should end in <code>/credentials/issue</code>.</p>
 <p>We've put together a <a href="https://github.com/credential-handler/chapi-playground-test-suite">simple test utility</a> that you can run locally against your endpoint (the test runs locally; the endpoint can be running anywhere).  Once your issuer endpoint can pass the test conditions, we'll be ready to add it to the list of options in the CHAPI Playground.</p>
 <p>Once integrated into the Playground, your issuer will be able to work with any CHAPI-enabled wallet, including the Veres Wallet. (Note that you can also add CHAPI support directly to your issuer so that it can communicate directly with digital wallets).</p>
@@ -77,7 +77,7 @@
 <h3 id="introduction-1" tabindex="-1">Introduction</h3>
 <p>Wallets can integrate with the CHAPI Playground using two different methods:</p>
 <ol>
-<li><strong>Basic CHAPI store() workflow:</strong> this workflow uses CHAPI to directly communicate a Verifiable Credential.  The <a href="https://playground.chapi.io">CHAPI Playground</a> site uses VCAPI on the backend to connect to various issuer sites.  This is a simplified workflow that can get developers up-and-running without the need to implement a credential pickup using VC-API Exchanges.</li>
+<li><strong>Basic CHAPI store() workflow:</strong> this workflow uses CHAPI to directly communicate a Verifiable Credential.  The <a href="https://vcplayground.org/">CHAPI Playground</a> site uses VCAPI on the backend to connect to various issuer sites.  This is a simplified workflow that can get developers up-and-running without the need to implement a credential pickup using VC-API Exchanges.</li>
 <li><strong>VC-API Exchanges workflow:</strong> in this workflow, the Playground site uses CHAPI to communicate the URL of a VC-API <code>/exchanges</code> endpoint where a Verifiable Credential can be picked up.  The use of CHAPI here preserves the individual's choice of wallet and avoids the need to make assumptions about credential types, wallet apps, etc.  The wallet then hits the specified <code>/exchanges</code> endpoint and receives a Verifiable Presentation containing the Credential.  DID Authentication and credential pickup are performed in the same step.  This is especially useful for native mobile apps.</li>
 </ol>
 <h3 id="integrating-with-the-basic-chapi-store()-workflow" tabindex="-1">Integrating with the basic CHAPI store() workflow</h3>
@@ -100,7 +100,7 @@
     <span class="token property">"service"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
       <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"VerifiableCredentialApiExchangeService"</span><span class="token punctuation">,</span>
-        <span class="token property">"serviceEndpoint"</span><span class="token operator">:</span> <span class="token string">"https://playground.chapi.io/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"</span>
+        <span class="token property">"serviceEndpoint"</span><span class="token operator">:</span> <span class="token string">"https://vcplayground.org/exchanges/eyJjcmVkZW50aWFsIjoiaHR0cHM6Ly9wbGF5Z3JvdW5kLmNoYXBpLmlvL2V4YW1wbGVzL2pmZjIvamZmMi5qc29uIiwiaXNzdWVyIjoiZGIvdmMifQ/esOGVHG8d44Q"</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"CredentialHandlerService"</span>
@@ -108,7 +108,7 @@
     <span class="token punctuation">]</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"challenge"</span><span class="token operator">:</span> <span class="token string">"g2Wvqg7-cQGWYCCH55rUl"</span><span class="token punctuation">,</span>
-  <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"playground.chapi.io"</span>
+  <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"vcplayground.org"</span>
 <span class="token punctuation">}</span></code></pre>
 <p><strong>Step 2</strong>: The Wallet POSTs a VP containing the DID Auth to the <code>/exchanges</code> endpoint.</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
@@ -126,7 +126,7 @@
       <span class="token property">"verificationMethod"</span><span class="token operator">:</span> <span class="token string">"did:example:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdcpO5v4tK2USAhWptpr"</span><span class="token punctuation">,</span>
       <span class="token property">"proofPurpose"</span><span class="token operator">:</span> <span class="token string">"authentication"</span><span class="token punctuation">,</span>
       <span class="token property">"challenge"</span><span class="token operator">:</span> <span class="token string">"TTkKgear2sBt4TYxr_zrL"</span><span class="token punctuation">,</span>
-      <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"playground.chapi.io"</span><span class="token punctuation">,</span>
+      <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"vcplayground.org"</span><span class="token punctuation">,</span>
       <span class="token property">"proofValue"</span><span class="token operator">:</span> <span class="token string">"eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..gaG1RaxRy-xLkjVN-7ulh0dbUU1EX"</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>

@@ -34,7 +34,7 @@
       <a class="item" href="/developers/wallets">Digital Wallets</a>
       <a class="item" href="/developers/verifiers">VC Verifiers</a>
       <span class="item">
-        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+        <a class="ui basic inverted button" href="https://vcplayground.org/">Try the Playground!</a>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
         <span class="desktop only">&nbsp; | Credential Handler API</span>
       </a>
       <span class="item">
-        <a class="ui basic inverted button" href="https://playground.chapi.io/">Try the Playground!</a>
+        <a class="ui basic inverted button" href="https://vcplayground.org/">Try the Playground!</a>
       </span>
       <div class="right menu">
         <a class="toc icon item"><i class="sidebar icon"></i></a>
@@ -135,11 +135,11 @@ That link will contain a <code>request</code> query parameter with a URL encoded
 </ul>
 <p>Here is an example URL showing the <code>request</code> query parameter and its URL encoded value:</p>
 <pre><code style="white-space: normal;overflow: auto;word-break: break-all;">
-https://wallet.example.com/switchboard?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fplayground.chapi.io%22%2C%22protocols%22%3A%7B%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%257B%2522credential_issuer%2522%253A%2522https%253A%252F%252Fexample.exchanger.com%252Fexchangers%252Fz1A1GqykGBWKbwhFCDqFjMfnG%252Fexchanges%252Fz1A36rr6wEL25EEiikKvisVEC%2522%252C%2522credentials%2522%253A%255B%257B%2522format%2522%253A%2522ldp_vc%2522%252C%2522credential_definition%2522%253A%257B%2522%2540context%2522%253A%255B%2522https%253A%252F%252Fwww.w3.org%252F2018%252Fcredentials%252Fv1%2522%252C%2522https%253A%252F%252Fpurl.imsglobal.org%252Fspec%252Fob%252Fv3p0%252Fcontext.json%2522%255D%252C%2522type%2522%253A%255B%2522VerifiableCredential%2522%252C%2522OpenBadgeCredential%2522%255D%257D%257D%255D%252C%2522grants%2522%253A%257B%2522urn%253Aietf%253Aparams%253Aoauth%253Agrant-type%253Apre-authorized_code%2522%253A%257B%2522pre-authorized_code%2522%253A%25220065a8a0-069b-46f1-a857-4e1ce5047afd%2522%257D%257D%257D%22%2C%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%7D%7D
+https://wallet.example.com/switchboard?request=%7B%22credentialRequestOrigin%22%3A%22https%3A%2F%2Fvcplayground.org%22%2C%22protocols%22%3A%7B%22OID4VCI%22%3A%22openid-credential-offer%3A%2F%2F%3Fcredential_offer%3D%257B%2522credential_issuer%2522%253A%2522https%253A%252F%252Fexample.exchanger.com%252Fexchangers%252Fz1A1GqykGBWKbwhFCDqFjMfnG%252Fexchanges%252Fz1A36rr6wEL25EEiikKvisVEC%2522%252C%2522credentials%2522%253A%255B%257B%2522format%2522%253A%2522ldp_vc%2522%252C%2522credential_definition%2522%253A%257B%2522%2540context%2522%253A%255B%2522https%253A%252F%252Fwww.w3.org%252F2018%252Fcredentials%252Fv1%2522%252C%2522https%253A%252F%252Fpurl.imsglobal.org%252Fspec%252Fob%252Fv3p0%252Fcontext.json%2522%255D%252C%2522type%2522%253A%255B%2522VerifiableCredential%2522%252C%2522OpenBadgeCredential%2522%255D%257D%257D%255D%252C%2522grants%2522%253A%257B%2522urn%253Aietf%253Aparams%253Aoauth%253Agrant-type%253Apre-authorized_code%2522%253A%257B%2522pre-authorized_code%2522%253A%25220065a8a0-069b-46f1-a857-4e1ce5047afd%2522%257D%257D%257D%22%2C%22vcapi%22%3A%22https%3A%2F%2Fexchanger.example.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz19mxa763DAKX7diL51kBFecZ%22%7D%7D
 </code></pre>
 <p>The <code>request</code> value is URL encoded. Its contents look like this when unencoded:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"credentialRequestOrigin"</span><span class="token operator">:</span> <span class="token string">"https://playground.chapi.io"</span><span class="token punctuation">,</span>
+  <span class="token property">"credentialRequestOrigin"</span><span class="token operator">:</span> <span class="token string">"https://vcplayground.org"</span><span class="token punctuation">,</span>
   <span class="token property">"protocols"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"vcapi"</span><span class="token operator">:</span> <span class="token string">"https://exchanger.example.com/exchangers/z1A1GqykGBWKbwhFCDqFjMfnG/exchanges/z19mxa763DAKX7diL51kBFecZ"</span><span class="token punctuation">,</span>
     <span class="token property">"OID4VCI"</span><span class="token operator">:</span> <span class="token string">"openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fexample.exchanger.com%2Fexchangers%2Fz1A1GqykGBWKbwhFCDqFjMfnG%2Fexchanges%2Fz1A36rr6wEL25EEiikKvisVEC%22%2C%22credentials%22%3A%5B%7B%22format%22%3A%22ldp_vc%22%2C%22credential_definition%22%3A%7B%22%40context%22%3A%5B%22https%3A%2F%2Fwww.w3.org%2F2018%2Fcredentials%2Fv1%22%2C%22https%3A%2F%2Fpurl.imsglobal.org%2Fspec%2Fob%2Fv3p0%2Fcontext.json%22%5D%2C%22type%22%3A%5B%22VerifiableCredential%22%2C%22OpenBadgeCredential%22%5D%7D%7D%5D%2C%22grants%22%3A%7B%22urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Apre-authorized_code%22%3A%7B%22pre-authorized_code%22%3A%220065a8a0-069b-46f1-a857-4e1ce5047afd%22%7D%7D%7D"</span>
