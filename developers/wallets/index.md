@@ -132,7 +132,7 @@ WebCredentialHandler.activateHandler({
 </p>
 
 Now, with those things in place, you can test the process out on the
-[Playground](https://playground.chapi.io/). First, click the button in your
+[Playground](https://vcplayground.org/). First, click the button in your
 `/index.html` to register with CHAPI. Then, use either the Verifier or Issuer
 sections of the Playground to trigger `get()` (Verifier) or `store()`
 (Issuer) events when you select your Wallet in the CHAPI Wallet selector modal.
@@ -205,7 +205,7 @@ An example VPR is shown below.  Like the other CHAPI examples on this site, the 
         "type": "DIDAuthentication"
       },
       "challenge": "IME0WNG2MIOsYsPgezxAM", //randomly-generated challenge string (e.g.,a UUID, nanoid, or bnid)
-      "domain": "https://playground.chapi.io" //URL of your web app (where the wallet will respond to the DID Auth request
+      "domain": "https://vcplayground.org" //URL of your web app (where the wallet will respond to the DID Auth request
   },
   "recommendedHandlerOrigins": [
       "https://demo.vereswallet.dev/"
@@ -287,7 +287,7 @@ const didAuthPresentation = {
         "verificationMethod": "did:v1:test:nym:z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr#z6MkjsQSCqdN4CGE6R9tKhETAEoPYdXci5v4tK2USAhWptpr",
         "proofPurpose": "authentication",
         "challenge": "IME0WNG2MIOsYsPgezxAM",
-        "domain": "https://playground.chapi.io",
+        "domain": "https://vcplayground.org",
         "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..n7f3DZ4yNuH2ApE0dZy1gaLBTKEuGYHGsmycgWwKptZaNeKz2FKRAjzPeat3GQnJg1n_5Q6GU9bAql602m2tCg"
     }
 };
