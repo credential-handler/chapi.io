@@ -13,8 +13,9 @@ Too often, users are presented with a fixed set of options for authentication wi
 A _Credential Handler_ is an event handler for credential request and storage events.  Web app developers can use CHAPI to provide their users with Credential Handlers that run in the browser.  These Credential Handlers can respond when users visit other websites that present, request, or store Verifiable Credentials.
 
 ![Choose a wallet modal presenting all preregistered wallet systems which can be clicked on to proceed to store the credentials there.](/images/VeresCHAPIaccept.png)
-## How do I build CHAPI into my website or application?
-Examples and developer docs:
+
+## Enable Browser-based Credential Exchange
+Checkout the examples and developer docs...
 
 <p class="button-row">
     <a href="developers/issuers" class="btn2">for VC Issuers</a>
