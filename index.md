@@ -5,11 +5,9 @@ permalink: /index.html
 showHero: true
 ---
 
-The CHAPI protocol allows your digital wallet to receive Verifiable Credentials from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that establishes trust and preserves privacy.
-## CHAPI is for open for _everyone_
-CHAPI is an open protocol designed to solve the "NASCAR Problem" - too often, users are presented with a fixed set of options for authentication with third-party sites.  The CHAPI protocol provides mediation between any CHAPI-enabled web application and a third-party site.  Just register your web app with your browser, and off you go!
+The Credential Handler API (CHAPI) allows your digital wallet to receive [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) from an independent third-party issuer - or present Verifiable Credentials to an independent third-party verifier - in a way that establishes trust and preserves privacy.
 
-Both [CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are results of open collaboration through World Wide Web Consortium (W3C).  You can find more information and join the discussion at the [W3C Credentials Community Group](https://www.w3.org/community/credentials/).
+Too often, users are presented with a fixed set of options for authentication with third-party sites. The CHAPI protocol provides mediation between any CHAPI-enabled Web or mobile application and a third-party site.
 
 ## How does CHAPI work?
 A _Credential Handler_ is an event handler for credential request and storage events.  Web app developers can use CHAPI to provide their users with Credential Handlers that run in the browser.  These Credential Handlers can respond when users visit other websites that present, request, or store Verifiable Credentials.
@@ -30,5 +28,7 @@ Interested in making your Verifier/Issuer/Wallet available for experimentation? 
 <p class="button-row">
     <a href="developers/playgroundfaq" class="btn2">CHAPI Playground FAQ</a>
 </p>
+
+[CHAPI](https://w3c-ccg.github.io/credential-handler-api/) and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) are the result of open collaboration through the World Wide Web Consortium (W3C).  You can find more information and join the discussion at the [W3C Credentials Community Group](https://www.w3.org/community/credentials/).
 
 Read more about the [open standards that power CHAPI](/standards).
