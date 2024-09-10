@@ -19,7 +19,7 @@ following:
 ```json
 {
   "protocols": {
-    "vcapi": "https://vcapi.example.com/exchanges/12345",
+    "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/12345",
     "OIC4VCI": "openid-credential-offer://?..."
   }
 }
@@ -144,11 +144,11 @@ sequenceDiagram
     autonumber
     Note right of H: Start exchange
     W->>I: Initiate
-    Note right of W: POST /workflows/123/exchanges/123 &mdash; HTTP request to start exchange (e.g., send credentials, get credentials)
+    Note right of W: POST /workflows/abc/exchanges/123 &mdash; HTTP request to start exchange (e.g., send credentials, get credentials)
     I->>W: Verifiable Presentation Request (VPR)
     Note left of I: VPR includes method of interaction, for purposes of exchange
     W->>I: Verifiable Presentation (VP)
-    Note right of W: POST /workflows/123/exchanges/abc &mdash; sent via interaction mechanism to meet requirements of exchange
+    Note right of W: POST /workflows/abc/exchanges/abc &mdash; sent via interaction mechanism to meet requirements of exchange
     I->>W: Verifiable Presentation
     Note left of I: VP includes result of exchange (e.g., VCs), or VPR with new interaction request, or error description
 ```
