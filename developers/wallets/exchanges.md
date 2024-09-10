@@ -112,8 +112,8 @@ For example:
 ```
 
 If the object includes `redirectUrl`, the *exchange is complete* and the
-workflow service recommends that the client proceed to another place to continue
-the interaction in another form.
+workflow service recommends that the client sent the user to another place to
+continue the interaction.
 
 For example:
 ```json
