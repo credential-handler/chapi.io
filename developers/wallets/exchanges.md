@@ -178,7 +178,6 @@ function checkResponse(body) {
     });
     checkResponse(response.json());
   }
-  // TODO: should these be exclusive?
   if('verifiablePresentation' in body) {
     // the Wallet has received a Verifiable Presentation containing one or more
     // Verifiable Credentials--use them per your use case
