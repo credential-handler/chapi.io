@@ -19,7 +19,7 @@ _exchange client_) by sending a POST request to that URL.
 
 Exchange URL:
 ```
-https://vcapi.example.com/exchanges/12345/
+https://vcapi.example.com/exchanges/12345
 ```
 
 To initiate an exchange using VC API, an exchange client performs an HTTP POST
@@ -28,7 +28,7 @@ has no constraints of its own on the exchange — i.e., it has nothing to reques
 from the other party — the JSON object is empty ({})--as seen below:
 
 ```http
-POST /exchanges/12345/
+POST /exchanges/12345
 Host: vcapi.example.com
 
 {}
@@ -101,7 +101,7 @@ the interaction in another form.
 For example:
 ```json
 {
-  "redirectUrl": "https://vcapi.example.com/go-here-next/"
+  "redirectUrl": "https://vcapi.example.com/go-here-next"
 }
 ```
 
