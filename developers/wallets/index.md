@@ -12,6 +12,7 @@ CHAPI integrates easily into digital wallet software, allowing your wallet to re
 * [Verifiable Credential Storage](#verifiable-credential-storage)
 * [Verifiable Credential Presentation](#verifiable-credential-presentation)
 * [DID Authentication with CHAPI](#did-authentication-with-chapi)
+* <span class="ui green tiny label">new!</span> [Handling VC API Exchanges](exchanges/)
 
 ## Native Wallets
 * [Wallet Registration](native/#wallet-registration)
