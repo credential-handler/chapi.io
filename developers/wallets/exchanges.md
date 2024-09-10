@@ -19,7 +19,7 @@ following:
 ```json
 {
   "protocols": {
-    "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/12345",
+    "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/123",
     "OIC4VCI": "openid-credential-offer://?..."
   }
 }
@@ -33,13 +33,13 @@ an HTTP GET request including an explicit `Accept: application/json` request
 header--which results in the same JSON object as above:
 
 ```http
-GET /exchanges/12345/protocols
+GET /workflows/abc/exchanges/123/protocols
 Host: vcapi.example.com
 Accept: application/json
 
 {
   "protocols": {
-    "vcapi": "https://vcapi.example.com/exchanges/12345",
+    "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/123",
     "OIC4VCI": "openid-credential-offer://?..."
   }
 }
@@ -50,7 +50,7 @@ request is sent with a configuration object (which may be empty) to begin the
 exchange:
 
 ```http
-POST /exchanges/12345
+POST /workflows/abc/exchanges/123
 Host: vcapi.example.com
 
 {}
@@ -148,7 +148,7 @@ sequenceDiagram
     I->>W: Verifiable Presentation Request (VPR)
     Note left of I: VPR includes method of interaction, for purposes of exchange
     W->>I: Verifiable Presentation (VP)
-    Note right of W: POST /workflows/abc/exchanges/abc &mdash; sent via interaction mechanism to meet requirements of exchange
+    Note right of W: POST /workflows/abc/exchanges/123 &mdash; sent via interaction mechanism to meet requirements of exchange
     I->>W: Verifiable Presentation
     Note left of I: VP includes result of exchange (e.g., VCs), or VPR with new interaction request, or error description
 ```
