@@ -11,11 +11,24 @@ permalink: /developers/wallets/exchanges/
 > the issuance, verification, transmission, or presentation of verifiable
 > credentials.
 
-A Web Wallet may receive an Exchange URL through CHAPI, reading a QR code, or
+A Web Wallet may receive an Exchange URL through CHAPI, by reading a QR code, or
 via some other user initiated transmission.
 
-Once that URL is received, the Wallet can initiate the exchange (acting as the
-_exchange client_) by sending a POST request to that URL.
+CHAPI will provide a complete protocols object similar to the following:
+```json
+{
+  "protocols": {
+    "vcapi": "https://vcapi.example.com/exchanges/12345",
+    "OIC4VCI": "openid-credential-offer://?..."
+  }
+}
+```
+
+Alternatively, a QR code will only provide a single URL.
+
+Once a VC API URL is received (either via CHAPI, a QR code scan, etc.), the
+Wallet can initiate the exchange (acting as the _exchange client_) by sending a
+POST request to that URL.
 
 Exchange URL:
 ```
