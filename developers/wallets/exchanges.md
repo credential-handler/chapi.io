@@ -11,10 +11,11 @@ permalink: /developers/wallets/exchanges/
 > the issuance, verification, transmission, or presentation of verifiable
 > credentials.
 
-A Web Wallet may receive an Exchange URL through CHAPI, by reading a QR code, or
-via some other user initiated transmission.
+A VC API workflow interaction begins with _either_ a CHAPI event or an
+interaction URL via a QR code (or similar user initiated transfer experience).
 
-CHAPI will provide a complete protocols object similar to the following:
+The CHAPI event will provide a complete protocols object similar to the
+following:
 ```json
 {
   "protocols": {
@@ -23,22 +24,30 @@ CHAPI will provide a complete protocols object similar to the following:
   }
 }
 ```
+Alternatively, a QR code can be used to provide a URL which when dereferenced
+will result in either a `protocols` (object as above) or an HTML fallback page
+to allow the user to continue otherwise.
 
-Alternatively, a QR code will only provide a single URL.
+To retrieve a `protocols` object from an _interaction URL_, the Wallet must send
+an HTTP GET request including an explicit `Accept: application/json` request
+header--which results in the same JSON object as above:
 
-Once a VC API URL is received (either via CHAPI, a QR code scan, etc.), the
-Wallet can initiate the exchange (acting as the _exchange client_) by sending a
-POST request to that URL.
+```http
+GET /exchanges/12345/protocols
+Host: vcapi.example.com
+Accept: application/json
 
-Exchange URL:
+{
+  "protocols": {
+    "vcapi": "https://vcapi.example.com/exchanges/12345",
+    "OIC4VCI": "openid-credential-offer://?..."
+  }
+}
 ```
-https://vcapi.example.com/exchanges/12345
-```
 
-To initiate an exchange using VC API, an exchange client performs an HTTP POST
-sending a JSON object as the request body. In the simplest case, when the client
-has no constraints of its own on the exchange — i.e., it has nothing to request
-from the other party — the JSON object is empty ({})--as seen below:
+Once a VC API exchange URL is acquisitioned from `protocols.vcapi`, a POST
+request is sent with a configuration object (which may be empty) to begin the
+exchange:
 
 ```http
 POST /exchanges/12345
@@ -47,12 +56,7 @@ Host: vcapi.example.com
 {}
 ```
 
-The workflow service then responds with its own JSON object in the response
-body:
-
-```json
-{}
-```
+A response will be returned by the exchanger...
 
 If the response object is empty (as above), the exchange is complete and nothing
 is requested from nor offered to the exchange client.
