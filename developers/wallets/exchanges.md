@@ -157,35 +157,33 @@ The exchange client (Wallet) code for a flow like the above may look similar to
 the following:
 
 ```js
-const receivedExchangeUrl = 'https://vcapi.example.com/workflows/123/exchanges/123';
+const receivedExchangeUrl = 'https://vcapi.example.com/workflows/abc/exchanges/123';
 
 const response = await fetch(receivedExchangeUrl, {
   method: 'POST'
   body: JSON.stringify({})
 });
-const body = response.json();
+const body = await response.json();
 
 function checkResponse(body) {
   if('verifiablePresentationRequest' in body) {
     // use the information in the Verifiable Presentation Request to find a
-    // credentail that fullfills the request, then send a Verifiable
-    // Presentation as the response to the interaction endpoint included in the
+    // credential that fulfills the request, then send a Verifiable
+    // Presentation a message back to the exchange endpoint
     // Verifiable Presentation Request
-    const presentation = findCredentialAndCreatePresentation();
-    // TODO: properly extract interaction URL
-    const interactionUrl = body.interact.service[0].serviceEndpoint;
-    const response = await fetch(interactionUrl, {
+    const verifiablePresentation = findCredentialAndCreatePresentation();
+    const response = await fetch(receivedExchangeUrl, {
       method: 'POST',
-      body: JSON.stringify(presentation)
+      body: JSON.stringify({verifiablePresentation})
     });
     checkResponse(response.json());
   }
   // TODO: should these be exclusive?
   if('verifiablePresentation' in body) {
     // the Wallet has received a Verifiable Presentation containing one or more
-    // Verifiable Credentials--validate and verify them per your use case
+    // Verifiable Credentials--use them per your use case
   }
   if('redirectUrl' in body) {
-    // TODO: take the user to the new location OR does the exchange "move"?
+    // take the user to the new location
   }
 }
