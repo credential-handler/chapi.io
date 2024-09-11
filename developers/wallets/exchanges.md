@@ -71,6 +71,10 @@ If, however, the object includes `verifiablePresentationRequest`, then the
 exchange is not yet complete and some *additional information is requested*, as
 specified by the contents of the associated verifiable presentation request.
 
+> Read more about possible values in the
+> [Verifiable Presentation Requests](https://w3c-ccg.github.io/vp-request-spec/#overview)
+> specification.
+
 For example:
 ```json
 {
