@@ -6,10 +6,16 @@ permalink: /developers/wallets/exchanges/
 
 ## {{ title }}
 
+<figure>
+
 > A VC API workflow defines a particular set of steps for exchanging verifiable
 > credentials between two parties across a trust boundary. Each step can involve
 > the issuance, verification, transmission, or presentation of verifiable
 > credentials.
+<figcaption>
+  <cite>from <a href="https://w3c-ccg.github.io/vc-api/#workflows-and-exchanges">VC API Workflows & Exchanges</a></cite>
+</figcaption>
+</figure>
 
 A VC API workflow interaction begins with _either_ a CHAPI event or an
 interaction URL via a QR code (or similar user initiated transfer experience).
