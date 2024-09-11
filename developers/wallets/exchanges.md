@@ -72,7 +72,7 @@ For example:
     "query": [{
       "type": "QueryByExample",
       "credentialQuery": [{
-        "reason": "Please present proof of citizenship.",
+        "reason": "We require proof of residency to onboard you.",
         "example": {
           "@context": [
             "https://www.w3.org/ns/credentials/v2",
