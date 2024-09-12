@@ -76,7 +76,7 @@ following:</p>
 <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"protocols"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"vcapi"</span><span class="token operator">:</span> <span class="token string">"https://vcapi.example.com/workflows/abc/exchanges/123"</span><span class="token punctuation">,</span>
-    <span class="token property">"OIC4VCI"</span><span class="token operator">:</span> <span class="token string">"openid-credential-offer://?..."</span>
+    <span class="token property">"OID4VCI"</span><span class="token operator">:</span> <span class="token string">"openid-credential-offer://?..."</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Alternatively, a QR code can be used to provide a URL which when dereferenced
@@ -92,7 +92,7 @@ header--which results in the same JSON object as above:</p>
 {
   "protocols": {
     "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/123",
-    "OIC4VCI": "openid-credential-offer://?..."
+    "OID4VCI": "openid-credential-offer://?..."
   }
 }</code></pre>
 <p>Once a VC API exchange URL is acquisitioned from <code>protocols.vcapi</code>, a POST
