@@ -26,7 +26,7 @@ following:
 {
   "protocols": {
     "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/123",
-    "OIC4VCI": "openid-credential-offer://?..."
+    "OID4VCI": "openid-credential-offer://?..."
   }
 }
 ```
@@ -46,7 +46,7 @@ Accept: application/json
 {
   "protocols": {
     "vcapi": "https://vcapi.example.com/workflows/abc/exchanges/123",
-    "OIC4VCI": "openid-credential-offer://?..."
+    "OID4VCI": "openid-credential-offer://?..."
   }
 }
 ```
